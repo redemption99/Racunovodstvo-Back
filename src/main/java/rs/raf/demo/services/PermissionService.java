@@ -30,7 +30,7 @@ public class PermissionService implements IService<Permission, Long> {
 
     @Override
     public List<Permission> findAll() {
-        return (List<Permission>) permissionRepository.findAll();
+        return permissionRepository.findAll();
     }
 
     @Override
