@@ -4,7 +4,8 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import rs.raf.demo.model.Faktura;
-import rs.raf.demo.services.FakturaService;
+import rs.raf.demo.services.IFakturaService;
+import rs.raf.demo.services.impl.FakturaService;
 
 import java.util.List;
 
@@ -13,7 +14,7 @@ import java.util.List;
 @RequestMapping("/api/faktura")
 public class FakturaRestController {
 
-    private final FakturaService fakturaService;
+    private final IFakturaService fakturaService;
 
     public FakturaRestController(FakturaService fakturaService) {
         this.fakturaService = fakturaService;

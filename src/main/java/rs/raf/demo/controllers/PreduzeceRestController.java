@@ -8,7 +8,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 import rs.raf.demo.model.Preduzece;
 import rs.raf.demo.services.IService;
-import rs.raf.demo.services.PreduzeceService;
+import rs.raf.demo.services.impl.PreduzeceService;
 
 import javax.validation.Valid;
 import java.util.HashMap;

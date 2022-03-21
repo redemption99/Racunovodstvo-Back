@@ -9,6 +9,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import rs.raf.demo.model.Faktura;
 import rs.raf.demo.model.TipFakture;
 import rs.raf.demo.repositories.FakturaRepository;
+import rs.raf.demo.services.impl.FakturaService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +22,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class FakturaServiceTest {
 
     @InjectMocks
-    private  FakturaService fakturaService;
+    private FakturaService fakturaService;
 
     @Mock
     private FakturaRepository fakturaRepository;

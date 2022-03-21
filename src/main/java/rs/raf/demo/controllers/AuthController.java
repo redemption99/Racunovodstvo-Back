@@ -6,7 +6,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.web.bind.annotation.*;
 import rs.raf.demo.requests.LoginRequest;
 import rs.raf.demo.responses.LoginResponse;
-import rs.raf.demo.services.UserService;
+import rs.raf.demo.services.impl.UserService;
 import rs.raf.demo.utils.JwtUtil;
 
 @RestController
