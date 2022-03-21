@@ -9,7 +9,7 @@ import rs.raf.demo.repositories.FakturaRepository;
 import java.util.*;
 
 @Service
-public class FakturaService implements IService<Faktura, Long>{
+public class FakturaService implements IFakturaService{
 
     private final FakturaRepository fakturaRepository;
 
