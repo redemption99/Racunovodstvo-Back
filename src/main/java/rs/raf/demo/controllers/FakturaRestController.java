@@ -49,4 +49,12 @@ public class FakturaRestController {
         }
     }
 
+    @DeleteMapping(value = "/{id}")
+    public ResponseEntity<?> deleteFaktura(@PathVariable("id") Long id){
+        fakturaService.deleteById(id);
+        return ResponseEntity.ok().build();
+    }
+
 }
+
+
