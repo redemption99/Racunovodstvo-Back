@@ -1,5 +1,6 @@
 package rs.raf.demo.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.format.annotation.NumberFormat;
@@ -8,6 +9,7 @@ import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+import java.util.List;
 
 @Entity
 @Getter
@@ -43,4 +45,8 @@ public class Preduzece {
     private String webAdresa;
     @Column
     private String komentar;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "preduzece", fetch =  FetchType.EAGER)
+    private List<Faktura> fakture;
 }

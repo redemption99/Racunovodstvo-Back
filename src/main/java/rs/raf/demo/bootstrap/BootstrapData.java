@@ -61,8 +61,6 @@ public class BootstrapData implements CommandLineRunner {
 
         this.userRepository.save(user1);
         this.userRepository.save(user2);
-
-
         System.out.println("Data loaded!");
     }
 }
