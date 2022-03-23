@@ -3,6 +3,7 @@ package rs.raf.demo.services.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import rs.raf.demo.model.Faktura;
+
 import rs.raf.demo.model.TipFakture;
 import rs.raf.demo.repositories.FakturaRepository;
 import rs.raf.demo.services.IFakturaService;
