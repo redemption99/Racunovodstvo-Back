@@ -9,6 +9,7 @@ import rs.raf.demo.services.impl.FakturaService;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @CrossOrigin
@@ -42,6 +43,16 @@ public class FakturaRestController {
         }
     }
 
+    @GetMapping(value = "/sume", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> getSume(@RequestParam String tipFakture){
+        Map<String, Double> sume = fakturaService.getSume(tipFakture);
+        if(!sume.isEmpty()) {
+            return ResponseEntity.ok(sume);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
     @GetMapping(value = "/all", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> getFakture(){
         if(fakturaService.findAll().isEmpty()){
@@ -65,12 +76,10 @@ public class FakturaRestController {
             return ResponseEntity.notFound().build();
         }
     }
-  
+
     @DeleteMapping(value = "/{id}")
     public ResponseEntity<?> deleteFaktura(@PathVariable("id") Long id){
         fakturaService.deleteById(id);
         return ResponseEntity.ok().build();
     }
 }
-
-
