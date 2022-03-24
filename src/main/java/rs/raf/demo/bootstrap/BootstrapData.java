@@ -19,11 +19,11 @@ public class BootstrapData implements CommandLineRunner {
     private final Logger log = LoggerFactory.getLogger(BootstrapData.class);
     private final UserRepository userRepository;
     private final PermissionRepository permissionRepository;
-    private final IFakturaRepository fakturaRepository;
+    private final FakturaRepository fakturaRepository;
     private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public BootstrapData(UserRepository userRepository,IFakturaRepository fakturaRepository, PermissionRepository permissionRepository, PasswordEncoder passwordEncoder) {
+    public BootstrapData(UserRepository userRepository,FakturaRepository fakturaRepository, PermissionRepository permissionRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.permissionRepository = permissionRepository;

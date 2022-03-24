@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 import rs.raf.demo.model.Faktura;
 
 import rs.raf.demo.model.TipFakture;
-import rs.raf.demo.repositories.IFakturaRepository;
+import rs.raf.demo.repositories.FakturaRepository;
 import rs.raf.demo.services.IFakturaService;
 import rs.raf.demo.utils.Utils;
 
@@ -15,10 +15,10 @@ import java.util.*;
 @Service
 public class FakturaService implements IFakturaService {
 
-    private final IFakturaRepository fakturaRepository;
+    private final FakturaRepository fakturaRepository;
 
     @Autowired
-    public FakturaService(IFakturaRepository fakturaRepository) {
+    public FakturaService(FakturaRepository fakturaRepository) {
         this.fakturaRepository = fakturaRepository;
     }
 
