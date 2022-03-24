@@ -3,6 +3,7 @@ package rs.raf.demo.controllers;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import rs.raf.demo.services.IService;
 import rs.raf.demo.services.impl.DnevnikKnjizenjaService;
 
 @CrossOrigin
@@ -10,7 +11,7 @@ import rs.raf.demo.services.impl.DnevnikKnjizenjaService;
 @RequestMapping("/api/knjizenje")
 public class KnjizenjeController {
 
-    private final DnevnikKnjizenjaService dnevnikKnjizenjaService;
+    private final IService dnevnikKnjizenjaService;
 
     public KnjizenjeController(DnevnikKnjizenjaService dnevnikKnjizenjaService) {
         this.dnevnikKnjizenjaService = dnevnikKnjizenjaService;
