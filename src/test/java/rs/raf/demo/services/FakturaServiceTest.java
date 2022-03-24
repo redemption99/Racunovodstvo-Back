@@ -8,7 +8,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import rs.raf.demo.model.Faktura;
 import rs.raf.demo.model.TipFakture;
-import rs.raf.demo.repositories.FakturaRepository;
+import rs.raf.demo.repositories.IFakturaRepository;
 import rs.raf.demo.services.impl.FakturaService;
 
 import java.util.ArrayList;
@@ -25,7 +25,7 @@ class FakturaServiceTest {
     private FakturaService fakturaService;
 
     @Mock
-    private FakturaRepository fakturaRepository;
+    private IFakturaRepository fakturaRepository;
 
     private List<Faktura> fakture;
 
@@ -108,6 +108,14 @@ class FakturaServiceTest {
         assertEquals(0, rezultat.size());
     }
 
+    @Test
+    void testSave() {
+        Faktura ocekivanaFaktura = new Faktura();
 
+        when(fakturaRepository.save(ocekivanaFaktura)).thenReturn(ocekivanaFaktura);
+        Faktura vracenaFaktura = fakturaService.save(ocekivanaFaktura);
+
+        assertSame(ocekivanaFaktura, vracenaFaktura);
+    }
 
 }
