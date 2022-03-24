@@ -1,6 +1,5 @@
 package rs.raf.demo.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
