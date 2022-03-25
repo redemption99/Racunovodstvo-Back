@@ -12,6 +12,7 @@ import rs.raf.demo.services.IFakturaService;
 import rs.raf.demo.services.impl.FakturaService;
 import rs.raf.demo.specifications.FakturaSpecificationsBuilder;
 import rs.raf.demo.utils.ApiUtil;
+import rs.raf.demo.specifications.RacunSpecificationsBuilder;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Max;
@@ -77,7 +78,7 @@ public class FakturaRestController {
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> search(@RequestParam(name = "search") String search){
-        FakturaSpecificationsBuilder builder = new FakturaSpecificationsBuilder();
+        RacunSpecificationsBuilder<Faktura> builder = new RacunSpecificationsBuilder<>();
         Pattern pattern = Pattern.compile("(\\w+?)(:|<|>)(\\w+?),");
         Matcher matcher = pattern.matcher(search + ",");
         while (matcher.find()) {
