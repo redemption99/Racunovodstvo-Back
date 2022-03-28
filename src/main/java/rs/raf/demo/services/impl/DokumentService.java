@@ -44,29 +44,37 @@ public class DokumentService implements IDokumentService {
     @Override
     public Double getSumaPotrazuje(Long id) {
         Optional<Dokument> dok = findById(id);
-        List<Knjizenje> knjizenja = dok.get().getKnjizenje();
-        Double suma = Double.valueOf(0);
-        for (Knjizenje i : knjizenja) {
-            List<Konto> allKonto = i.getKonto();
-            for (Konto j: allKonto) {
-                suma += j.getPotrazuje();
+        if (dok.isPresent()) {
+            List<Knjizenje> knjizenja = dok.get().getKnjizenje();
+            Double suma = (double) 0;
+            for (Knjizenje i : knjizenja) {
+                List<Konto> allKonto = i.getKonto();
+                for (Konto j : allKonto) {
+                    suma += j.getPotrazuje();
+                }
             }
+            return suma;
         }
-        return suma;
+        else
+            return null;
     }
 
     @Override
     public Double getSumaDuguje(Long id) {
         Optional<Dokument> dok = findById(id);
-        List<Knjizenje> knjizenja = dok.get().getKnjizenje();
-        Double suma = Double.valueOf(0);
-        for (Knjizenje i : knjizenja) {
-            List<Konto> allKonto = i.getKonto();
-            for (Konto j: allKonto) {
-                suma += j.getDuguje();
+        if (dok.isPresent()) {
+            List<Knjizenje> knjizenja = dok.get().getKnjizenje();
+            Double suma = (double) 0;
+            for (Knjizenje i : knjizenja) {
+                List<Konto> allKonto = i.getKonto();
+                for (Konto j : allKonto) {
+                    suma += j.getDuguje();
+                }
             }
+            return suma;
         }
-        return suma;
+        else
+            return null;
     }
 
     @Override
