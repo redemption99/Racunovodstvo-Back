@@ -20,6 +20,8 @@ public class GlavnaKnjiga {
     @JoinColumn(name = "dnevnikKnjizenjaId")
     private DnevnikKnjizenja dnevnikKnjizenja;
     @Column
+    private Double duguje;
+    @Column
     private Double potrazuje;
     @Column(nullable = false)
     private Double saldo;
