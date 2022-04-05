@@ -101,7 +101,7 @@ public class KnjizenjeController {
             return ResponseEntity.notFound().build();
         }
 
-        return ResponseEntity.ok(result.getContent());
+        return ResponseEntity.ok(result);
     }
 
 
