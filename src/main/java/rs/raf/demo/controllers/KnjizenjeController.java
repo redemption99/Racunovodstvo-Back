@@ -12,6 +12,7 @@ import rs.raf.demo.services.IKnjizenjeService;
 import rs.raf.demo.specifications.RacunSpecificationsBuilder;
 
 
+import javax.naming.OperationNotSupportedException;
 import javax.persistence.EntityNotFoundException;
 import javax.validation.Valid;
 import javax.validation.constraints.Max;
@@ -27,6 +28,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import rs.raf.demo.model.Knjizenje;
 import rs.raf.demo.utils.ApiUtil;
+import rs.raf.demo.utils.SearchUtil;
 
 
 @CrossOrigin
@@ -37,10 +39,12 @@ public class KnjizenjeController {
 
 
     private final IKnjizenjeService knjizenjaService;
+    private final SearchUtil<Knjizenje> searchUtil;
 
 
     public KnjizenjeController(IKnjizenjeService knjizenjaService) {
         this.knjizenjaService = knjizenjaService;
+        this.searchUtil = new SearchUtil<>();
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -88,13 +92,8 @@ public class KnjizenjeController {
         RacunSpecificationsBuilder<Knjizenje> builder = new RacunSpecificationsBuilder<>();
         Pageable pageSort = ApiUtil.resolveSortingAndPagination(page, size, sort);
 
-        Pattern pattern = Pattern.compile("(\\w+?)(:|<|>)(\\w+?),");
-        Matcher matcher = pattern.matcher(search + ",");
-        while (matcher.find()) {
-            builder.with(matcher.group(1), matcher.group(2), matcher.group(3));
-        }
 
-        Specification<Knjizenje> spec = builder.build();
+        Specification<Knjizenje> spec = searchUtil.getSpec(search);
 
         Page<Knjizenje> result = knjizenjaService.findAll(spec, pageSort);
 
