@@ -3,7 +3,6 @@ package raf.si.racunovodstvo.knjizenje.model;
 import lombok.Getter;
 import lombok.Setter;
 import raf.si.racunovodstvo.knjizenje.model.enums.TipFakture;
-import rs.raf.demo.model.enums.TipFakture;
 
 import java.util.Date;
 
@@ -19,7 +18,7 @@ import javax.persistence.PrimaryKeyJoinColumn;
 @Getter
 @Setter
 @PrimaryKeyJoinColumn(name = "fakturaId")
-public class Faktura extends rs.raf.demo.model.Dokument {
+public class Faktura extends Dokument {
 
     @Column(nullable = false)
     private String brojFakture;
@@ -52,7 +51,4 @@ public class Faktura extends rs.raf.demo.model.Dokument {
     @Column
     @Enumerated(EnumType.STRING)
     private TipFakture tipFakture;
-    @ManyToOne
-    @JoinColumn(name = "preduzeceId")
-    private Preduzece preduzece;
 }

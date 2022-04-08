@@ -33,7 +33,7 @@ public class Knjizenje {
     private Date datumKnjizenja;
     @ManyToOne
     @JoinColumn(name = "dokument")
-    private rs.raf.demo.model.Dokument dokument;
+    private Dokument dokument;
     @OneToMany(mappedBy = "knjizenje", fetch =  FetchType.EAGER)
     private List<Konto> konto;
     @Column
