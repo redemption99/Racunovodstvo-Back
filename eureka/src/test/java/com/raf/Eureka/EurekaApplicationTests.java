@@ -1,4 +1,4 @@
-package raf.si.racunovodstvo.eureka;
+package com.raf.Eureka;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
