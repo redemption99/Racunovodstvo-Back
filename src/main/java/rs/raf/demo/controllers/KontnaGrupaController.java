@@ -10,9 +10,11 @@ import rs.raf.demo.services.IKontnaGrupaService;
 import rs.raf.demo.services.impl.KontnaGrupaService;
 import rs.raf.demo.utils.ApiUtil;
 
+import javax.persistence.EntityNotFoundException;
 import javax.validation.Valid;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
+import java.util.Optional;
 
 @CrossOrigin
 @RestController
@@ -27,12 +29,13 @@ public class KontnaGrupaController {
     }
 
     @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> getKontnaGrupa(@PathVariable("id") String id) {
-        try {
-            return ResponseEntity.ok(kontnaGrupaService.findKontnaGrupaById(id));
-        } catch (Exception e) {
-            return ResponseEntity.notFound().build();
+    public ResponseEntity<?> getKontnaGrupa(@PathVariable("id") Long id) {
+        Optional<KontnaGrupa> optionalKontnaGrupa = kontnaGrupaService.findById(id);
+        if (optionalKontnaGrupa.isPresent()) {
+            return ResponseEntity.ok(optionalKontnaGrupa.get());
         }
+
+        throw new EntityNotFoundException();
     }
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
@@ -48,14 +51,21 @@ public class KontnaGrupaController {
         return ResponseEntity.ok(kontnaGrupaService.save(kontnaGrupa));
     }
 
-    @PutMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> updateKontnaGrupa(@Valid @RequestBody KontnaGrupa kontnaGrupa) {
-        return ResponseEntity.ok(kontnaGrupaService.update(kontnaGrupa.getBrojKonta()));
+    @PutMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> updateKontnaGrupa(@Valid @RequestBody KontnaGrupa kontnaGrupa, @PathVariable Long id) {
+        if (kontnaGrupaService.findById(id).isPresent())
+            return ResponseEntity.ok(kontnaGrupaService.save(kontnaGrupa));
+        throw new EntityNotFoundException();
     }
 
     @DeleteMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> deleteKontnaGrupa(@PathVariable String id) {
-        kontnaGrupaService.deleteById(id);
-        return ResponseEntity.ok().build();
+    public ResponseEntity<?> deleteKontnaGrupa(@PathVariable Long id) {
+        Optional<KontnaGrupa> optionalKontnaGrupa = kontnaGrupaService.findById(id);
+        if (optionalKontnaGrupa.isPresent()) {
+            kontnaGrupaService.deleteById(id);
+            return ResponseEntity.noContent().build();
+        }
+
+        throw new EntityNotFoundException();
     }
 }

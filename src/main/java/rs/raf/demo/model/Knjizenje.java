@@ -18,11 +18,16 @@ public class Knjizenje {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long knjizenjeId;
     @Column(nullable = false)
+    @NotNull(message = "Broj naloga je obavezan")
+    private String brojNaloga;
+    @Column(nullable = false)
     @NotNull(message = "Datum je obavezna")
     private Date datumKnjizenja;
     @ManyToOne
-    @JoinColumn(name = "knjizenje")
+    @JoinColumn(name = "dokument")
     private Dokument dokument;
     @OneToMany(mappedBy = "knjizenje", fetch =  FetchType.EAGER)
     private List<Konto> konto;
+    @Column
+    private String komentar;
 }

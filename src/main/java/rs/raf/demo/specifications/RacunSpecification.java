@@ -1,66 +1,89 @@
 package rs.raf.demo.specifications;
 
 import lombok.AllArgsConstructor;
-import lombok.SneakyThrows;
 import org.springframework.data.jpa.domain.Specification;
+import rs.raf.demo.exceptions.OperationNotSupportedException;
+import rs.raf.demo.model.Dokument;
+import rs.raf.demo.model.KontnaGrupa;
+import rs.raf.demo.model.Preduzece;
+import rs.raf.demo.model.enums.TipFakture;
+import rs.raf.demo.relations.*;
 
-import java.lang.reflect.Method;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
+import javax.persistence.criteria.*;
 
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Expression;
-import javax.persistence.criteria.Join;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
+import java.util.Date;
+import java.util.Objects;
+
 
 @AllArgsConstructor
 public class RacunSpecification<T> implements Specification<T> {
 
     private SearchCriteria criteria;
 
-    private Map<String, Method> operationToMethod;
 
-    @SneakyThrows
-    public RacunSpecification(SearchCriteria searchCriteria) {
-        this.criteria = searchCriteria;
-        this.initializeMap();
+    private RacunRelations<T> getRelations(Root<T> root, CriteriaBuilder builder, Class keyType, String key, String val)
+        throws OperationNotSupportedException {
+        if (Date.class == keyType) {
+            return new DateRelations<>(root, builder, key, val);
+        }
+        if (Long.class == keyType) {
+            return new LongRelations<>(root, builder, key, val);
+        }
+        if (String.class == keyType) {
+            return new StringRelations<>(root, builder, key, val);
+        }
+        if (Double.class == keyType) {
+            return new DoubleRelations<>(root, builder, key, val);
+        }
+        if (Preduzece.class == keyType) {
+            return new PreduzeceRelations<>(root, builder, key, val);
+        }
+        if (Dokument.class == keyType) {
+            return new DokumentRelations<>(root, builder, key, val);
+        }
+        if (TipFakture.class == keyType) {
+            return new TipFaktureRelations<>(root, builder, key, val);
+        }
+        if (KontnaGrupa.class == keyType) {
+            return new KontnaGrupaRelations<>(root, builder, key, val);
+        }
+
+        throw new OperationNotSupportedException(String.format("Josuvek nije podrzano filtriranje po tipu %s(%s)", key, keyType));
     }
 
-    private void initializeMap() throws NoSuchMethodException {
-        operationToMethod = new HashMap();
-        operationToMethod.put(">", CriteriaBuilder.class.getMethod("greaterThanOrEqualTo", Expression.class, Comparable.class));
-        operationToMethod.put("<", CriteriaBuilder.class.getMethod("lessThanOrEqualTo", Expression.class, Comparable.class));
-        operationToMethod.put(":", CriteriaBuilder.class.getMethod("equal", Expression.class, Object.class));
-    }
-
-    @SneakyThrows
     @Override
     public Predicate toPredicate
-        (Root<T> root, CriteriaQuery<?> query, CriteriaBuilder builder) {
-        this.initializeMap();
-        Expression expression = getCurrentExpression(root);
-        return (Predicate) operationToMethod.get(criteria.getOperation())
-                                            .invoke(builder, expression, criteria.getValue().toString());
-    }
+            (Root<T> root, CriteriaQuery<?> query, CriteriaBuilder builder) {
 
-    private Expression getCurrentExpression(Root<T> root) {
-        if (isJoiningRequired(criteria.getKey())) {
-            return getExpresionForJoinedTable(root);
-        } else {
-            return root.get(criteria.getKey());
+        Class keyType = root.get(criteria.getKey()).getJavaType();
+        RacunRelations<T> relations = getRelations(root,builder,keyType,criteria.getKey(),criteria.getValue().toString());
+
+        if (criteria.getOperation().equalsIgnoreCase(">")) {
+            return relations.greaterThanOrEqualTo();
         }
+        if (criteria.getOperation().equalsIgnoreCase("<")) {
+            return relations.lessThanOrEqualTo();
+        }
+        if (criteria.getOperation().equalsIgnoreCase(":")) {
+            return relations.equalTo();
+        }
+        throw new OperationNotSupportedException(String.format("Nepoznata operacija \"%s\"",criteria.getOperation()));
     }
 
-    private Expression getExpresionForJoinedTable(Root<T> root) {
-        String[] tableAndField = criteria.getKey().split("_");
-        Join groupJoin = root.join(tableAndField[0]);
-        return groupJoin.get(tableAndField[1]);
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        RacunSpecification<?> that = (RacunSpecification<?>) o;
+        return Objects.equals(criteria, that.criteria);
     }
 
-    private boolean isJoiningRequired(String key) {
-        return key.contains("_");
+    @Override
+    public int hashCode() {
+        return Objects.hash(criteria);
     }
 }
