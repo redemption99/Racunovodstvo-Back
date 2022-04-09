@@ -20,6 +20,8 @@ import java.util.Objects;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Expression;
+import javax.persistence.criteria.Join;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
@@ -61,6 +63,13 @@ public class RacunSpecification<T> implements Specification<T> {
     public Predicate toPredicate
             (Root<T> root, CriteriaQuery<?> query, CriteriaBuilder builder) {
 
+        // mgojkovic: Poseban slucaj gde nam treba join kako bismo radili filter po poljima koja nisu kljuc,
+        // join radi samo sa equal trenutno (nezavisno od prosledjene operacije), treba generalizovati
+        if (isJoiningRequired(criteria.getKey())) {
+            Expression exception = getExpresionForJoinedTable(root);
+            return builder.equal(exception, criteria.getValue().toString());
+        }
+
         Class keyType = root.get(criteria.getKey()).getJavaType();
         RacunRelations<T> relations = getRelations(root,builder,keyType,criteria.getKey(),criteria.getValue().toString());
 
@@ -74,6 +83,16 @@ public class RacunSpecification<T> implements Specification<T> {
             return relations.equalTo();
         }
         throw new OperationNotSupportedException(String.format("Nepoznata operacija \"%s\"",criteria.getOperation()));
+    }
+
+    private Expression getExpresionForJoinedTable(Root<T> root) {
+        String[] tableAndField = criteria.getKey().split("_");
+        Join groupJoin = root.join(tableAndField[0]);
+        return groupJoin.get(tableAndField[1]);
+    }
+
+    private boolean isJoiningRequired(String key) {
+        return key.contains("_");
     }
 
     @Override

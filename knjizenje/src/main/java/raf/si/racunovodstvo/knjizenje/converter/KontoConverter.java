@@ -14,14 +14,15 @@ public class KontoConverter {
 
     public Page<GlavnaKnjigaResponse> convert(List<Konto> kontoList) {
         return new PageImpl<>(kontoList.stream().map(
-                konto -> new GlavnaKnjigaResponse(
-                        konto.getKnjizenje().getKnjizenjeId(),
-                        konto.getKnjizenje().getDatumKnjizenja(),
-                        konto.getPotrazuje(),
-                        konto.getDuguje(),
-                        konto.getDuguje() - konto.getPotrazuje(),
-                        konto.getKontnaGrupa().getNazivKonta(),
-                        konto.getKontnaGrupa().getBrojKonta())
+            konto -> new GlavnaKnjigaResponse(
+                konto.getKnjizenje().getKnjizenjeId(),
+                konto.getKnjizenje().getDatumKnjizenja(),
+                konto.getPotrazuje(),
+                konto.getDuguje(),
+                konto.getDuguje() - konto.getPotrazuje(),
+                konto.getKontnaGrupa().getNazivKonta(),
+                konto.getKontnaGrupa().getBrojKonta(),
+                konto.getKnjizenje().getKomentar())
         ).collect(Collectors.toList()));
     }
 }
