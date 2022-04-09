@@ -1,4 +1,4 @@
-package raf.si.racunovodstvo.preduzece.service;
+package raf.si.racunovodstvo.preduzece.services;
 
 
 import java.util.List;

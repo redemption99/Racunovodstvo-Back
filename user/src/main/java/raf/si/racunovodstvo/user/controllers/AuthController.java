@@ -33,5 +33,9 @@ public class AuthController {
         return ResponseEntity.ok(new LoginResponse(jwtUtil.generateToken(loginRequest.getUsername())));
     }
 
+    @GetMapping("/access")
+    public ResponseEntity<?> access(){
+        return ResponseEntity.ok().build();
+    }
 
 }

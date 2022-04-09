@@ -4,8 +4,11 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.mapping.PropertyReferenceException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.web.authentication.Http403ForbiddenEntryPoint;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 import raf.si.racunovodstvo.preduzece.exceptions.OperationNotSupportedException;
@@ -58,5 +61,13 @@ public class MyExceptionHandler extends ResponseEntityExceptionHandler
         details.add(ex.getLocalizedMessage());
         ErrorResponse error = new ErrorResponse("418 I am a teapot!", details);
         return new ResponseEntity<>(error, HttpStatus.I_AM_A_TEAPOT);
+    }
+
+    @ExceptionHandler(HttpClientErrorException.class)
+    public final ResponseEntity<Object> handleForbidden(Exception ex) {
+        List<String> details = new ArrayList<>();
+        details.add(ex.getLocalizedMessage());
+        ErrorResponse error = new ErrorResponse("403 Forbidden!", details);
+        return new ResponseEntity<>(error, HttpStatus.FORBIDDEN);
     }
 }

@@ -1,11 +1,11 @@
-package raf.si.racunovodstvo.preduzece.service.impl;
+package raf.si.racunovodstvo.preduzece.services.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import raf.si.racunovodstvo.preduzece.model.Preduzece;
-import raf.si.racunovodstvo.preduzece.repository.PreduzeceRepository;
-import raf.si.racunovodstvo.preduzece.service.IService;
+import raf.si.racunovodstvo.preduzece.repositories.PreduzeceRepository;
+import raf.si.racunovodstvo.preduzece.services.IService;
 import raf.si.racunovodstvo.preduzece.utils.SearchUtil;
 
 import java.util.List;

@@ -3,11 +3,17 @@ package raf.si.racunovodstvo.preduzece.specifications;
 import lombok.AllArgsConstructor;
 import org.springframework.data.jpa.domain.Specification;
 import raf.si.racunovodstvo.preduzece.exceptions.OperationNotSupportedException;
+import raf.si.racunovodstvo.preduzece.model.Preduzece;
+import raf.si.racunovodstvo.preduzece.model.enums.RadnaPozicija;
+import raf.si.racunovodstvo.preduzece.model.enums.StatusZaposlenog;
 import raf.si.racunovodstvo.preduzece.relations.BooleanRelations;
 import raf.si.racunovodstvo.preduzece.relations.DateRelations;
 import raf.si.racunovodstvo.preduzece.relations.DoubleRelations;
 import raf.si.racunovodstvo.preduzece.relations.LongRelations;
+import raf.si.racunovodstvo.preduzece.relations.PreduzeceRelations;
 import raf.si.racunovodstvo.preduzece.relations.RacunRelations;
+import raf.si.racunovodstvo.preduzece.relations.RadnaPozicijaRelations;
+import raf.si.racunovodstvo.preduzece.relations.StatusZaposlenogRelations;
 import raf.si.racunovodstvo.preduzece.relations.StringRelations;
 
 import java.util.Date;
@@ -15,6 +21,8 @@ import java.util.Objects;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Expression;
+import javax.persistence.criteria.Join;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
@@ -39,6 +47,15 @@ public class RacunSpecification<T> implements Specification<T> {
         if (Double.class == keyType) {
             return new DoubleRelations<>(root, builder, key, val);
         }
+        if (Preduzece.class == keyType) {
+            return new PreduzeceRelations<>(root, builder, key, val);
+        }
+        if (RadnaPozicija.class == keyType) {
+            return new RadnaPozicijaRelations(root, builder, key, val);
+        }
+        if (StatusZaposlenog.class == keyType) {
+            return new StatusZaposlenogRelations(root, builder, key, val);
+        }
         if (Boolean.class == keyType) {
             return new BooleanRelations<>(root, builder, key, val);
         }
@@ -48,7 +65,14 @@ public class RacunSpecification<T> implements Specification<T> {
 
     @Override
     public Predicate toPredicate
-            (Root<T> root, CriteriaQuery<?> query, CriteriaBuilder builder) {
+        (Root<T> root, CriteriaQuery<?> query, CriteriaBuilder builder) {
+
+        // mgojkovic: Poseban slucaj gde nam treba join kako bismo radili filter po poljima koja nisu kljuc,
+        // join radi samo sa equal trenutno (nezavisno od prosledjene operacije), treba generalizovati
+        if (isJoiningRequired(criteria.getKey())) {
+            Expression exception = getExpresionForJoinedTable(root);
+            return builder.equal(exception, criteria.getValue().toString());
+        }
 
         Class keyType = root.get(criteria.getKey()).getJavaType();
         RacunRelations<T> relations = getRelations(root,builder,keyType,criteria.getKey(),criteria.getValue().toString());
@@ -63,6 +87,16 @@ public class RacunSpecification<T> implements Specification<T> {
             return relations.equalTo();
         }
         throw new OperationNotSupportedException(String.format("Nepoznata operacija \"%s\"",criteria.getOperation()));
+    }
+
+    private Expression getExpresionForJoinedTable(Root<T> root) {
+        String[] tableAndField = criteria.getKey().split("_");
+        Join groupJoin = root.join(tableAndField[0]);
+        return groupJoin.get(tableAndField[1]);
+    }
+
+    private boolean isJoiningRequired(String key) {
+        return key.contains("_");
     }
 
     @Override

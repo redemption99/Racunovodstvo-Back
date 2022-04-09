@@ -20,7 +20,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final UserService userService;
     private final JwtFilter jwtFilter;
-    private static final String[] EXCLUDED_URLS = {"/auth/**","/v3/api-docs/**","/swagger-ui.html","/swagger-ui/**"};
+    private static final String[] EXCLUDED_URLS = {"/auth/login","/v3/api-docs/**","/swagger-ui.html","/swagger-ui/**"};
 
     @Autowired
     public SpringSecurityConfig(UserService userService, JwtFilter jwtFilter) {

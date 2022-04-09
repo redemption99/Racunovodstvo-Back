@@ -1,4 +1,4 @@
-package raf.si.racunovodstvo.preduzece.repository;
+package raf.si.racunovodstvo.preduzece.repositories;
 
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.JpaRepository;

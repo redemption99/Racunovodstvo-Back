@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import raf.si.racunovodstvo.preduzece.model.Preduzece;
-import raf.si.racunovodstvo.preduzece.service.IService;
-import raf.si.racunovodstvo.preduzece.service.impl.PreduzeceService;
+import raf.si.racunovodstvo.preduzece.services.IService;
+import raf.si.racunovodstvo.preduzece.services.impl.PreduzeceService;
 
 import java.util.Optional;
 

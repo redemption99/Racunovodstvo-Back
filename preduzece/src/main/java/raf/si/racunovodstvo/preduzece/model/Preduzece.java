@@ -48,6 +48,6 @@ public class Preduzece {
     private String webAdresa;
     @Column
     private String komentar;
-    @Column
+    @Column(columnDefinition = "boolean default true")
     private Boolean isActive;
 }
