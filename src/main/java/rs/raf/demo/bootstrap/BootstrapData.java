@@ -1,6 +1,5 @@
 package rs.raf.demo.bootstrap;
 
-import net.bytebuddy.utility.RandomString;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,10 +7,12 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import rs.raf.demo.model.*;
+import rs.raf.demo.model.enums.PolZaposlenog;
+import rs.raf.demo.model.enums.RadnaPozicija;
+import rs.raf.demo.model.enums.StatusZaposlenog;
 import rs.raf.demo.model.enums.TipDokumenta;
 import rs.raf.demo.model.enums.TipFakture;
 import rs.raf.demo.repositories.*;
-import rs.raf.demo.responses.KnjizenjeResponse;
 
 import java.util.*;
 
@@ -27,6 +28,10 @@ public class BootstrapData implements CommandLineRunner {
     private final KontnaGrupaRepository kontnaGrupaRepository;
     private final KontoRepository kontoRepository;
     private final KnjizenjeRepository knjizenjeRepository;
+    private final ZaposleniRepository zaposleniRepository;
+    private final StazRepository stazRepository;
+    private final PlataRepository plataRepository;
+    private final KoeficijentRepository koeficijentRepository;
 
     @Autowired
     public BootstrapData(UserRepository userRepository,
@@ -36,7 +41,11 @@ public class BootstrapData implements CommandLineRunner {
                          KontoRepository kontoRepository,
                          KontnaGrupaRepository kontnaGrupaRepository,
                          KnjizenjeRepository knjizenjeRepository,
-                         PreduzeceRepository preduzeceRepository) {
+                         PreduzeceRepository preduzeceRepository,
+                         ZaposleniRepository zaposleniRepository,
+                         StazRepository stazRepository,
+                         PlataRepository plataRepository,
+                         KoeficijentRepository koeficijentRepository) {
         this.userRepository = userRepository;
         this.permissionRepository = permissionRepository;
         this.fakturaRepository = fakturaRepository;
@@ -45,6 +54,10 @@ public class BootstrapData implements CommandLineRunner {
         this.kontoRepository = kontoRepository;
         this.knjizenjeRepository = knjizenjeRepository;
         this.kontnaGrupaRepository = kontnaGrupaRepository;
+        this.zaposleniRepository = zaposleniRepository;
+        this.stazRepository = stazRepository;
+        this.plataRepository = plataRepository;
+        this.koeficijentRepository = koeficijentRepository;
     }
 
     private Preduzece getDefaultPreduzece(){
@@ -192,15 +205,21 @@ public class BootstrapData implements CommandLineRunner {
         Konto konto1 = new Konto();
         konto1.setDuguje(1000.0);
         konto1.setPotrazuje(500.0);
+        konto1.setKnjizenje(knj1);
+        konto1.setKontnaGrupa(kg1);
         konto1 = kontoRepository.save(konto1);
 
         Konto konto2 = new Konto();
         konto2.setDuguje(2000.0);
+        konto2.setKnjizenje(knj1);
+        konto2.setKontnaGrupa(kg1);
         konto2.setPotrazuje(1000.0);
         kontoRepository.save(konto2);
 
         Konto konto3 = new Konto();
         konto3.setDuguje(0.0);
+        konto3.setKnjizenje(knj1);
+        konto3.setKontnaGrupa(kg1);
         konto3.setPotrazuje(1000.0);
         kontoRepository.save(konto3);
 
@@ -216,6 +235,46 @@ public class BootstrapData implements CommandLineRunner {
         konto2.setKnjizenje(knjizenje);
         konto3.setKnjizenje(knjizenje);
         kontoRepository.save(konto1);
+
+        Staz staz = new Staz();
+        staz.setPocetakRada(new Date());
+        staz.setKrajRada(null);
+        stazRepository.save(staz);
+
+        List<Staz> stazevi = new ArrayList<>();
+        stazevi.add(staz);
+
+        Zaposleni zaposleni = new Zaposleni();
+        zaposleni.setIme("Marko");
+        zaposleni.setPrezime("Markovic");
+        zaposleni.setPocetakRadnogOdnosa(new Date());
+        zaposleni.setJmbg("1234567890123");
+        zaposleni.setPol(PolZaposlenog.MUSKO);
+        zaposleni.setStatusZaposlenog(StatusZaposlenog.ZAPOSLEN);
+        zaposleni.setDatumRodjenja(new Date());
+        zaposleni.setRadnaPozicija(RadnaPozicija.DIREKTOR);
+        zaposleni.setStaz(stazevi);
+        zaposleniRepository.save(zaposleni);
+
+        Plata plata = new Plata();
+        plata.setNetoPlata(100000.0);
+        plata.setZaposleni(zaposleni);
+        plata.setDatumOd(new Date());
+        plata.setDatumDo(null);
+        plataRepository.save(plata);
+
+        Koeficijent koeficijent = new Koeficijent();
+        koeficijent.setKoeficijentPoreza(1d);
+        koeficijent.setNezaposlenost1(2d);
+        koeficijent.setNezaposlenost2(10d);
+        koeficijent.setPenzionoOsiguranje1(5d);
+        koeficijent.setPenzionoOsiguranje2(50d);
+        koeficijent.setNajnizaOsnovica(1d);
+        koeficijent.setNajvisaOsnovica(1d);
+        koeficijent.setZdravstvenoOsiguranje1(5d);
+        koeficijent.setZdravstvenoOsiguranje2(5d);
+        koeficijent.setPoreskoOslobadjanje(23.4);
+        koeficijentRepository.save(koeficijent);
 
         log.info("Data loaded!");
     }
