@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.web.authentication.Http403ForbiddenEntryPoint;
 import org.springframework.stereotype.Component;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.filter.OncePerRequestFilter;
 import raf.si.racunovodstvo.preduzece.exceptions.handler.MyExceptionHandler;
@@ -29,7 +30,10 @@ import javax.servlet.http.HttpServletResponse;
 @Component
 public class AuthFilter extends OncePerRequestFilter {
 
-    private static final String URL = "http://localhost:8081/auth/access";
+    @Autowired
+    RestTemplate restTemplate;
+
+    private static final String URL = "http://user/auth/access";
 
     @Override
     protected void doFilterInternal(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, FilterChain filterChain)
@@ -39,14 +43,13 @@ public class AuthFilter extends OncePerRequestFilter {
 
             HttpHeaders headers = new HttpHeaders();
             headers.add("Authorization", authHeader);
-
             HttpEntity request = new HttpEntity(headers);
 
             // baca izuzetak ako nije ispravak token
-            ResponseEntity<String> response = new RestTemplate().exchange(URL, HttpMethod.GET, request, String.class);
+            ResponseEntity<String> response = restTemplate.exchange(URL, HttpMethod.GET, request, String.class);
 
             filterChain.doFilter(httpServletRequest, httpServletResponse);
-        } catch (Exception e) {
+        } catch (HttpClientErrorException e) {
             httpServletResponse.sendError(HttpServletResponse.SC_UNAUTHORIZED, "The token is not valid.");
         }
 

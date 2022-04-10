@@ -1,5 +1,6 @@
 package raf.si.racunovodstvo.knjizenje.filter;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -18,7 +19,10 @@ import javax.servlet.http.HttpServletResponse;
 @Component
 public class AuthFilter extends OncePerRequestFilter {
 
-    private static final String URL = "http://localhost:8081/auth/access";
+    @Autowired
+    private RestTemplate restTemplate;
+
+    private static final String URL = "http://user/auth/access";
 
     @Override
     protected void doFilterInternal(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, FilterChain filterChain)
@@ -32,7 +36,7 @@ public class AuthFilter extends OncePerRequestFilter {
             HttpEntity request = new HttpEntity(headers);
 
             // baca izuzetak ako nije ispravak token
-            ResponseEntity<String> response = new RestTemplate().exchange(URL, HttpMethod.GET, request, String.class);
+            ResponseEntity<String> response = restTemplate.exchange(URL, HttpMethod.GET, request, String.class);
 
             filterChain.doFilter(httpServletRequest, httpServletResponse);
         } catch (Exception e) {
