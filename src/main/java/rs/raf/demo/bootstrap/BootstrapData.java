@@ -114,17 +114,35 @@ public class BootstrapData implements CommandLineRunner {
         user1.setFirstName("Petar");
         user1.setLastName("Petrovic");
 
+        List<Permission> user1Perm = new ArrayList<>();
+
+        Permission per1 = new Permission();
+        per1.setName("admin");
+        permissionRepository.save(per1);
+        user1Perm.add(per1);
+
+        Permission per2 = new Permission();
+        per2.setName("fiknj");
+        permissionRepository.save(per2);
+        user1Perm.add(per2);
+
+        Permission per3 = new Permission();
+        per3.setName("finop");
+        permissionRepository.save(per3);
+        user1Perm.add(per3);
+
+        Permission per4 = new Permission();
+        per4.setName("obrza");
+        permissionRepository.save(per4);
+        user1Perm.add(per4);
+
+        user1.setPermissions(user1Perm);
+
         User user2 = new User();
         user2.setUsername("user2");
         user2.setPassword(this.passwordEncoder.encode("user2"));
         user2.setFirstName("Marko");
         user2.setLastName("Markovic");
-
-        List<Permission> user1Permissions = new ArrayList<>();
-        user1Permissions.add(permission1);
-        user1Permissions.add(permission2);
-        user1Permissions.add(permission3);
-        user1.setPermissions(user1Permissions);
 
         this.userRepository.save(user1);
         this.userRepository.save(user2);
