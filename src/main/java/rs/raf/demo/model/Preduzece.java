@@ -49,4 +49,7 @@ public class Preduzece {
     @JsonIgnore
     @OneToMany(mappedBy = "preduzece", fetch =  FetchType.EAGER)
     private List<Faktura> fakture;
+    @JsonIgnore
+    @OneToMany(mappedBy = "preduzece")
+    private List<Transakcija> transakcije;
 }

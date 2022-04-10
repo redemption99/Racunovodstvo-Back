@@ -1,6 +1,5 @@
 package rs.raf.demo.bootstrap;
 
-import net.bytebuddy.utility.RandomString;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,8 +9,8 @@ import org.springframework.stereotype.Component;
 import rs.raf.demo.model.*;
 import rs.raf.demo.model.enums.TipDokumenta;
 import rs.raf.demo.model.enums.TipFakture;
+import rs.raf.demo.model.enums.TipTransakcije;
 import rs.raf.demo.repositories.*;
-import rs.raf.demo.responses.KnjizenjeResponse;
 
 import java.util.*;
 
@@ -27,6 +26,7 @@ public class BootstrapData implements CommandLineRunner {
     private final KontnaGrupaRepository kontnaGrupaRepository;
     private final KontoRepository kontoRepository;
     private final KnjizenjeRepository knjizenjeRepository;
+    private final TransakcijaRepository transakcijaRepository;
 
     @Autowired
     public BootstrapData(UserRepository userRepository,
@@ -36,7 +36,8 @@ public class BootstrapData implements CommandLineRunner {
                          KontoRepository kontoRepository,
                          KontnaGrupaRepository kontnaGrupaRepository,
                          KnjizenjeRepository knjizenjeRepository,
-                         PreduzeceRepository preduzeceRepository) {
+                         PreduzeceRepository preduzeceRepository,
+                         TransakcijaRepository transakcijaRepository) {
         this.userRepository = userRepository;
         this.permissionRepository = permissionRepository;
         this.fakturaRepository = fakturaRepository;
@@ -45,6 +46,7 @@ public class BootstrapData implements CommandLineRunner {
         this.kontoRepository = kontoRepository;
         this.knjizenjeRepository = knjizenjeRepository;
         this.kontnaGrupaRepository = kontnaGrupaRepository;
+        this.transakcijaRepository = transakcijaRepository;
     }
 
     private Preduzece getDefaultPreduzece(){
@@ -216,6 +218,34 @@ public class BootstrapData implements CommandLineRunner {
         konto2.setKnjizenje(knjizenje);
         konto3.setKnjizenje(knjizenje);
         kontoRepository.save(konto1);
+
+        Transakcija transakcija1 = new Transakcija();
+        transakcija1.setBrojTransakcije(1999L);
+        transakcija1.setKomitentTransakcije("komm1");
+        transakcija1.setDatumTransakcije(new Date());
+        transakcija1.setTipTransakcije(TipTransakcije.UPLATA);
+        transakcija1.setIznosTransakcije(269.00);
+        transakcija1.setSifraTransakcije("sifra1");
+        transakcija1.setKomentarTransakcije("lajkserkoment");
+        transakcijaRepository.save(transakcija1);
+
+        Transakcija transakcija2 = new Transakcija();
+        transakcija2.setBrojTransakcije(2022L);
+        transakcija2.setKomitentTransakcije("komm2");
+        transakcija2.setDatumTransakcije(new Date());
+        transakcija2.setTipTransakcije(TipTransakcije.ISPLATA);
+        transakcija2.setIznosTransakcije(333.00);
+        transakcija2.setSifraTransakcije("sifra22");
+        transakcijaRepository.save(transakcija2);
+
+        Transakcija transakcija3 = new Transakcija();
+        transakcija3.setBrojTransakcije(1960L);
+        transakcija3.setKomitentTransakcije("komitent");
+        transakcija3.setDatumTransakcije(new Date());
+        transakcija3.setTipTransakcije(TipTransakcije.ISPLATA);
+        transakcija3.setIznosTransakcije(450.00);
+        transakcija3.setSifraTransakcije("sifraaa33");
+        transakcijaRepository.save(transakcija3);
 
         log.info("Data loaded!");
     }
