@@ -14,6 +14,7 @@ import rs.raf.demo.utils.SearchUtil;
 import javax.persistence.EntityNotFoundException;
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Optional;
 
 @CrossOrigin
 @RestController
@@ -37,7 +38,8 @@ public class TransakcijaController {
 
     @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> updateTransakcija(@Valid @RequestBody Transakcija transakcija) {
-        if (transakcijaService.findById(transakcija.getTransakcijaId()).isPresent())
+        Optional<Transakcija> optionalTransakcija = transakcijaService.findById(transakcija.getTransakcijaId());
+        if (optionalTransakcija.isPresent())
             return ResponseEntity.ok(transakcijaService.save(transakcija));
         throw new EntityNotFoundException();
     }
@@ -59,8 +61,9 @@ public class TransakcijaController {
 
     @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> getTransakcijaId(@PathVariable("id") Long id) {
-        if (transakcijaService.findById(id).isPresent()) {
-            return ResponseEntity.ok(transakcijaService.findById(id).get());
+        Optional<Transakcija> optionalTransakcija = transakcijaService.findById(id);
+        if (optionalTransakcija.isPresent()) {
+            return ResponseEntity.ok(optionalTransakcija.get());
         }
 
         throw new EntityNotFoundException();
