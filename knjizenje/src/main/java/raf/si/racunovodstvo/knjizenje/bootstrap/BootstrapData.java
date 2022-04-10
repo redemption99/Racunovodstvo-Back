@@ -4,7 +4,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import raf.si.racunovodstvo.knjizenje.model.*;
 import raf.si.racunovodstvo.knjizenje.model.enums.TipDokumenta;
@@ -22,7 +21,6 @@ public class BootstrapData implements CommandLineRunner {
 
     private final Logger log = LoggerFactory.getLogger(BootstrapData.class);
     private final FakturaRepository fakturaRepository;
-    private final PasswordEncoder passwordEncoder;
     private final KontnaGrupaRepository kontnaGrupaRepository;
     private final KontoRepository kontoRepository;
     private final KnjizenjeRepository knjizenjeRepository;
@@ -30,13 +28,11 @@ public class BootstrapData implements CommandLineRunner {
 
     @Autowired
     public BootstrapData(FakturaRepository fakturaRepository,
-                         PasswordEncoder passwordEncoder,
                          KontoRepository kontoRepository,
                          KontnaGrupaRepository kontnaGrupaRepository,
                          KnjizenjeRepository knjizenjeRepository
                          ) {
         this.fakturaRepository = fakturaRepository;
-        this.passwordEncoder = passwordEncoder;
         this.kontoRepository = kontoRepository;
         this.knjizenjeRepository = knjizenjeRepository;
         this.kontnaGrupaRepository = kontnaGrupaRepository;
