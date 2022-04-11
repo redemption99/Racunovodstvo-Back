@@ -114,7 +114,6 @@ public class FakturaRestController {
             @RequestHeader(name="Authorization") String token
     ) throws IOException {
         Pageable pageSort = ApiUtil.resolveSortingAndPagination(page, size, sort);
-        //TODO fix
         return ResponseEntity.ok(addPreduzeceToFakturaList(fakturaService.findAll(pageSort).toList(), token));
     }
 

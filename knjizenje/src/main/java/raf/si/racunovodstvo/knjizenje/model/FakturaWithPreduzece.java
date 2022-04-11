@@ -13,6 +13,7 @@ import java.util.Date;
 public class FakturaWithPreduzece{
 
     private String brojFakture;
+    private Long dokumentId;
     private Date datumIzdavanja;
     private Date rokZaPlacanje;
     private Date datumPlacanja;
@@ -31,6 +32,7 @@ public class FakturaWithPreduzece{
 
     public FakturaWithPreduzece(Faktura f, Preduzece p){
         this(f.getBrojFakture(),
+                f.getDokumentId(),
                 f.getDatumIzdavanja(),
                 f.getRokZaPlacanje(),
                 f.getDatumPlacanja(),
