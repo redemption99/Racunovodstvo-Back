@@ -38,9 +38,9 @@ public class Faktura extends Dokument {
     private Double rabat;
     @Column(nullable = false)
     private Double porezProcenat;
-    @Column(nullable = false)
+    @Column
     private Double porez;
-    @Column(nullable = false)
+    @Column
     private Double iznos;
     @Column(nullable = false)
     private String valuta;
