@@ -27,7 +27,6 @@ public class AuthController {
         try {
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
         } catch (AuthenticationException e){
-            e.printStackTrace();
             return ResponseEntity.status(401).build();
         }
 
