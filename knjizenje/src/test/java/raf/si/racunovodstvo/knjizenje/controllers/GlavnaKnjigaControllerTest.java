@@ -32,7 +32,7 @@ class GlavnaKnjigaControllerTest {
         sort[0] = "1";
 
         ResponseEntity<?> responseEntity = glavnaKnjigaController.getPreduzeceById(search, page, size, sort);
-        assertEquals(responseEntity.getStatusCodeValue(), 200);
+        assertEquals(200, responseEntity.getStatusCodeValue());
     }
 
     @Test
@@ -49,6 +49,6 @@ class GlavnaKnjigaControllerTest {
     @Test
     void getAll() {
         ResponseEntity<?> responseEntity = glavnaKnjigaController.getAll();
-        assertEquals(responseEntity.getStatusCodeValue(), 200);
+        assertEquals(200, responseEntity.getStatusCodeValue());
     }
 }

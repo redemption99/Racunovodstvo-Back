@@ -30,7 +30,7 @@ class KnjizenjeControllerTest {
     @Test
     void createDnevnikKnjizenja() {
         ResponseEntity<?> responseEntity = knjizenjeController.createDnevnikKnjizenja(new Knjizenje());
-        assertEquals(responseEntity.getStatusCodeValue(), 200);
+        assertEquals(200, responseEntity.getStatusCodeValue());
     }
 
     @Test
@@ -40,7 +40,7 @@ class KnjizenjeControllerTest {
         given(knjizenjeService.findById(MOCK_ID)).willReturn(Optional.of(knjizenje));
         ResponseEntity<?> responseEntity = knjizenjeController.updateDnevnikKnjizenja(knjizenje);
 
-        assertEquals(responseEntity.getStatusCodeValue(), 200);
+        assertEquals(200, responseEntity.getStatusCodeValue());
     }
 
     @Test
@@ -59,7 +59,7 @@ class KnjizenjeControllerTest {
         given(knjizenjeService.findById(MOCK_ID)).willReturn(Optional.of(knjizenje));
         ResponseEntity<?> responseEntity = knjizenjeController.deleteDnevnikKnjizenja(MOCK_ID);
 
-        assertEquals(responseEntity.getStatusCodeValue(), 204);
+        assertEquals(204, responseEntity.getStatusCodeValue());
     }
 
     @Test
@@ -75,7 +75,7 @@ class KnjizenjeControllerTest {
         given(knjizenjeService.findById(MOCK_ID)).willReturn(Optional.of(knjizenje));
         ResponseEntity<?> responseEntity = knjizenjeController.getDnevnikKnjizenjaId(MOCK_ID);
 
-        assertEquals(responseEntity.getStatusCodeValue(), 200);
+        assertEquals(200, responseEntity.getStatusCodeValue());
     }
 
     @Test
@@ -94,7 +94,7 @@ class KnjizenjeControllerTest {
         sort[0] = "1";
 
         ResponseEntity<?> responseEntity = knjizenjeController.search(search, page, size, sort);
-        assertEquals(responseEntity.getStatusCodeValue(), 200);
+        assertEquals(200, responseEntity.getStatusCodeValue());
     }
 
     @Test
@@ -111,6 +111,6 @@ class KnjizenjeControllerTest {
     @Test
     void findAll() {
         ResponseEntity<?> responseEntity = knjizenjeController.findAll();
-        assertEquals(responseEntity.getStatusCodeValue(), 200);
+        assertEquals(200, responseEntity.getStatusCodeValue());
     }
 }

@@ -48,7 +48,7 @@ class FakturaRestControllerTest {
         String tipFakture = "tip";
 
         ResponseEntity<?> responseEntity = fakturaRestController.getSume(tipFakture);
-        assertEquals(responseEntity.getStatusCodeValue(), 200);
+        assertEquals(200, responseEntity.getStatusCodeValue());
     }
 
     @Test
@@ -65,14 +65,14 @@ class FakturaRestControllerTest {
         when(fakturaService.findAll(any(Pageable.class))).thenReturn(new PageImpl<>(fakture));
 
         ResponseEntity<?> responseEntity = fakturaRestController.getFakture(page, size, sort, TOKEN);
-        assertEquals(responseEntity.getStatusCodeValue(), 200);
+        assertEquals(200, responseEntity.getStatusCodeValue());
     }
 
     @Test
     void search() throws IOException {
         given(fakturaService.findAll(any(Specification.class))).willReturn(new ArrayList());
         ResponseEntity<?> responseEntity = fakturaRestController.search("porez>1", TOKEN);
-        assertEquals(responseEntity.getStatusCodeValue(), 200);
+        assertEquals(200, responseEntity.getStatusCodeValue());
     }
 
     @Test
@@ -88,7 +88,7 @@ class FakturaRestControllerTest {
         given(restTemplate.exchange(any(String.class), any(HttpMethod.class), any(HttpEntity.class), any(Class.class))).willReturn(ResponseEntity.ok(body));
 
         ResponseEntity<?> responseEntity = fakturaRestController.createFaktura(faktura, TOKEN);
-        assertEquals(responseEntity.getStatusCodeValue(), 200);
+        assertEquals(200, responseEntity.getStatusCodeValue());
     }
 
     @Test
@@ -106,7 +106,7 @@ class FakturaRestControllerTest {
         given(restTemplate.exchange(any(String.class), any(HttpMethod.class), any(HttpEntity.class), any(Class.class))).willReturn(ResponseEntity.ok(body));
         given(fakturaService.findById(MOCK_ID)).willReturn(Optional.of(faktura));
         ResponseEntity<?> responseEntity = fakturaRestController.updateFaktura(faktura, TOKEN);
-        assertEquals(responseEntity.getStatusCodeValue(), 200);
+        assertEquals(200, responseEntity.getStatusCodeValue());
     }
 
     @Test

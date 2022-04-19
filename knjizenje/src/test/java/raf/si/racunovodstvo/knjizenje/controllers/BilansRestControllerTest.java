@@ -42,13 +42,13 @@ class BilansRestControllerTest {
         given(bilansService.findBrutoBilans(any(String.class), any(String.class), any(Date.class), any(Date.class))).willReturn(bilansResponseList);
 
         ResponseEntity<?> responseEntity1 = bilansRestController.getBilansStanja(datumiOd, datumiDo);
-        assertEquals(responseEntity1.getStatusCodeValue(), 200);
+        assertEquals(200, responseEntity1.getStatusCodeValue());
 
         ResponseEntity<?> responseEntity2 = bilansRestController.getBilansUspeha(datumiOd, datumiDo);
-        assertEquals(responseEntity2.getStatusCodeValue(), 200);
+        assertEquals(200, responseEntity2.getStatusCodeValue());
 
         ResponseEntity<?> responseEntity3 = bilansRestController.getBrutoBilans(brojKontaOd, brojKontaDo, datumiOd.get(0), datumiDo.get(0));
-        assertEquals(responseEntity3.getStatusCodeValue(), 200);
+        assertEquals(200, responseEntity3.getStatusCodeValue());
     }
 
     @Test
@@ -62,12 +62,12 @@ class BilansRestControllerTest {
         String brojKontaDo = "2";
 
         ResponseEntity<?> responseEntity1 = bilansRestController.getBilansStanja(datumiOd, datumiDo);
-        assertEquals(responseEntity1.getStatusCodeValue(), 404);
+        assertEquals(404, responseEntity1.getStatusCodeValue());
 
         ResponseEntity<?> responseEntity2 = bilansRestController.getBilansUspeha(datumiOd, datumiDo);
-        assertEquals(responseEntity2.getStatusCodeValue(), 404);
+        assertEquals(404, responseEntity2.getStatusCodeValue());
 
         ResponseEntity<?> responseEntity3 = bilansRestController.getBrutoBilans(brojKontaOd, brojKontaDo, datumiOd.get(0), datumiDo.get(0));
-        assertEquals(responseEntity3.getStatusCodeValue(), 404);
+        assertEquals(404, responseEntity3.getStatusCodeValue());
     }
 }
