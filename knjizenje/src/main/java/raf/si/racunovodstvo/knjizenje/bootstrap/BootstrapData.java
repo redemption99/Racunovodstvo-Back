@@ -8,10 +8,8 @@ import org.springframework.stereotype.Component;
 import raf.si.racunovodstvo.knjizenje.model.*;
 import raf.si.racunovodstvo.knjizenje.model.enums.TipDokumenta;
 import raf.si.racunovodstvo.knjizenje.model.enums.TipFakture;
-import raf.si.racunovodstvo.knjizenje.repositories.FakturaRepository;
-import raf.si.racunovodstvo.knjizenje.repositories.KnjizenjeRepository;
-import raf.si.racunovodstvo.knjizenje.repositories.KontnaGrupaRepository;
-import raf.si.racunovodstvo.knjizenje.repositories.KontoRepository;
+import raf.si.racunovodstvo.knjizenje.model.enums.TipTransakcije;
+import raf.si.racunovodstvo.knjizenje.repositories.*;
 
 
 import java.util.*;
@@ -24,18 +22,20 @@ public class BootstrapData implements CommandLineRunner {
     private final KontnaGrupaRepository kontnaGrupaRepository;
     private final KontoRepository kontoRepository;
     private final KnjizenjeRepository knjizenjeRepository;
+    private final TransakcijaRepository transakcijaRepository;
 
 
     @Autowired
     public BootstrapData(FakturaRepository fakturaRepository,
                          KontoRepository kontoRepository,
                          KontnaGrupaRepository kontnaGrupaRepository,
-                         KnjizenjeRepository knjizenjeRepository
-    ) {
+                         KnjizenjeRepository knjizenjeRepository,
+                         TransakcijaRepository transakcijaRepository) {
         this.fakturaRepository = fakturaRepository;
         this.kontoRepository = kontoRepository;
         this.knjizenjeRepository = knjizenjeRepository;
         this.kontnaGrupaRepository = kontnaGrupaRepository;
+        this.transakcijaRepository = transakcijaRepository;
     }
 
     private Faktura getDefaultFaktura() {
@@ -76,6 +76,17 @@ public class BootstrapData implements CommandLineRunner {
         konto.setKnjizenje(knj);
         konto.setKontnaGrupa(kg);
         return konto;
+    }
+
+    private Transakcija getRandomTransakcija() {
+        Random random = new Random();
+        Transakcija tr = new Transakcija();
+
+        tr.setBrojTransakcije(321L);
+        tr.setIznos(222.22);
+        tr.setTipTransakcije(TipTransakcije.UPLATA);
+        tr.setDatumTransakcije(new Date());
+        return tr;
     }
 
     @Override
@@ -219,6 +230,16 @@ public class BootstrapData implements CommandLineRunner {
         konto2.setKnjizenje(knjizenje);
         konto3.setKnjizenje(knjizenje);
         kontoRepository.save(konto1);
+
+        Transakcija tr1 = getRandomTransakcija();
+        tr1.setBrojTransakcije(111L);
+        Transakcija tr2 = getRandomTransakcija();
+        tr2.setBrojTransakcije(222L);
+        Transakcija tr3 = getRandomTransakcija();
+        tr3.setBrojTransakcije(333L);
+        transakcijaRepository.save(tr1);
+        transakcijaRepository.save(tr2);
+        transakcijaRepository.save(tr3);
 
         log.info("Data loaded!");
     }
