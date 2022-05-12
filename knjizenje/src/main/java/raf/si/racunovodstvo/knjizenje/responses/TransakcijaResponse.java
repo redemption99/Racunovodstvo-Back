@@ -9,6 +9,7 @@ import java.util.Date;
 @Data
 public class TransakcijaResponse {
 
+    private Long dokumentId;
     private Long brojTransakcije;
     private Date datumTransakcije;
     private TipTransakcije tipTransakcije;

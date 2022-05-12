@@ -15,5 +15,4 @@ public interface ITransakcijaService extends IService<Transakcija, Long> {
     TransakcijaResponse save(TransakcijaRequest artikalRequest);
 
     TransakcijaResponse update(TransakcijaRequest artikalRequest);
-
 }

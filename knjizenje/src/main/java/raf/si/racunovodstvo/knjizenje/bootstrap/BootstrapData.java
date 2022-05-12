@@ -82,8 +82,9 @@ public class BootstrapData implements CommandLineRunner {
         Random random = new Random();
         Transakcija tr = new Transakcija();
 
-        tr.setBrojTransakcije(321L);
-        tr.setIznos(222.22);
+        tr.setTipDokumenta(TipDokumenta.FAKTURA);
+        tr.setBrojTransakcije(random.nextLong());
+        tr.setIznos(random.nextDouble());
         tr.setTipTransakcije(TipTransakcije.UPLATA);
         tr.setDatumTransakcije(new Date());
         return tr;
@@ -232,11 +233,12 @@ public class BootstrapData implements CommandLineRunner {
         kontoRepository.save(konto1);
 
         Transakcija tr1 = getRandomTransakcija();
-        tr1.setBrojTransakcije(111L);
+        tr1.setBrojDokumenta("1122");
+        tr1.setDokumentId(1111L);
         Transakcija tr2 = getRandomTransakcija();
-        tr2.setBrojTransakcije(222L);
+        tr2.setBrojDokumenta("1331");
         Transakcija tr3 = getRandomTransakcija();
-        tr3.setBrojTransakcije(333L);
+        tr3.setBrojDokumenta("1389");
         transakcijaRepository.save(tr1);
         transakcijaRepository.save(tr2);
         transakcijaRepository.save(tr3);
