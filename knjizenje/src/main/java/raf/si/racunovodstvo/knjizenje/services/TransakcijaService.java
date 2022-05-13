@@ -45,7 +45,7 @@ public class TransakcijaService implements ITransakcijaService {
 
     @Override
     public TransakcijaResponse update(TransakcijaRequest transakcijaRequest) {
-        Optional<Transakcija> optionalTransakcija = transakcijaRepository.findById(transakcijaRequest.getBrojTransakcije());
+        Optional<Transakcija> optionalTransakcija = transakcijaRepository.findById(transakcijaRequest.getDokumentId());
         if (optionalTransakcija.isEmpty()) {
             throw new EntityNotFoundException();
         }

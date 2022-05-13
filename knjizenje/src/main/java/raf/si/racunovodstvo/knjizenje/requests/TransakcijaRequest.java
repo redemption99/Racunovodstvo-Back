@@ -2,11 +2,13 @@ package raf.si.racunovodstvo.knjizenje.requests;
 
 import lombok.Data;
 import raf.si.racunovodstvo.knjizenje.model.SifraTransakcije;
+import raf.si.racunovodstvo.knjizenje.model.enums.TipDokumenta;
 import raf.si.racunovodstvo.knjizenje.model.enums.TipTransakcije;
 import raf.si.racunovodstvo.knjizenje.validation.groups.OnCreate;
 import raf.si.racunovodstvo.knjizenje.validation.groups.OnUpdate;
 import raf.si.racunovodstvo.knjizenje.validation.validator.ValidTransakcija;
 
+import javax.persistence.Id;
 import javax.validation.constraints.AssertTrue;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -17,6 +19,13 @@ import java.util.Date;
 @ValidTransakcija
 public class TransakcijaRequest {
 
+    @Id
+    @NotNull
+    private Long dokumentId;
+    @NotNull
+    private String brojDokumenta;
+    @NotNull
+    private TipDokumenta tipDokumenta;
     @Null(groups = OnCreate.class)
     @NotNull(groups = OnUpdate.class)
     private Long brojTransakcije;
