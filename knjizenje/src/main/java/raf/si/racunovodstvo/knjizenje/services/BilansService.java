@@ -4,11 +4,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import raf.si.racunovodstvo.knjizenje.repositories.KontnaGrupaRepository;
 import raf.si.racunovodstvo.knjizenje.responses.BilansResponse;
+import raf.si.racunovodstvo.knjizenje.services.impl.IBilansService;
 
 import java.util.*;
 
 @Service
-public class BilansService {
+public class BilansService implements IBilansService {
 
     private final KontnaGrupaRepository kontnaGrupaRepository;
 
@@ -17,6 +18,7 @@ public class BilansService {
         this.kontnaGrupaRepository = kontnaGrupaRepository;
     }
 
+    @Override
     public List<BilansResponse> findBilans(List<String> startsWith, List<Date> datumiOd, List<Date> datumiDo) {
         Set<BilansResponse> bilansSet = new HashSet<>();
         for (int i = 0; i < datumiDo.size() && i < datumiOd.size(); i++) {
@@ -29,6 +31,7 @@ public class BilansService {
         return bilansList;
     }
 
+    @Override
     public List<BilansResponse> findBrutoBilans(String brojKontaOd, String brojKontaDo, Date datumOd, Date datumDo) {
         List<BilansResponse> bilansList = kontnaGrupaRepository.findAllForBilans(brojKontaOd, brojKontaDo, datumOd, datumDo);
         bilansList.sort(Comparator.comparing(BilansResponse::getBrojKonta).reversed());
