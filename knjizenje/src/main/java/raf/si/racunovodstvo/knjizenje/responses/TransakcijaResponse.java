@@ -14,7 +14,7 @@ public class TransakcijaResponse {
     private Long dokumentId;
     private String brojDokumenta;
     private TipDokumenta tipDokumenta;
-    private Long brojTransakcije;
+    private String brojTransakcije;
     private Date datumTransakcije;
     private TipTransakcije tipTransakcije;
     private Double iznos;

@@ -4,6 +4,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import raf.si.racunovodstvo.knjizenje.model.Transakcija;
+import raf.si.racunovodstvo.knjizenje.repositories.DokumentRepository;
 import raf.si.racunovodstvo.knjizenje.repositories.TransakcijaRepository;
 import raf.si.racunovodstvo.knjizenje.requests.TransakcijaRequest;
 import raf.si.racunovodstvo.knjizenje.responses.TransakcijaResponse;
@@ -21,13 +22,15 @@ import javax.persistence.EntityNotFoundException;
 public class TransakcijaService implements ITransakcijaService {
 
     private final TransakcijaRepository transakcijaRepository;
+    private final DokumentRepository dokumentRepository;
     private final IConverter<Transakcija, TransakcijaResponse> transakcijaReverseConverter;
     private final IConverter<TransakcijaRequest, Transakcija> transakcijaConverter;
 
     public TransakcijaService(TransakcijaRepository transakcijaRepository,
-                          TransakcijaReverseConverter transakcijaReverseConverter,
-                          TransakcijaConverter transakcijaConverter) {
+                              DokumentRepository dokumentRepository, TransakcijaReverseConverter transakcijaReverseConverter,
+                              TransakcijaConverter transakcijaConverter) {
         this.transakcijaRepository = transakcijaRepository;
+        this.dokumentRepository = dokumentRepository;
         this.transakcijaReverseConverter = transakcijaReverseConverter;
         this.transakcijaConverter = transakcijaConverter;
     }

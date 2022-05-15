@@ -6,6 +6,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @Entity
@@ -17,7 +18,7 @@ public class SifraTransakcije {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long sifraTransakcijeId;
     @Column(nullable = false)
-    @NotBlank(message = "Sifra transakcije je obavezna!")
+    @NotNull(message = "Sifra transakcije je obavezna!")
     private Long sifra;
     @Column(nullable = false)
     @NotBlank(message = "Naziv transakcije je obavezan!")

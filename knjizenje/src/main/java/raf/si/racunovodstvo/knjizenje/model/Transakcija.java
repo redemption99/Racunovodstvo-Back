@@ -10,11 +10,11 @@ import java.util.Date;
 @Entity
 @Getter
 @Setter
-@PrimaryKeyJoinColumn(name = "transakcijaId")
+@PrimaryKeyJoinColumn(name = "dokumentId")
 public class Transakcija extends Dokument{
 
     @Column(nullable = false,unique = true)
-    private Long brojTransakcije;
+    private String brojTransakcije;
     @Column(nullable = false)
     private Date datumTransakcije;
     @Column(nullable = false)

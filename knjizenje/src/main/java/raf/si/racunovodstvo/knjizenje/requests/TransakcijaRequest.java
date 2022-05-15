@@ -19,16 +19,15 @@ import java.util.Date;
 @ValidTransakcija
 public class TransakcijaRequest {
 
-    @Id
-    @NotNull
+    @Null(groups = OnCreate.class)
+    @NotNull(groups = OnUpdate.class)
     private Long dokumentId;
     @NotNull
     private String brojDokumenta;
     @NotNull
     private TipDokumenta tipDokumenta;
-    @Null(groups = OnCreate.class)
-    @NotNull(groups = OnUpdate.class)
-    private Long brojTransakcije;
+    @NotNull
+    private String brojTransakcije;
     @NotNull
     private Date datumTransakcije;
     @NotNull

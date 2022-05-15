@@ -23,6 +23,7 @@ public class BootstrapData implements CommandLineRunner {
     private final KontoRepository kontoRepository;
     private final KnjizenjeRepository knjizenjeRepository;
     private final TransakcijaRepository transakcijaRepository;
+    private final SifraTransakcijeRepository sifraTransakcijeRepository;
 
 
     @Autowired
@@ -30,18 +31,18 @@ public class BootstrapData implements CommandLineRunner {
                          KontoRepository kontoRepository,
                          KontnaGrupaRepository kontnaGrupaRepository,
                          KnjizenjeRepository knjizenjeRepository,
-                         TransakcijaRepository transakcijaRepository) {
+                         TransakcijaRepository transakcijaRepository, SifraTransakcijeRepository sifraTransakcijeRepository) {
         this.fakturaRepository = fakturaRepository;
         this.kontoRepository = kontoRepository;
         this.knjizenjeRepository = knjizenjeRepository;
         this.kontnaGrupaRepository = kontnaGrupaRepository;
         this.transakcijaRepository = transakcijaRepository;
+        this.sifraTransakcijeRepository = sifraTransakcijeRepository;
     }
 
     private Faktura getDefaultFaktura() {
 
         Faktura f1 = new Faktura();
-        f1.setBrojFakture("1");
         f1.setIznos(1000.00);
         f1.setTipFakture(TipFakture.ULAZNA_FAKTURA);
         f1.setDatumIzdavanja(new Date());
@@ -52,7 +53,6 @@ public class BootstrapData implements CommandLineRunner {
         f1.setPorezProcenat(1.00);
         f1.setProdajnaVrednost(1000.00);
         f1.setValuta("EUR");
-        f1.setBrojDokumenta("1234");
         f1.setRokZaPlacanje(new Date());
         f1.setTipDokumenta(TipDokumenta.FAKTURA);
 
@@ -78,6 +78,13 @@ public class BootstrapData implements CommandLineRunner {
         return konto;
     }
 
+    private SifraTransakcije getRandomSifraTransakcije() {
+        SifraTransakcije st = new SifraTransakcije();
+        st.setSifra(1010L);
+        st.setNazivTransakcije("1010LLLLL");
+        return st;
+    }
+
     private Transakcija getRandomTransakcija() {
         Transakcija tr = new Transakcija();
         tr.setTipDokumenta(TipDokumenta.FAKTURA);
@@ -93,25 +100,35 @@ public class BootstrapData implements CommandLineRunner {
         log.info("Loading Data...");
 
         Faktura f1 = getDefaultFaktura();
+        f1.setBrojFakture("1");
         f1.setIznos(1000.00);
+        f1.setBrojDokumenta("1233");
         f1.setTipFakture(TipFakture.IZLAZNA_FAKTURA);
         f1.setPreduzeceId(1L);
 
         Faktura f2 = getDefaultFaktura();
+        f2.setBrojFakture("5");
         f2.setIznos(2000.00);
+        f2.setBrojDokumenta("1235");
         f2.setPreduzeceId(2L);
 
         Faktura f3 = getDefaultFaktura();
         f3.setIznos(3000.00);
+        f3.setBrojFakture("6");
+        f3.setBrojDokumenta("1236");
         f3.setPreduzeceId(2L);
         f3.setTipFakture(TipFakture.IZLAZNA_FAKTURA);
 
         Faktura f4 = getDefaultFaktura();
+        f4.setBrojFakture("7");
         f4.setIznos(4000.00);
+        f4.setBrojDokumenta("1237");
         f4.setPreduzeceId(2L);
 
         Faktura f5 = getDefaultFaktura();
+        f5.setBrojFakture("9");
         f5.setIznos(3000.00);
+        f5.setBrojDokumenta("1239");
         f5.setPreduzeceId(2L);
         f5.setTipFakture(TipFakture.IZLAZNA_FAKTURA);
 
@@ -229,15 +246,21 @@ public class BootstrapData implements CommandLineRunner {
         konto3.setKnjizenje(knjizenje);
         kontoRepository.save(konto1);
 
+        SifraTransakcije st = getRandomSifraTransakcije();
+        sifraTransakcijeRepository.save(st);
+
         Transakcija tr1 = getRandomTransakcija();
         tr1.setBrojDokumenta("1122");
-        tr1.setBrojTransakcije(1123L);
+        tr1.setBrojTransakcije("1123L");
+        tr1.setSifraTransakcije(st);
         Transakcija tr2 = getRandomTransakcija();
         tr2.setBrojDokumenta("1331");
-        tr2.setBrojTransakcije(3312L);
+        tr2.setBrojTransakcije("3312L");
+        tr2.setSifraTransakcije(st);
         Transakcija tr3 = getRandomTransakcija();
         tr3.setBrojDokumenta("1389");
-        tr3.setBrojTransakcije(1492L);
+        tr3.setBrojTransakcije("1492L");
+        tr3.setSifraTransakcije(st);
         transakcijaRepository.save(tr1);
         transakcijaRepository.save(tr2);
         transakcijaRepository.save(tr3);
