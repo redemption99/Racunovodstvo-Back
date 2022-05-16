@@ -35,8 +35,7 @@ public class IzvestajiController {
                                             @RequestParam String brojKontaDo,
                                             @RequestParam String name,
                                             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date datumOd,
-                                            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date datumDo,
-                                            Principal principal) throws DocumentException {
+                                            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date datumDo) throws DocumentException {
         byte[] pdf = izvestajService.makeBrutoBilansTableReport(name, title, datumOd, datumDo, brojKontaOd, brojKontaDo).getReport();
         return ResponseEntity.ok(pdf);
     }
@@ -56,8 +55,8 @@ public class IzvestajiController {
 
     @GetMapping(path = "/uspeh", produces = MediaType.APPLICATION_PDF_VALUE)
     public ResponseEntity<?> getBilansUspeha(@RequestParam Long preduzece,
-                                             @RequestParam String name,
                                              @RequestParam String title,
+                                             @RequestParam String name,
                                              @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) List<Date> datumiOd,
                                              @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) List<Date> datumiDo,
                                              @RequestHeader("Authorization") String token) throws DocumentException {
