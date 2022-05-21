@@ -44,7 +44,7 @@ class IzvestajiControllerTest {
     void getBrutoBilansTest() throws DocumentException {
         byte[] expected = new byte[]{};
         Reports reports = Mockito.mock(Reports.class);
-        given(izvestajService.makeBrutoBilansTableReport(MOCK_NAME,
+        given(izvestajService.makeBrutoBilansTableReport(MOCK_TOKEN,
                                                          MOCK_TITLE,
                                                          MOCK_DATUM_OD,
                                                          MOCK_DATUM_DO,
@@ -56,9 +56,9 @@ class IzvestajiControllerTest {
             (byte[]) izvestajiController.getBrutoBilans(MOCK_TITLE,
                                                         MOCK_BROJ_KONTA_OD,
                                                         MOCK_BROJ_KONTA_DO,
-                                                        MOCK_NAME,
                                                         MOCK_DATUM_OD,
-                                                        MOCK_DATUM_DO).getBody();
+                                                        MOCK_DATUM_DO,
+                                                        MOCK_TOKEN).getBody();
         assertEquals(expected, result);
     }
 
@@ -68,11 +68,9 @@ class IzvestajiControllerTest {
         Reports reports = Mockito.mock(Reports.class);
         List<Date> datumiOd = List.of(MOCK_DATUM_OD);
         List<Date> datumiDo = List.of(MOCK_DATUM_DO);
-        //List<String> startsWith = List.of("0", "1", "2", "3", "4");
         List<String> startsWith = List.of("5", "6");
         given(izvestajService.makeBilansTableReport(MOCK_PREDUZECE_ID,
                                                     MOCK_TOKEN,
-                                                    MOCK_NAME,
                                                     MOCK_TITLE,
                                                     datumiOd,
                                                     datumiDo,
@@ -80,7 +78,7 @@ class IzvestajiControllerTest {
         given(reports.getReport()).willReturn(expected);
 
         byte[] result =
-            (byte[]) izvestajiController.getBilansStanja(MOCK_PREDUZECE_ID, MOCK_TITLE, MOCK_NAME, datumiOd, datumiDo, MOCK_TOKEN)
+            (byte[]) izvestajiController.getBilansStanja(MOCK_PREDUZECE_ID, MOCK_TITLE, datumiOd, datumiDo, MOCK_TOKEN)
                                         .getBody();
         assertEquals(expected, result);
     }
@@ -94,7 +92,6 @@ class IzvestajiControllerTest {
         List<String> startsWith = List.of("0", "1", "2", "3", "4");
         given(izvestajService.makeBilansTableReport(MOCK_PREDUZECE_ID,
                                                     MOCK_TOKEN,
-                                                    MOCK_NAME,
                                                     MOCK_TITLE,
                                                     datumiOd,
                                                     datumiDo,
@@ -109,7 +106,6 @@ class IzvestajiControllerTest {
 
     @GetMapping(path = "/uspeh", produces = MediaType.APPLICATION_PDF_VALUE)
     public ResponseEntity<?> getBilansUspeha(@RequestParam Long preduzece,
-                                             @RequestParam String name,
                                              @RequestParam String title,
                                              @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) List<Date> datumiOd,
                                              @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) List<Date> datumiDo,
@@ -117,7 +113,7 @@ class IzvestajiControllerTest {
         List<String> brojKontaStartsWith = List.of("0", "1", "2", "3", "4");
 
         byte[] pdf =
-            izvestajService.makeBilansTableReport(preduzece, token, name, title, datumiOd, datumiDo, brojKontaStartsWith).getReport();
+            izvestajService.makeBilansTableReport(preduzece, token, title, datumiOd, datumiDo, brojKontaStartsWith).getReport();
         return ResponseEntity.ok(pdf);
     }
 }

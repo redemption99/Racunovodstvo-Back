@@ -9,11 +9,13 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.ResponseEntity;
 import raf.si.racunovodstvo.knjizenje.converter.BilansSchemaConverter;
 import raf.si.racunovodstvo.knjizenje.feign.PreduzeceFeignClient;
+import raf.si.racunovodstvo.knjizenje.feign.UserFeignClient;
 import raf.si.racunovodstvo.knjizenje.model.Preduzece;
 import raf.si.racunovodstvo.knjizenje.reports.ReportsConstants;
 import raf.si.racunovodstvo.knjizenje.reports.TableReport;
 import raf.si.racunovodstvo.knjizenje.reports.schema.BilansSchema;
 import raf.si.racunovodstvo.knjizenje.responses.BilansResponse;
+import raf.si.racunovodstvo.knjizenje.responses.UserResponse;
 import raf.si.racunovodstvo.knjizenje.services.impl.IBilansService;
 
 import java.util.ArrayList;
@@ -40,6 +42,10 @@ class IzvestajServiceTest {
     @Mock
     private PreduzeceFeignClient preduzeceFeignClient;
 
+    @Mock
+    private UserFeignClient userFeignClient;
+
+    private UserResponse userResponse;
     private List<BilansResponse> bilansResponseList;
 
     private static final String MOCK_NAME = "MOCK_NAME";
@@ -70,13 +76,16 @@ class IzvestajServiceTest {
                                                      String.valueOf(MOCK_DUGUJE - MOCK_POTRAZUJE));
         bilansResponseList = List.of(bilansResponse);
         given(bilansSchemaConverter.convert(bilansResponse)).willReturn(bilansSchema);
+        userResponse = new UserResponse();
+        userResponse.setUsername(MOCK_NAME);
     }
 
     @Test
     void makeBrutoBilansTableReportTest() {
         given(bilansService.findBrutoBilans(MOCK_BROJ_KONTA_OD, MOCK_BROJ_KONTA_DO, MOCK_DATUM_OD, MOCK_DATUM_DO)).willReturn(
             bilansResponseList);
-        TableReport result = (TableReport) izvestajService.makeBrutoBilansTableReport(MOCK_NAME,
+        given(userFeignClient.getCurrentUser(MOCK_TOKEN)).willReturn(ResponseEntity.ok(userResponse));
+        TableReport result = (TableReport) izvestajService.makeBrutoBilansTableReport(MOCK_TOKEN,
                                                                                       MOCK_TITLE,
                                                                                       MOCK_DATUM_OD,
                                                                                       MOCK_DATUM_DO,
@@ -93,11 +102,12 @@ class IzvestajServiceTest {
         preduzece.setAdresa(MOCK_ADRESA);
         preduzece.setGrad(MOCK_GRAD);
         preduzece.setNaziv(MOCK_NAZIV);
+        given(userFeignClient.getCurrentUser(MOCK_TOKEN)).willReturn(ResponseEntity.ok(userResponse));
         given(bilansService.findBilans(anyList(), anyList(), anyList())).willReturn(bilansResponseList);
         given(preduzeceFeignClient.getPreduzeceById(MOCK_PREDUZECE_ID, MOCK_TOKEN)).willReturn(ResponseEntity.ok(preduzece));
 
-        TableReport result = (TableReport) izvestajService.makeBilansTableReport(MOCK_PREDUZECE_ID, MOCK_TOKEN,
-                                                                                 MOCK_NAME,
+        TableReport result = (TableReport) izvestajService.makeBilansTableReport(MOCK_PREDUZECE_ID,
+                                                                                 MOCK_TOKEN,
                                                                                  MOCK_TITLE,
                                                                                  List.of(MOCK_DATUM_OD),
                                                                                  List.of(MOCK_DATUM_DO),

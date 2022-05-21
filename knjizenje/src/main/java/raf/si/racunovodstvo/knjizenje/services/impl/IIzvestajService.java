@@ -7,11 +7,10 @@ import java.util.List;
 
 public interface IIzvestajService {
 
-    Reports makeBrutoBilansTableReport(String name, String title, Date datumOd, Date datumDo, String brojKontaOd, String brojKontaDo);
+    Reports makeBrutoBilansTableReport(String token, String title, Date datumOd, Date datumDo, String brojKontaOd, String brojKontaDo);
 
     Reports makeBilansTableReport(Long preduzeceId,
                                   String token,
-                                  String name,
                                   String title,
                                   List<Date> datumiOd,
                                   List<Date> datumiDo,

@@ -33,28 +33,27 @@ public class IzvestajiController {
     public ResponseEntity<?> getBrutoBilans(@RequestParam String title,
                                             @RequestParam String brojKontaOd,
                                             @RequestParam String brojKontaDo,
-                                            @RequestParam String name,
                                             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date datumOd,
-                                            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date datumDo) throws DocumentException {
-        byte[] pdf = izvestajService.makeBrutoBilansTableReport(name, title, datumOd, datumDo, brojKontaOd, brojKontaDo).getReport();
+                                            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date datumDo,
+                                            @RequestHeader("Authorization") String token) throws DocumentException {
+        byte[] pdf = izvestajService.makeBrutoBilansTableReport(token, title, datumOd, datumDo, brojKontaOd, brojKontaDo).getReport();
         return ResponseEntity.ok(pdf);
     }
 
     @GetMapping(path = "/stanje", produces = MediaType.APPLICATION_PDF_VALUE)
-    public ResponseEntity<?> getBilansStanja(@RequestParam Long preduzece,
+    public ResponseEntity<?> getBilansStanja(@RequestParam(required = false, defaultValue = "1") Long preduzece,
                                              @RequestParam String title,
-                                             @RequestParam String name,
                                              @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) List<Date> datumiOd,
                                              @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) List<Date> datumiDo,
                                              @RequestHeader("Authorization") String token) throws DocumentException {
         List<String> brojKontaStartsWith = List.of("5", "6");
         byte[] pdf =
-            izvestajService.makeBilansTableReport(preduzece, token, name, title, datumiOd, datumiDo, brojKontaStartsWith).getReport();
+            izvestajService.makeBilansTableReport(preduzece, token, title, datumiOd, datumiDo, brojKontaStartsWith).getReport();
         return ResponseEntity.ok(pdf);
     }
 
     @GetMapping(path = "/uspeh", produces = MediaType.APPLICATION_PDF_VALUE)
-    public ResponseEntity<?> getBilansUspeha(@RequestParam Long preduzece,
+    public ResponseEntity<?> getBilansUspeha(@RequestParam(required = false, defaultValue = "1") Long preduzece,
                                              @RequestParam String title,
                                              @RequestParam String name,
                                              @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) List<Date> datumiOd,
@@ -63,7 +62,7 @@ public class IzvestajiController {
         List<String> brojKontaStartsWith = List.of("0", "1", "2", "3", "4");
 
         byte[] pdf =
-            izvestajService.makeBilansTableReport(preduzece, token, name, title, datumiOd, datumiDo, brojKontaStartsWith).getReport();
+            izvestajService.makeBilansTableReport(preduzece, token, title, datumiOd, datumiDo, brojKontaStartsWith).getReport();
         return ResponseEntity.ok(pdf);
     }
 }
