@@ -1,13 +1,15 @@
 package raf.si.racunovodstvo.knjizenje.services;
 
 import org.springframework.stereotype.Service;
-import raf.si.racunovodstvo.knjizenje.converter.BilansSchemaConverter;
+import raf.si.racunovodstvo.knjizenje.converters.IConverter;
+import raf.si.racunovodstvo.knjizenje.converters.impl.BilansSchemaConverter;
 import raf.si.racunovodstvo.knjizenje.feign.PreduzeceFeignClient;
 import raf.si.racunovodstvo.knjizenje.feign.UserFeignClient;
 import raf.si.racunovodstvo.knjizenje.model.Preduzece;
 import raf.si.racunovodstvo.knjizenje.reports.Reports;
 import raf.si.racunovodstvo.knjizenje.reports.ReportsConstants;
 import raf.si.racunovodstvo.knjizenje.reports.TableReport;
+import raf.si.racunovodstvo.knjizenje.reports.schema.BilansSchema;
 import raf.si.racunovodstvo.knjizenje.responses.BilansResponse;
 import raf.si.racunovodstvo.knjizenje.responses.UserResponse;
 import raf.si.racunovodstvo.knjizenje.services.impl.IBilansService;
@@ -21,7 +23,7 @@ import java.util.stream.Collectors;
 public class IzvestajService implements IIzvestajService {
 
     private final IBilansService bilansService;
-    private final BilansSchemaConverter bilansSchemaConverter;
+    private final IConverter<BilansResponse, BilansSchema> bilansSchemaConverter;
     private final PreduzeceFeignClient preduzeceFeignClient;
     private final UserFeignClient userFeignClient;
 

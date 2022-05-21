@@ -1,9 +1,12 @@
 package raf.si.racunovodstvo.knjizenje.services;
 
+import org.apache.logging.log4j.util.Strings;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+import raf.si.racunovodstvo.knjizenje.feign.PreduzeceFeignClient;
+import raf.si.racunovodstvo.knjizenje.model.Preduzece;
 import raf.si.racunovodstvo.knjizenje.model.Transakcija;
 import raf.si.racunovodstvo.knjizenje.repositories.TransakcijaRepository;
 import raf.si.racunovodstvo.knjizenje.requests.TransakcijaRequest;
@@ -24,23 +27,34 @@ public class TransakcijaService implements ITransakcijaService {
     private final TransakcijaRepository transakcijaRepository;
     private final IConverter<Transakcija, TransakcijaResponse> transakcijaReverseConverter;
     private final IConverter<TransakcijaRequest, Transakcija> transakcijaConverter;
+    private final PreduzeceFeignClient preduzeceFeignClient;
 
     public TransakcijaService(TransakcijaRepository transakcijaRepository,
                               TransakcijaReverseConverter transakcijaReverseConverter,
-                              TransakcijaConverter transakcijaConverter) {
+                              TransakcijaConverter transakcijaConverter,
+                              PreduzeceFeignClient preduzeceFeignClient) {
         this.transakcijaRepository = transakcijaRepository;
         this.transakcijaReverseConverter = transakcijaReverseConverter;
         this.transakcijaConverter = transakcijaConverter;
+        this.preduzeceFeignClient = preduzeceFeignClient;
     }
 
     @Override
-    public Page<TransakcijaResponse> findAll(Pageable pageable) {
-        return transakcijaRepository.findAll(pageable).map(transakcijaReverseConverter::convert);
+    public Page<TransakcijaResponse> findAll(Pageable pageable, String token) {
+        return transakcijaRepository.findAll(pageable).map(transakcija -> {
+            TransakcijaResponse transakcijaResponse = transakcijaReverseConverter.convert(transakcija);
+            transakcijaResponse.setKomitent(getKomitentForTransakcija(transakcija.getPreduzeceId(), token));
+            return transakcijaResponse;
+        });
     }
 
     @Override
-    public Page<TransakcijaResponse> search(Specification<Transakcija> specification, Pageable pageable) {
-        return transakcijaRepository.findAll(specification, pageable).map(transakcijaReverseConverter::convert);
+    public Page<TransakcijaResponse> search(Specification<Transakcija> specification, Pageable pageable, String token) {
+        return transakcijaRepository.findAll(specification, pageable).map(transakcija -> {
+            TransakcijaResponse transakcijaResponse = transakcijaReverseConverter.convert(transakcija);
+            transakcijaResponse.setKomitent(getKomitentForTransakcija(transakcija.getPreduzeceId(), token));
+            return transakcijaResponse;
+        });
     }
 
     @Override
@@ -81,5 +95,13 @@ public class TransakcijaService implements ITransakcijaService {
             throw new EntityNotFoundException();
         }
         transakcijaRepository.deleteById(var1);
+    }
+
+    private String getKomitentForTransakcija(Long preduzeceId, String token) {
+        if (preduzeceId != null) {
+            Preduzece preduzece = preduzeceFeignClient.getPreduzeceById(preduzeceId, token).getBody();
+            return preduzece == null ? null : preduzece.getNaziv();
+        }
+        return Strings.EMPTY;
     }
 }

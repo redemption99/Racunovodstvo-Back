@@ -9,9 +9,9 @@ import raf.si.racunovodstvo.knjizenje.responses.TransakcijaResponse;
 
 public interface ITransakcijaService extends IService<Transakcija, Long> {
 
-    Page<TransakcijaResponse> findAll(Pageable pageable);
+    Page<TransakcijaResponse> findAll(Pageable pageable, String token);
 
-    Page<TransakcijaResponse> search(Specification<Transakcija> specification, Pageable pageable);
+    Page<TransakcijaResponse> search(Specification<Transakcija> specification, Pageable pageable, String token);
 
     TransakcijaResponse save(TransakcijaRequest artikalRequest);
 

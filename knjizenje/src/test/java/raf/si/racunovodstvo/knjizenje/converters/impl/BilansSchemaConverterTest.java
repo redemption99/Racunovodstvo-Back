@@ -1,4 +1,4 @@
-package raf.si.racunovodstvo.knjizenje.converter;
+package raf.si.racunovodstvo.knjizenje.converters.impl;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

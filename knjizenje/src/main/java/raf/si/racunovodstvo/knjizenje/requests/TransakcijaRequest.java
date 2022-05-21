@@ -8,9 +8,6 @@ import raf.si.racunovodstvo.knjizenje.validation.groups.OnCreate;
 import raf.si.racunovodstvo.knjizenje.validation.groups.OnUpdate;
 import raf.si.racunovodstvo.knjizenje.validation.validator.ValidTransakcija;
 
-import javax.persistence.Id;
-import javax.validation.constraints.AssertTrue;
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Null;
 import java.util.Date;
@@ -38,4 +35,5 @@ public class TransakcijaRequest {
     private String komentar;
     @NotNull
     private SifraTransakcije sifraTransakcije;
+    private Long preduzeceId;
 }

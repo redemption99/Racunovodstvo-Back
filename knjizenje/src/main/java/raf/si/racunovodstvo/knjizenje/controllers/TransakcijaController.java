@@ -40,10 +40,11 @@ public class TransakcijaController {
         @RequestParam(defaultValue = "", required = false, name = "search") String search,
         @RequestParam(defaultValue = ApiUtil.DEFAULT_PAGE) @Min(ApiUtil.MIN_PAGE) Integer page,
         @RequestParam(defaultValue = ApiUtil.DEFAULT_SIZE) @Min(ApiUtil.MIN_SIZE) @Max(ApiUtil.MAX_SIZE) Integer size,
-        @RequestParam(defaultValue = "brojTransakcije") String[] sort) {
+        @RequestParam(defaultValue = "brojTransakcije") String[] sort,
+        @RequestHeader("Authorization") String token) {
         Pageable pageSort = ApiUtil.resolveSortingAndPagination(page, size, sort);
-        return ResponseEntity.ok(Strings.isNotBlank(search) ? transakcijaService.search(searchUtil.getSpec(search), pageSort)
-                                                            : transakcijaService.findAll(pageSort));
+        return ResponseEntity.ok(Strings.isNotBlank(search) ? transakcijaService.search(searchUtil.getSpec(search), pageSort, token)
+                                                            : transakcijaService.findAll(pageSort, token));
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)

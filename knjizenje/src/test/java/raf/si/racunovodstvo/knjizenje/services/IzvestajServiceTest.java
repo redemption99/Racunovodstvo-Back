@@ -7,7 +7,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.ResponseEntity;
-import raf.si.racunovodstvo.knjizenje.converter.BilansSchemaConverter;
+import raf.si.racunovodstvo.knjizenje.converters.impl.BilansSchemaConverter;
 import raf.si.racunovodstvo.knjizenje.feign.PreduzeceFeignClient;
 import raf.si.racunovodstvo.knjizenje.feign.UserFeignClient;
 import raf.si.racunovodstvo.knjizenje.model.Preduzece;
