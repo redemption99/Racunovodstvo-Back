@@ -17,6 +17,8 @@ public class TransakcijaReverseConverter implements IConverter<Transakcija, Tran
 
     @Override
     public TransakcijaResponse convert(Transakcija source) {
-        return modelMapper.map(source, TransakcijaResponse.class);
+        TransakcijaResponse transakcijaResponse = modelMapper.map(source, TransakcijaResponse.class);
+        transakcijaResponse.setTransakcijaId(source.getDokumentId());
+        return transakcijaResponse;
     }
 }

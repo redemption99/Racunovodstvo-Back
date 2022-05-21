@@ -1,17 +1,20 @@
 package raf.si.racunovodstvo.knjizenje.controllers;
 
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import org.apache.logging.log4j.util.Strings;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import raf.si.racunovodstvo.knjizenje.model.Transakcija;
 import raf.si.racunovodstvo.knjizenje.requests.TransakcijaRequest;
 import raf.si.racunovodstvo.knjizenje.responses.TransakcijaResponse;
 import raf.si.racunovodstvo.knjizenje.services.SifraTransakcijeService;
 import raf.si.racunovodstvo.knjizenje.services.impl.ITransakcijaService;
 import raf.si.racunovodstvo.knjizenje.utils.ApiUtil;
+import raf.si.racunovodstvo.knjizenje.utils.SearchUtil;
 import raf.si.racunovodstvo.knjizenje.validation.groups.OnCreate;
 import raf.si.racunovodstvo.knjizenje.validation.groups.OnUpdate;
 
@@ -21,25 +24,26 @@ import javax.validation.constraints.Min;
 @CrossOrigin
 @RestController
 @SecurityRequirement(name = "bearerAuth")
-@RequestMapping("/api/transakcija")
+@RequestMapping("/api/transakcije")
 public class TransakcijaController {
 
     private final ITransakcijaService transakcijaService;
-    private final SifraTransakcijeService sifraTransakcijeService;
+    private final SearchUtil<Transakcija> searchUtil;
 
-    public TransakcijaController(ITransakcijaService transakcijaService, SifraTransakcijeService sifraTransakcijeService) {
+    public TransakcijaController(ITransakcijaService transakcijaService) {
         this.transakcijaService = transakcijaService;
-        this.sifraTransakcijeService = sifraTransakcijeService;
+        this.searchUtil = new SearchUtil<>();
     }
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Page<TransakcijaResponse>> findAll(
-            @RequestParam(defaultValue = ApiUtil.DEFAULT_PAGE) @Min(ApiUtil.MIN_PAGE) Integer page,
-            @RequestParam(defaultValue = ApiUtil.DEFAULT_SIZE) @Min(ApiUtil.MIN_SIZE) @Max(ApiUtil.MAX_SIZE) Integer size,
-            @RequestParam(defaultValue = "brojTransakcije") String[] sort
-    ) {
+        @RequestParam(defaultValue = "", required = false, name = "search") String search,
+        @RequestParam(defaultValue = ApiUtil.DEFAULT_PAGE) @Min(ApiUtil.MIN_PAGE) Integer page,
+        @RequestParam(defaultValue = ApiUtil.DEFAULT_SIZE) @Min(ApiUtil.MIN_SIZE) @Max(ApiUtil.MAX_SIZE) Integer size,
+        @RequestParam(defaultValue = "brojTransakcije") String[] sort) {
         Pageable pageSort = ApiUtil.resolveSortingAndPagination(page, size, sort);
-        return ResponseEntity.ok(this.transakcijaService.findAll(pageSort));
+        return ResponseEntity.ok(Strings.isNotBlank(search) ? transakcijaService.search(searchUtil.getSpec(search), pageSort)
+                                                            : transakcijaService.findAll(pageSort));
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)

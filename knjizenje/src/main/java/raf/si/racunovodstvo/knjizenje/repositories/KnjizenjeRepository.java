@@ -7,7 +7,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import raf.si.racunovodstvo.knjizenje.model.Knjizenje;
 
-
 @Repository
 public interface KnjizenjeRepository extends JpaRepository<Knjizenje, Long> {
 

@@ -2,9 +2,9 @@ package raf.si.racunovodstvo.knjizenje.services;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import raf.si.racunovodstvo.knjizenje.model.Transakcija;
-import raf.si.racunovodstvo.knjizenje.repositories.DokumentRepository;
 import raf.si.racunovodstvo.knjizenje.repositories.TransakcijaRepository;
 import raf.si.racunovodstvo.knjizenje.requests.TransakcijaRequest;
 import raf.si.racunovodstvo.knjizenje.responses.TransakcijaResponse;
@@ -22,15 +22,13 @@ import javax.persistence.EntityNotFoundException;
 public class TransakcijaService implements ITransakcijaService {
 
     private final TransakcijaRepository transakcijaRepository;
-    private final DokumentRepository dokumentRepository;
     private final IConverter<Transakcija, TransakcijaResponse> transakcijaReverseConverter;
     private final IConverter<TransakcijaRequest, Transakcija> transakcijaConverter;
 
     public TransakcijaService(TransakcijaRepository transakcijaRepository,
-                              DokumentRepository dokumentRepository, TransakcijaReverseConverter transakcijaReverseConverter,
+                              TransakcijaReverseConverter transakcijaReverseConverter,
                               TransakcijaConverter transakcijaConverter) {
         this.transakcijaRepository = transakcijaRepository;
-        this.dokumentRepository = dokumentRepository;
         this.transakcijaReverseConverter = transakcijaReverseConverter;
         this.transakcijaConverter = transakcijaConverter;
     }
@@ -38,6 +36,11 @@ public class TransakcijaService implements ITransakcijaService {
     @Override
     public Page<TransakcijaResponse> findAll(Pageable pageable) {
         return transakcijaRepository.findAll(pageable).map(transakcijaReverseConverter::convert);
+    }
+
+    @Override
+    public Page<TransakcijaResponse> search(Specification<Transakcija> specification, Pageable pageable) {
+        return transakcijaRepository.findAll(specification, pageable).map(transakcijaReverseConverter::convert);
     }
 
     @Override
