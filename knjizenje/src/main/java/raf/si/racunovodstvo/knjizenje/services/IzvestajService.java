@@ -86,6 +86,9 @@ public class IzvestajService implements IIzvestajService {
 
     private String generatePreduzeceString(Long preduzeceId, String token) {
         Preduzece preduzece = preduzeceFeignClient.getPreduzeceById(preduzeceId, token).getBody();
-        return preduzece.getNaziv() + "\n" + preduzece.getAdresa() + ", " + preduzece.getGrad() + "\n";
+        if (preduzece != null) {
+            return preduzece.getNaziv() + "\n" + preduzece.getAdresa() + ", " + preduzece.getGrad() + "\n";
+        }
+        return "";
     }
 }
