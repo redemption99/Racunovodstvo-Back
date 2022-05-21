@@ -99,7 +99,7 @@ class IzvestajiControllerTest {
         given(reports.getReport()).willReturn(expected);
 
         byte[] result =
-            (byte[]) izvestajiController.getBilansUspeha(MOCK_PREDUZECE_ID, MOCK_TITLE, MOCK_NAME, datumiOd, datumiDo, MOCK_TOKEN)
+            (byte[]) izvestajiController.getBilansUspeha(MOCK_PREDUZECE_ID, MOCK_TITLE, datumiOd, datumiDo, MOCK_TOKEN)
                                         .getBody();
         assertEquals(expected, result);
     }

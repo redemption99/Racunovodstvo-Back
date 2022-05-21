@@ -55,7 +55,6 @@ public class IzvestajiController {
     @GetMapping(path = "/uspeh", produces = MediaType.APPLICATION_PDF_VALUE)
     public ResponseEntity<?> getBilansUspeha(@RequestParam(required = false, defaultValue = "1") Long preduzece,
                                              @RequestParam String title,
-                                             @RequestParam String name,
                                              @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) List<Date> datumiOd,
                                              @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) List<Date> datumiDo,
                                              @RequestHeader("Authorization") String token) throws DocumentException {
