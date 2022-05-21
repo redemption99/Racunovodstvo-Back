@@ -37,7 +37,7 @@ public class BilansService implements IBilansService {
         bilansList.sort(Comparator.comparing(BilansResponse::getBrojKonta).reversed());
 
         sumBilans(bilansList);
-        sortBilans(bilansList);
+        sortBrutoBilans(bilansList);
         return bilansList;
     }
 
@@ -63,7 +63,7 @@ public class BilansService implements IBilansService {
         });
     }
 
-    private void sortBilans(List<BilansResponse> bilansList) {
+    private void sortBrutoBilans(List<BilansResponse> bilansList) {
         bilansList.sort((o1, o2) -> {
             String bk1 = o1.getBrojKonta();
             String bk2 = o2.getBrojKonta();
@@ -82,6 +82,23 @@ public class BilansService implements IBilansService {
                 return bk2.startsWith(bk1) ? 1 : bk1.compareTo(bk2);
             }
             return bk1.substring(0, 1).compareTo(bk2.substring(0, 1));
+        });
+    }
+
+    private void sortBilans(List<BilansResponse> bilansList) {
+        bilansList.sort((o1, o2) -> {
+            String bk1 = o1.getBrojKonta();
+            String bk2 = o2.getBrojKonta();
+            int len1 = bk1.length();
+            int len2 = bk2.length();
+            if (len1 == len2) {
+                return bk1.compareTo(bk2);
+            }
+            if (len1 > len2) {
+                return bk1.startsWith(bk2) ? -1 : bk1.compareTo(bk2);
+            } else {
+                return bk2.startsWith(bk1) ? -1 : bk2.compareTo(bk1);
+            }
         });
     }
 }
