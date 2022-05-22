@@ -8,10 +8,8 @@ import org.springframework.stereotype.Component;
 import raf.si.racunovodstvo.knjizenje.model.*;
 import raf.si.racunovodstvo.knjizenje.model.enums.TipDokumenta;
 import raf.si.racunovodstvo.knjizenje.model.enums.TipFakture;
-import raf.si.racunovodstvo.knjizenje.repositories.FakturaRepository;
-import raf.si.racunovodstvo.knjizenje.repositories.KnjizenjeRepository;
-import raf.si.racunovodstvo.knjizenje.repositories.KontnaGrupaRepository;
-import raf.si.racunovodstvo.knjizenje.repositories.KontoRepository;
+import raf.si.racunovodstvo.knjizenje.model.enums.TipTransakcije;
+import raf.si.racunovodstvo.knjizenje.repositories.*;
 
 
 import java.util.*;
@@ -24,24 +22,27 @@ public class BootstrapData implements CommandLineRunner {
     private final KontnaGrupaRepository kontnaGrupaRepository;
     private final KontoRepository kontoRepository;
     private final KnjizenjeRepository knjizenjeRepository;
+    private final TransakcijaRepository transakcijaRepository;
+    private final SifraTransakcijeRepository sifraTransakcijeRepository;
 
 
     @Autowired
     public BootstrapData(FakturaRepository fakturaRepository,
                          KontoRepository kontoRepository,
                          KontnaGrupaRepository kontnaGrupaRepository,
-                         KnjizenjeRepository knjizenjeRepository
-    ) {
+                         KnjizenjeRepository knjizenjeRepository,
+                         TransakcijaRepository transakcijaRepository, SifraTransakcijeRepository sifraTransakcijeRepository) {
         this.fakturaRepository = fakturaRepository;
         this.kontoRepository = kontoRepository;
         this.knjizenjeRepository = knjizenjeRepository;
         this.kontnaGrupaRepository = kontnaGrupaRepository;
+        this.transakcijaRepository = transakcijaRepository;
+        this.sifraTransakcijeRepository = sifraTransakcijeRepository;
     }
 
     private Faktura getDefaultFaktura() {
 
         Faktura f1 = new Faktura();
-        f1.setBrojFakture("1");
         f1.setIznos(1000.00);
         f1.setTipFakture(TipFakture.ULAZNA_FAKTURA);
         f1.setDatumIzdavanja(new Date());
@@ -52,7 +53,6 @@ public class BootstrapData implements CommandLineRunner {
         f1.setPorezProcenat(1.00);
         f1.setProdajnaVrednost(1000.00);
         f1.setValuta("EUR");
-        f1.setBrojDokumenta("1234");
         f1.setRokZaPlacanje(new Date());
         f1.setTipDokumenta(TipDokumenta.FAKTURA);
 
@@ -78,31 +78,57 @@ public class BootstrapData implements CommandLineRunner {
         return konto;
     }
 
+    private SifraTransakcije getRandomSifraTransakcije() {
+        SifraTransakcije st = new SifraTransakcije();
+        st.setSifra(1010L);
+        st.setNazivTransakcije("1010LLLLL");
+        return st;
+    }
+
+    private Transakcija getRandomTransakcija() {
+        Transakcija tr = new Transakcija();
+        tr.setTipDokumenta(TipDokumenta.FAKTURA);
+        tr.setIznos(222.33);
+        tr.setTipTransakcije(TipTransakcije.UPLATA);
+        tr.setDatumTransakcije(new Date());
+        return tr;
+    }
+
     @Override
     public void run(String... args) throws Exception {
 
         log.info("Loading Data...");
 
         Faktura f1 = getDefaultFaktura();
+        f1.setBrojFakture("1");
         f1.setIznos(1000.00);
+        f1.setBrojDokumenta("1233");
         f1.setTipFakture(TipFakture.IZLAZNA_FAKTURA);
         f1.setPreduzeceId(1L);
 
         Faktura f2 = getDefaultFaktura();
+        f2.setBrojFakture("5");
         f2.setIznos(2000.00);
+        f2.setBrojDokumenta("1235");
         f2.setPreduzeceId(2L);
 
         Faktura f3 = getDefaultFaktura();
         f3.setIznos(3000.00);
+        f3.setBrojFakture("6");
+        f3.setBrojDokumenta("1236");
         f3.setPreduzeceId(2L);
         f3.setTipFakture(TipFakture.IZLAZNA_FAKTURA);
 
         Faktura f4 = getDefaultFaktura();
+        f4.setBrojFakture("7");
         f4.setIznos(4000.00);
+        f4.setBrojDokumenta("1237");
         f4.setPreduzeceId(2L);
 
         Faktura f5 = getDefaultFaktura();
+        f5.setBrojFakture("9");
         f5.setIznos(3000.00);
+        f5.setBrojDokumenta("1239");
         f5.setPreduzeceId(2L);
         f5.setTipFakture(TipFakture.IZLAZNA_FAKTURA);
 
@@ -148,7 +174,19 @@ public class BootstrapData implements CommandLineRunner {
         KontnaGrupa kg12 = new KontnaGrupa();
         kg12.setBrojKonta("120");
         kg12.setNazivKonta("Naziv kontne grupe 120");
-        this.kontnaGrupaRepository.saveAll(Arrays.asList(kg1, kg2, kg3, kg4, kg5, kg6, kg7, kg8, kg9, kg10, kg11, kg12));
+        KontnaGrupa kg13 = new KontnaGrupa();
+        kg13.setBrojKonta("00");
+        kg13.setNazivKonta("Naziv kontne grupe 00");
+        KontnaGrupa kg14 = new KontnaGrupa();
+        kg14.setBrojKonta("000");
+        kg14.setNazivKonta("Naziv kontne grupe 000");
+        KontnaGrupa kg15 = new KontnaGrupa();
+        kg15.setBrojKonta("0001");
+        kg15.setNazivKonta("Naziv kontne grupe 0001");
+        KontnaGrupa kg16 = new KontnaGrupa();
+        kg16.setBrojKonta("0001");
+        kg16.setNazivKonta("Naziv kontne grupe 0001");
+        this.kontnaGrupaRepository.saveAll(Arrays.asList(kg1, kg2, kg3, kg4, kg5, kg6, kg7, kg8, kg9, kg10, kg11, kg12, kg13, kg14, kg15, kg16));
 
         Knjizenje knj1 = new Knjizenje();
         knj1.setDatumKnjizenja(new Date());
@@ -183,8 +221,12 @@ public class BootstrapData implements CommandLineRunner {
         Konto k14 = createKonto(kg1, knj4, 1200.0, 1504.0);
         Konto k15 = createKonto(kg11, knj4, 1430.0, 1594.0);
         Konto k16 = createKonto(kg8, knj4, 1000.0, 504.0);
+        Konto k17 = createKonto(kg13, knj4, 1090.0, 1004.0);
+        Konto k18 = createKonto(kg14, knj4, 1200.0, 1504.0);
+        Konto k19 = createKonto(kg15, knj4, 1430.0, 1594.0);
+        Konto k20 = createKonto(kg16, knj4, 1000.0, 504.0);
 
-        this.kontoRepository.saveAll(Arrays.asList(k1, k2, k3, k4, k5, k6, k7, k8, k9, k10, k11, k12, k13, k14, k15, k16));
+        this.kontoRepository.saveAll(Arrays.asList(k1, k2, k3, k4, k5, k6, k7, k8, k9, k10, k11, k12, k13, k14, k15, k16, k17, k18, k19, k20));
 
         Konto konto1 = new Konto();
         konto1.setDuguje(1000.0);
@@ -219,6 +261,28 @@ public class BootstrapData implements CommandLineRunner {
         konto2.setKnjizenje(knjizenje);
         konto3.setKnjizenje(knjizenje);
         kontoRepository.save(konto1);
+
+        SifraTransakcije st = getRandomSifraTransakcije();
+        sifraTransakcijeRepository.save(st);
+
+        Transakcija tr1 = getRandomTransakcija();
+        tr1.setBrojDokumenta("1122");
+        tr1.setBrojTransakcije("1123L");
+        tr1.setSifraTransakcije(st);
+        tr1.setPreduzeceId(1L);
+        Transakcija tr2 = getRandomTransakcija();
+        tr2.setBrojDokumenta("1331");
+        tr2.setBrojTransakcije("3312L");
+        tr2.setSifraTransakcije(st);
+        tr2.setPreduzeceId(1L);
+        Transakcija tr3 = getRandomTransakcija();
+        tr3.setBrojDokumenta("1389");
+        tr3.setBrojTransakcije("1492L");
+        tr3.setSifraTransakcije(st);
+        tr3.setPreduzeceId(1L);
+        transakcijaRepository.save(tr1);
+        transakcijaRepository.save(tr2);
+        transakcijaRepository.save(tr3);
 
         log.info("Data loaded!");
     }

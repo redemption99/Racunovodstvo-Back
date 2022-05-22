@@ -18,7 +18,7 @@ import javax.persistence.PrimaryKeyJoinColumn;
 @PrimaryKeyJoinColumn(name = "fakturaId")
 public class Faktura extends Dokument {
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String brojFakture;
     @Column(nullable = false)
     private Date datumIzdavanja;
@@ -49,7 +49,5 @@ public class Faktura extends Dokument {
     @Column
     @Enumerated(EnumType.STRING)
     private TipFakture tipFakture;
-    @Column
-    private Long preduzeceId;
 
 }

@@ -6,7 +6,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
-import raf.si.racunovodstvo.knjizenje.converter.KnjizenjeConverter;
+import raf.si.racunovodstvo.knjizenje.converters.KnjizenjeConverter;
 import raf.si.racunovodstvo.knjizenje.model.Dokument;
 import raf.si.racunovodstvo.knjizenje.model.Knjizenje;
 import raf.si.racunovodstvo.knjizenje.model.Konto;
@@ -30,13 +30,13 @@ public class KnjizenjeService implements IKnjizenjeService {
     private final KontoService kontoService;
 
     @Lazy
+    @Autowired
     private KnjizenjeConverter knjizenjeConverter;
 
-    public KnjizenjeService(KnjizenjeRepository knjizenjeRepository, DokumentRepository dokumentRepository, KontoService kontoService, KnjizenjeConverter knjizenjeConverter) {
+    public KnjizenjeService(KnjizenjeRepository knjizenjeRepository, DokumentRepository dokumentRepository, KontoService kontoService) {
         this.knjizenjeRepository = knjizenjeRepository;
         this.dokumentRepository = dokumentRepository;
         this.kontoService = kontoService;
-        this.knjizenjeConverter = knjizenjeConverter;
     }
 
     @Override

@@ -1,4 +1,4 @@
-package raf.si.racunovodstvo.knjizenje.converter;
+package raf.si.racunovodstvo.knjizenje.converters;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
