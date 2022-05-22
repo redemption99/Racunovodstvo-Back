@@ -28,6 +28,4 @@ public class Transakcija extends Dokument{
     @ManyToOne
     @JoinColumn(name = "sifra")
     private SifraTransakcije sifraTransakcije;
-    @Column
-    private Long preduzeceId;
 }
