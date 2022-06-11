@@ -11,6 +11,7 @@ import raf.si.racunovodstvo.nabavka.model.Artikal;
 import raf.si.racunovodstvo.nabavka.model.IstorijaProdajneCene;
 import raf.si.racunovodstvo.nabavka.model.KalkulacijaArtikal;
 import raf.si.racunovodstvo.nabavka.repositories.ArtikalRepository;
+import raf.si.racunovodstvo.nabavka.repositories.IstorijaProdajneCeneRepository;
 import raf.si.racunovodstvo.nabavka.requests.ArtikalRequest;
 import raf.si.racunovodstvo.nabavka.responses.ArtikalResponse;
 import raf.si.racunovodstvo.nabavka.services.IArtikalService;
@@ -27,13 +28,16 @@ import javax.persistence.EntityNotFoundException;
 public class ArtikalService implements IArtikalService {
 
     private final ArtikalRepository artikalRepository;
+    private final IstorijaProdajneCeneRepository istorijaProdajneCeneRepository;
     private final IConverter<Artikal, ArtikalResponse> artikalReverseConverter;
     private final IConverter<ArtikalRequest, Artikal> artikalConverter;
 
     public ArtikalService(ArtikalRepository artikalRepository,
+                          IstorijaProdajneCeneRepository istorijaProdajneCeneRepository,
                           ArtikalReverseConverter artikalReverseConverter,
                           ArtikalConverter artikalConverter) {
         this.artikalRepository = artikalRepository;
+        this.istorijaProdajneCeneRepository = istorijaProdajneCeneRepository;
         this.artikalReverseConverter = artikalReverseConverter;
         this.artikalConverter = artikalConverter;
     }
@@ -80,12 +84,15 @@ public class ArtikalService implements IArtikalService {
         }
 
         KalkulacijaArtikal savedKalkulacijaArtikal = (KalkulacijaArtikal)findById(artikal.getArtikalId()).get();
-        List<IstorijaProdajneCene> istorijaProdajneCene = savedKalkulacijaArtikal.getIstorijaProdajneCene();
+        List<IstorijaProdajneCene> istorijaProdajneCeneList = savedKalkulacijaArtikal.getIstorijaProdajneCene();
         if (isProdajnaCenaUpdated(artikal)) {
-            istorijaProdajneCene.add(new IstorijaProdajneCene(new Date(), savedKalkulacijaArtikal.getProdajnaCena()));
-            artikal.setIstorijaProdajneCene(new ArrayList<>(istorijaProdajneCene));
+            IstorijaProdajneCene istorijaProdajneCene = new IstorijaProdajneCene();
+            istorijaProdajneCene.setProdajnaCena(savedKalkulacijaArtikal.getProdajnaCena());
+            istorijaProdajneCene.setTimestamp(new Date());
+            istorijaProdajneCene = istorijaProdajneCeneRepository.save(istorijaProdajneCene);
+            istorijaProdajneCeneList.add(istorijaProdajneCene);
         }
-        artikal.setIstorijaProdajneCene(new ArrayList<>(istorijaProdajneCene));
+        artikal.setIstorijaProdajneCene(new ArrayList<>(istorijaProdajneCeneList));
     }
 
     private boolean isProdajnaCenaUpdated(KalkulacijaArtikal artikal) {
