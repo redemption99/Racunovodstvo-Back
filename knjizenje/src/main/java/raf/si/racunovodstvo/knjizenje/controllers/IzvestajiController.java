@@ -5,6 +5,7 @@ import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
@@ -13,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import raf.si.racunovodstvo.knjizenje.services.impl.IIzvestajService;
 
-import java.security.Principal;
 import java.util.Date;
 import java.util.List;
 
@@ -62,6 +62,28 @@ public class IzvestajiController {
 
         byte[] pdf =
             izvestajService.makeBilansTableReport(preduzece, token, title, datumiOd, datumiDo, brojKontaStartsWith).getReport();
+        return ResponseEntity.ok(pdf);
+    }
+
+    @GetMapping(path = "/staticki_izvestaj_o_transakcijama", produces = MediaType.APPLICATION_PDF_VALUE)
+    public ResponseEntity<?> getStatickiIzvestajOTransakcijama(@RequestParam Long preduzece,
+                                             @RequestParam String title,
+                                             @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date datumOd,
+                                             @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date datumDo,
+                                             @RequestHeader("Authorization") String token) throws DocumentException {
+
+        byte[] pdf =
+            izvestajService.makeStatickiIzvestajOTransakcijamaTableReport(preduzece, title, datumOd, datumDo, token).getReport();
+        return ResponseEntity.ok(pdf);
+    }
+
+    @GetMapping(path = "/sifra_transakcije", produces = MediaType.APPLICATION_PDF_VALUE)
+    public ResponseEntity<?> getSifraTransakcije(@RequestParam String title,
+                                                 @RequestParam(defaultValue = "sifraTransakcijeId")  String[] sort,
+                                                 @RequestHeader("Authorization") String token) throws DocumentException {
+
+        byte[] pdf =
+            izvestajService.makeSifraTransakcijaTableReport(title, sort, token).getReport();
         return ResponseEntity.ok(pdf);
     }
 }
