@@ -12,6 +12,7 @@ import raf.si.racunovodstvo.nabavka.model.IstorijaProdajneCene;
 import raf.si.racunovodstvo.nabavka.model.KalkulacijaArtikal;
 import raf.si.racunovodstvo.nabavka.repositories.ArtikalRepository;
 import raf.si.racunovodstvo.nabavka.repositories.IstorijaProdajneCeneRepository;
+import raf.si.racunovodstvo.nabavka.repositories.KalkulacijaArtikalRepository;
 import raf.si.racunovodstvo.nabavka.requests.ArtikalRequest;
 import raf.si.racunovodstvo.nabavka.responses.ArtikalResponse;
 import raf.si.racunovodstvo.nabavka.services.IArtikalService;
@@ -28,15 +29,18 @@ import javax.persistence.EntityNotFoundException;
 public class ArtikalService implements IArtikalService {
 
     private final ArtikalRepository artikalRepository;
+    private final KalkulacijaArtikalRepository kalkulacijaArtikalRepository;
     private final IstorijaProdajneCeneRepository istorijaProdajneCeneRepository;
     private final IConverter<Artikal, ArtikalResponse> artikalReverseConverter;
     private final IConverter<ArtikalRequest, Artikal> artikalConverter;
 
     public ArtikalService(ArtikalRepository artikalRepository,
+                          KalkulacijaArtikalRepository kalkulacijaArtikalRepository,
                           IstorijaProdajneCeneRepository istorijaProdajneCeneRepository,
                           ArtikalReverseConverter artikalReverseConverter,
                           ArtikalConverter artikalConverter) {
         this.artikalRepository = artikalRepository;
+        this.kalkulacijaArtikalRepository = kalkulacijaArtikalRepository;
         this.istorijaProdajneCeneRepository = istorijaProdajneCeneRepository;
         this.artikalReverseConverter = artikalReverseConverter;
         this.artikalConverter = artikalConverter;
@@ -45,6 +49,11 @@ public class ArtikalService implements IArtikalService {
     @Override
     public Page<ArtikalResponse> findAll(Pageable pageable) {
         return artikalRepository.findAll(pageable).map(artikalReverseConverter::convert);
+    }
+
+    @Override
+    public Page<ArtikalResponse> findAllKalkulacijaArtikli(Pageable pageable) {
+        return kalkulacijaArtikalRepository.findAll(pageable).map(artikalReverseConverter::convert);
     }
 
     @Override
@@ -76,6 +85,11 @@ public class ArtikalService implements IArtikalService {
     @Override
     public Page<ArtikalResponse> findAll(Specification<Artikal> spec, Pageable pageSort) {
         return artikalRepository.findAll(spec, pageSort).map(artikalReverseConverter::convert);
+    }
+
+    @Override
+    public Page<ArtikalResponse> findAllKalkulacijaArtikli(Specification<Artikal> spec, Pageable pageSort) {
+        return kalkulacijaArtikalRepository.findAll(spec, pageSort).map(artikalReverseConverter::convert);
     }
 
     private void handleIstorijaProdaje(KalkulacijaArtikal artikal) {
