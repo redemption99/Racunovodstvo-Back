@@ -8,6 +8,7 @@ import raf.si.racunovodstvo.knjizenje.converters.impl.BilansSchemaConverter;
 import raf.si.racunovodstvo.knjizenje.feign.PreduzeceFeignClient;
 import raf.si.racunovodstvo.knjizenje.feign.UserFeignClient;
 import raf.si.racunovodstvo.knjizenje.model.Preduzece;
+import raf.si.racunovodstvo.knjizenje.reports.BilansTableContent;
 import raf.si.racunovodstvo.knjizenje.reports.Reports;
 import raf.si.racunovodstvo.knjizenje.reports.ReportsConstants;
 import raf.si.racunovodstvo.knjizenje.reports.TableReport;
@@ -27,6 +28,7 @@ import raf.si.racunovodstvo.knjizenje.utils.SearchUtil;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import javax.persistence.EntityNotFoundException;
@@ -59,13 +61,12 @@ public class IzvestajService implements IIzvestajService {
 
     @Override
     public Reports makeBrutoBilansTableReport(String token, String title, Date datumOd, Date datumDo, String brojKontaOd, String brojKontaDo) {
-        List<BilansResponse> bilansResponseList = bilansService.findBrutoBilans(brojKontaOd, brojKontaDo, datumOd, datumDo);
-        List<List<String>> rows = bilansResponseList.stream()
-                                                    .map(bilansResponse -> bilansSchemaConverter.convert(bilansResponse).getList())
-                                                    .collect(Collectors.toList());
-        String sums = generateSumsString(bilansResponseList);
+        List<BilansResponse> bilansResponseListMap = bilansService.findBrutoBilans(brojKontaOd, brojKontaDo, datumOd, datumDo);
+
+        BilansTableContent bilansTableContent = new BilansTableContent(Map.of("", bilansResponseListMap), false);
+        String sums = bilansTableContent.getSums();
         String name = getCurrentUsername(token);
-        return new TableReport(name, title, sums, ReportsConstants.BILANS_COLUMNS, rows);
+        return new TableReport(name, title, sums, bilansTableContent.getColumns(),bilansTableContent.getRows());
     }
 
     @Override
@@ -74,16 +75,16 @@ public class IzvestajService implements IIzvestajService {
                                          String title,
                                          List<Date> datumiOd,
                                          List<Date> datumiDo,
-                                         List<String> brojKontaStartsWith) {
-        List<BilansResponse> bilansResponseList = bilansService.findBilans(brojKontaStartsWith, datumiOd, datumiDo);
-        List<List<String>> rows = bilansResponseList.stream()
-                                                    .map(bilansResponse -> bilansSchemaConverter.convert(bilansResponse).getList())
-                                                    .collect(Collectors.toList());
-        String sums = generateSumsString(bilansResponseList);
+                                         List<String> brojKontaStartsWith, boolean isBilansUspeha) {
+
+        Map<String, List<BilansResponse>> bilansResponseListMap = bilansService.findBilans(brojKontaStartsWith, datumiOd, datumiDo);
+        BilansTableContent bilansTableContent = new BilansTableContent(bilansResponseListMap,isBilansUspeha);
+
         String preduzece = generatePreduzeceString(preduzeceId, token);
-        String footer = sums + "\n\n\n" + preduzece;
+        String footer = bilansTableContent.getSums() + "\n\n\n" + preduzece;
         String name = getCurrentUsername(token);
-        return new TableReport(name, title, footer, ReportsConstants.BILANS_COLUMNS, rows);
+
+        return new TableReport(name, title, footer, bilansTableContent.getColumns(), bilansTableContent.getRows());
     }
 
     @Override
@@ -147,5 +148,10 @@ public class IzvestajService implements IIzvestajService {
     private String getCurrentUsername(String token) {
         UserResponse user = userFeignClient.getCurrentUser(token).getBody();
         return user == null ? "" : user.getUsername();
+    }
+
+    public Reports makePromenaNaKapitalTableReport(int godina1, int godina2, String opis) {
+        PromenaNaKapitalHelper promenaNaKapitalHelper = new PromenaNaKapitalHelper(godina1, godina2, opis, bilansService);
+        return promenaNaKapitalHelper.makePromenaNaKapitalTableReport();
     }
 }

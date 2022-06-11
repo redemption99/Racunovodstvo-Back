@@ -6,7 +6,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
-import raf.si.racunovodstvo.knjizenje.converters.KontoConverter;
+import raf.si.racunovodstvo.knjizenje.converters.impl.KontoConverter;
 import raf.si.racunovodstvo.knjizenje.model.Konto;
 import raf.si.racunovodstvo.knjizenje.repositories.KontoRepository;
 import raf.si.racunovodstvo.knjizenje.responses.GlavnaKnjigaResponse;
@@ -18,7 +18,6 @@ import java.util.Optional;
 @Service
 public class KontoService implements IService<Konto, Long> {
 
-    @Lazy
     private KontoConverter kontoConverter;
 
     private final KontoRepository kontoRepository;

@@ -5,6 +5,7 @@ import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -18,15 +19,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import raf.si.racunovodstvo.knjizenje.model.Knjizenje;
+import raf.si.racunovodstvo.knjizenje.requests.KnjizenjeRequest;
+import raf.si.racunovodstvo.knjizenje.responses.AnalitickaKarticaResponse;
 import raf.si.racunovodstvo.knjizenje.responses.KnjizenjeResponse;
 import raf.si.racunovodstvo.knjizenje.services.impl.IKnjizenjeService;
-import raf.si.racunovodstvo.knjizenje.specifications.RacunSpecificationsBuilder;
 import raf.si.racunovodstvo.knjizenje.utils.ApiUtil;
 import raf.si.racunovodstvo.knjizenje.utils.SearchUtil;
 
+import java.util.Date;
 import java.util.Optional;
 
 import javax.persistence.EntityNotFoundException;
+import javax.persistence.PersistenceException;
 import javax.validation.Valid;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
@@ -50,6 +54,18 @@ public class KnjizenjeController {
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> createDnevnikKnjizenja(@Valid @RequestBody Knjizenje dnevnikKnjizenja) {
+
+        boolean invalidKonto =
+                dnevnikKnjizenja.getKonto() != null ?
+                        dnevnikKnjizenja
+                                .getKonto().
+                                stream().
+                                anyMatch(konto -> konto.getKontnaGrupa().getBrojKonta().length() <=3)
+                        : false;
+
+        if(invalidKonto){
+            throw new PersistenceException("Moguće je vršiti knjiženje samo na konta sa 3 ili više cifre.");
+        }
         return ResponseEntity.ok(knjizenjaService.save(dnevnikKnjizenja));
     }
 
@@ -87,7 +103,6 @@ public class KnjizenjeController {
                                     @RequestParam(defaultValue = ApiUtil.DEFAULT_PAGE) @Min(ApiUtil.MIN_PAGE) Integer page,
                                     @RequestParam(defaultValue = ApiUtil.DEFAULT_SIZE) @Min(ApiUtil.MIN_SIZE) @Max(ApiUtil.MAX_SIZE) Integer size,
                                     @RequestParam(defaultValue = "-datumKnjizenja") String[] sort) {
-        RacunSpecificationsBuilder<Knjizenje> builder = new RacunSpecificationsBuilder<>();
         Pageable pageSort = ApiUtil.resolveSortingAndPagination(page, size, sort);
 
         Specification<Knjizenje> spec = searchUtil.getSpec(search);
@@ -98,5 +113,23 @@ public class KnjizenjeController {
     @GetMapping(value = "/all", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> findAll() {
         return ResponseEntity.ok(knjizenjaService.findAllKnjizenjeResponse());
+    }
+
+    @GetMapping(value = "/{id}/kontos", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> getKontoByKnjizenjeId(@PathVariable Long knjizenjeId) {
+        return ResponseEntity.ok(knjizenjaService.findKontoByKnjizenjeId(knjizenjeId));
+    }
+
+    @GetMapping(value = "/analitickeKartice", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Page<AnalitickaKarticaResponse>> getAnalitickeKartice(
+        @RequestParam String brojKonta,
+        @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date datumOd,
+        @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date datumDo,
+        @RequestParam Long preduzeceId,
+        @RequestParam(defaultValue = ApiUtil.DEFAULT_PAGE) @Min(ApiUtil.MIN_PAGE) Integer page,
+        @RequestParam(defaultValue = ApiUtil.DEFAULT_SIZE) @Min(ApiUtil.MIN_SIZE) @Max(ApiUtil.MAX_SIZE) Integer size,
+        @RequestParam(defaultValue = "-datumKnjizenja") String[] sort) {
+        Pageable pageSort = ApiUtil.resolveSortingAndPagination(page, size, sort);
+        return ResponseEntity.ok(knjizenjaService.findAllAnalitickeKarticeResponse(pageSort, brojKonta, datumOd, datumDo, preduzeceId));
     }
 }

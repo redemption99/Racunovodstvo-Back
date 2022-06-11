@@ -8,7 +8,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.data.domain.*;
 import org.springframework.data.jpa.domain.Specification;
-import raf.si.racunovodstvo.knjizenje.converters.KontoConverter;
+import raf.si.racunovodstvo.knjizenje.converters.impl.KontoConverter;
 import raf.si.racunovodstvo.knjizenje.model.Konto;
 import raf.si.racunovodstvo.knjizenje.repositories.KontoRepository;
 import raf.si.racunovodstvo.knjizenje.responses.GlavnaKnjigaResponse;
@@ -50,16 +50,6 @@ class KontoServiceTest {
         given(kontoRepository.findAll()).willReturn(kontoList);
 
         assertEquals(kontoList, kontoService.findAll());
-    }
-
-    @Test
-    void testFindAllSpecification() {
-        List<Konto> kontoList = new ArrayList<>();
-        Specification<Konto> kontoSpecification =
-                new RacunSpecification<>(new SearchCriteria(MOCK_SEARCH_KEY, MOCK_SEARCH_OPERATION, MOCK_SEARCH_VALUE));
-        given(kontoRepository.findAll(kontoSpecification)).willReturn(kontoList);
-
-        assertEquals(kontoList, kontoService.findAll(kontoSpecification));
     }
 
     @Test

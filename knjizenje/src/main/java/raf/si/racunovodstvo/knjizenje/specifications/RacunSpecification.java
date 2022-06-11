@@ -20,7 +20,6 @@ import raf.si.racunovodstvo.knjizenje.relations.TipFaktureRelations;
 import raf.si.racunovodstvo.knjizenje.relations.TipTransakcijeRelations;
 
 import java.util.Date;
-import java.util.Locale;
 import java.util.Objects;
 
 import javax.persistence.criteria.CriteriaBuilder;

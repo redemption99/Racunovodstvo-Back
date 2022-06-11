@@ -6,12 +6,17 @@ import raf.si.racunovodstvo.knjizenje.repositories.KontnaGrupaRepository;
 import raf.si.racunovodstvo.knjizenje.responses.BilansResponse;
 import raf.si.racunovodstvo.knjizenje.services.impl.IBilansService;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.*;
+
+import static raf.si.racunovodstvo.knjizenje.utils.Utils.periodToString;
 
 @Service
 public class BilansService implements IBilansService {
 
     private final KontnaGrupaRepository kontnaGrupaRepository;
+
 
     @Autowired
     public BilansService(KontnaGrupaRepository kontnaGrupaRepository) {
@@ -19,16 +24,26 @@ public class BilansService implements IBilansService {
     }
 
     @Override
-    public List<BilansResponse> findBilans(List<String> startsWith, List<Date> datumiOd, List<Date> datumiDo) {
-        Set<BilansResponse> bilansSet = new HashSet<>();
+    public Map<String,List<BilansResponse>> findBilans(List<String> startsWith, List<Date> datumiOd, List<Date> datumiDo) {
+        Map<String,List<BilansResponse>> bilansLists = new HashMap<>();
+
+
+
         for (int i = 0; i < datumiDo.size() && i < datumiOd.size(); i++) {
+            Set<BilansResponse> bilansSet = new HashSet<>();
+
+            String period = periodToString(datumiOd.get(i),datumiDo.get(i));
+
             bilansSet.addAll(kontnaGrupaRepository.findAllStartingWith(startsWith, datumiOd.get(i), datumiDo.get(i)));
+            bilansLists.put(period,new ArrayList<>(bilansSet));
         }
-        List<BilansResponse> bilansList = new ArrayList<>(bilansSet);
-        bilansList.sort(Comparator.comparing(BilansResponse::getBrojKonta).reversed());
-        sumBilans(bilansList);
-        sortBilans(bilansList);
-        return bilansList;
+        bilansLists.forEach((key,list) -> {
+            list.sort(Comparator.comparing(BilansResponse::getBrojKonta).reversed());
+            sumBilans(list);
+            sortBilans(list);
+        });
+
+        return bilansLists;
     }
 
     @Override
@@ -52,7 +67,7 @@ public class BilansService implements IBilansService {
             if (length <= 3) {
                 bilansResponse.setDuguje(bilansResponse.getDuguje() + dugujeMap.getOrDefault(brojKonta, 0.0));
                 bilansResponse.setPotrazuje(bilansResponse.getPotrazuje() + potrazujeMap.getOrDefault(brojKonta, 0.0));
-                bilansResponse.setBrojStavki(bilansResponse.getBrojStavki() + brojStavkiMap.getOrDefault(brojKonta, 0L));
+                bilansResponse.setBrojStavki(brojStavkiMap.getOrDefault(brojKonta, 0L));
                 bilansResponse.setSaldo(bilansResponse.getDuguje() - bilansResponse.getPotrazuje());
             }
 
@@ -69,7 +84,7 @@ public class BilansService implements IBilansService {
             String bk2 = o2.getBrojKonta();
             int len1 = bk1.length();
             int len2 = bk2.length();
-             if (len1 == len2) {
+            if (len1 == len2) {
                 return bk1.compareTo(bk2);
             }
             if (bk1.startsWith(bk2.substring(0, 1))) {
@@ -102,3 +117,4 @@ public class BilansService implements IBilansService {
         });
     }
 }
+
