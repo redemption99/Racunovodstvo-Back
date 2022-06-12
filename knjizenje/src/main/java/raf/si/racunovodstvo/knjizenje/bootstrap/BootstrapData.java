@@ -123,7 +123,7 @@ public class BootstrapData implements CommandLineRunner {
         log.info("Loading Data...");
 
         Faktura f1 = getDefaultFaktura();
-        f1.setBrojFakture("1");
+        f1.setBrojFakture("10");
         f1.setIznos(1000.00);
         f1.setBrojDokumenta("1233");
         f1.setTipFakture(TipFakture.IZLAZNA_FAKTURA);
@@ -155,11 +155,16 @@ public class BootstrapData implements CommandLineRunner {
 
         Faktura f6 = getDefaultFaktura();
         f6.setIznos(15000.00);
+        f6.setBrojFakture("8");
+        f6.setBrojDokumenta("123366");
         f6.setPreduzeceId(2L);
         f6.setTipFakture(TipFakture.MALOPRODAJNA_FAKTURA);
 
         Faktura f7 = getDefaultFaktura();
         f7.setIznos(20000.00);
+        f7.setBrojFakture("7");
+        f7.setBrojFakture("33SSSS9");
+        f7.setBrojDokumenta("1233222");
         f7.setPreduzeceId(2L);
         f7.setTipFakture(TipFakture.MALOPRODAJNA_FAKTURA);
 

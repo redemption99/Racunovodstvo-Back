@@ -150,16 +150,17 @@ public class BootstrapData implements CommandLineRunner {
         koeficijent.setPoreskoOslobadjanje(23.4);
         koeficijentRepository.save(koeficijent);
 
+        Obracun obracun = new Obracun();
+        obracun.setNaziv("Obracun 1");
+        obracun.setDatumObracuna(new Date());
+        obracunRepository.save(obracun);
 
-        Obracun obracun = obracunZaposleniService.makeObracun(new Date(), 1);
-
-        ObracunZaposleniRequest obracunZaposleniRequest = new ObracunZaposleniRequest();
-        obracunZaposleniRequest.setObracunId(obracun.getObracunId());
-        obracunZaposleniRequest.setZaposleniId(zaposleni.getZaposleniId());
-        obracunZaposleniRequest.setNetoPlata(plata2.getNetoPlata());
-        obracunZaposleniRequest.setUcinak(0.5);
-
-        obracunZaposleniService.save(obracunZaposleniRequest);
+        ObracunZaposleni obracunZaposleni = new ObracunZaposleni();
+        obracunZaposleni.setObracun(obracun);
+        obracunZaposleni.setZaposleni(zaposleni);
+        obracunZaposleni.setNetoPlata(plata2.getNetoPlata());
+        obracunZaposleni.setUcinak(0.5);
+        obracunZaposleniRepository.save(obracunZaposleni);
 
         log.info("Data loaded!");
     }
