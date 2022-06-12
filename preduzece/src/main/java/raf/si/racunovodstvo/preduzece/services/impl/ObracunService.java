@@ -21,11 +21,9 @@ public class ObracunService implements IObracunService {
     private final ObracunRepository obracunRepository;
     private final TransakcijeFeignClient transakcijeFeignClient;
 
-    private final ObracunZaradeJob obracunZaradeJob;
-    public ObracunService(ObracunRepository obracunRepository, TransakcijeFeignClient transakcijeFeignClient, ObracunZaradeJob obracunZaradeJob, ObracunZaposleniService obracunZaposleniService) {
+    public ObracunService(ObracunRepository obracunRepository, TransakcijeFeignClient transakcijeFeignClient) {
         this.obracunRepository = obracunRepository;
         this.transakcijeFeignClient = transakcijeFeignClient;
-        this.obracunZaradeJob = obracunZaradeJob;
     }
 
     @Override
