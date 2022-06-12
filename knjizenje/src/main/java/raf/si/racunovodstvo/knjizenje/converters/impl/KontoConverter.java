@@ -1,9 +1,9 @@
-package raf.si.racunovodstvo.knjizenje.converter.impl;
+package raf.si.racunovodstvo.knjizenje.converters.impl;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.stereotype.Component;
-import raf.si.racunovodstvo.knjizenje.converter.IConverter;
+import raf.si.racunovodstvo.knjizenje.converters.IConverter;
 import raf.si.racunovodstvo.knjizenje.model.Konto;
 import raf.si.racunovodstvo.knjizenje.responses.GlavnaKnjigaResponse;
 

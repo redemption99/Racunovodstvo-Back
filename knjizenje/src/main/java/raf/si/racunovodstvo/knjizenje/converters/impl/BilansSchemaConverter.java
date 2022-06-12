@@ -1,11 +1,12 @@
-package raf.si.racunovodstvo.knjizenje.converter;
+package raf.si.racunovodstvo.knjizenje.converters.impl;
 
 import org.springframework.stereotype.Service;
+import raf.si.racunovodstvo.knjizenje.converters.IConverter;
 import raf.si.racunovodstvo.knjizenje.reports.schema.BilansSchema;
 import raf.si.racunovodstvo.knjizenje.responses.BilansResponse;
 
 @Service
-public class BilansSchemaConverter {
+public class BilansSchemaConverter implements IConverter<BilansResponse, BilansSchema> {
 
     public BilansSchema convert(BilansResponse source) {
         return new BilansSchema(source.getBrojKonta(),

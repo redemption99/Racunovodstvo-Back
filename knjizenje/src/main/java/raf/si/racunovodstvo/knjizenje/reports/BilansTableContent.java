@@ -1,6 +1,6 @@
 package raf.si.racunovodstvo.knjizenje.reports;
 
-import raf.si.racunovodstvo.knjizenje.converter.BilansSchemaConverter;
+import raf.si.racunovodstvo.knjizenje.converters.impl.BilansSchemaConverter;
 import raf.si.racunovodstvo.knjizenje.responses.BilansResponse;
 
 import java.util.ArrayList;

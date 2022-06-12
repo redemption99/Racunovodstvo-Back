@@ -1,4 +1,4 @@
-package raf.si.racunovodstvo.knjizenje.converter;
+package raf.si.racunovodstvo.knjizenje.converters.impl;
 
 import org.springframework.stereotype.Component;
 import raf.si.racunovodstvo.knjizenje.model.BazniKonto;

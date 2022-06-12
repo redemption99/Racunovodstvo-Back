@@ -1,4 +1,4 @@
-package raf.si.racunovodstvo.knjizenje.converter;
+package raf.si.racunovodstvo.knjizenje.converters;
 
 public interface IConverter<S, T> {
 

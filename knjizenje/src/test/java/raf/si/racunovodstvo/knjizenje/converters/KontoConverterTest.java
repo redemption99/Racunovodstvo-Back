@@ -1,11 +1,11 @@
-package raf.si.racunovodstvo.knjizenje.converter;
+package raf.si.racunovodstvo.knjizenje.converters;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.data.domain.Page;
-import raf.si.racunovodstvo.knjizenje.converter.impl.KontoConverter;
+import raf.si.racunovodstvo.knjizenje.converters.impl.KontoConverter;
 import raf.si.racunovodstvo.knjizenje.model.Knjizenje;
 import raf.si.racunovodstvo.knjizenje.model.KontnaGrupa;
 import raf.si.racunovodstvo.knjizenje.model.Konto;

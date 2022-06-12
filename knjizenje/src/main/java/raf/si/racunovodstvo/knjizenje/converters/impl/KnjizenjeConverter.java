@@ -5,10 +5,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.stereotype.Component;
-import raf.si.racunovodstvo.knjizenje.converter.IConverter;
+import raf.si.racunovodstvo.knjizenje.converters.IConverter;
 import raf.si.racunovodstvo.knjizenje.model.Knjizenje;
-import raf.si.racunovodstvo.knjizenje.model.Konto;
-import raf.si.racunovodstvo.knjizenje.responses.AnalitickaKarticaResponse;
 import raf.si.racunovodstvo.knjizenje.responses.KnjizenjeResponse;
 import raf.si.racunovodstvo.knjizenje.services.impl.IKnjizenjeService;
 

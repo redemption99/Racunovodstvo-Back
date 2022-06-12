@@ -1,4 +1,4 @@
-package raf.si.racunovodstvo.knjizenje.converter;
+package raf.si.racunovodstvo.knjizenje.converters.impl;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
