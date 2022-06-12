@@ -106,18 +106,9 @@ public class IzvestajService implements IIzvestajService {
     }
 
     @Override
-    public Reports makeSifraTransakcijaTableReport(String title, String[] sort, String token) {
-        Pageable pageSort = ApiUtil.resolveSortingAndPagination(0, Integer.MAX_VALUE, sort);
-        Page<SifraTransakcijeResponse> sifraTransakcijeResponses = sifraTransakcijeService.search(searchUtil.getSpec("sifraTransakcijeId>0"), pageSort, token);
-        return new SifraTransakcijaHelper(title, sifraTransakcijeResponses.getContent()).makeReport();
-    }
-
-    private String createTransakcijeFilter(long preduzeceId, Date pocetniDatum, Date krajniDatum) {
-        String filter = "preduzeceId:" + preduzeceId;
-        if (pocetniDatum == null || krajniDatum == null) {
-            return filter;
-        }
-        return filter + ",datumTransakcije>" + pocetniDatum + ",datumTransakcije<" + krajniDatum;
+    public Reports makeSifraTransakcijaTableReport(String title, String sort, String token) {
+        Page<SifraTransakcijeResponse> sifraTransakcijeResponses = sifraTransakcijeService.search(searchUtil.getSpec("sifraTransakcijeId>0"), Pageable.unpaged(), token);
+        return new SifraTransakcijaHelper(title, sifraTransakcijeResponses.getContent(), sort).makeReport();
     }
 
     private String generateSumsString(List<BilansResponse> bilansResponseList) {
