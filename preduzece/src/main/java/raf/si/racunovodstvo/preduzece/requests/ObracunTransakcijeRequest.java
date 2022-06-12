@@ -1,8 +1,6 @@
-package raf.si.racunovodstvo.knjizenje.requests;
+package raf.si.racunovodstvo.preduzece.requests;
 
 import lombok.Data;
-import raf.si.racunovodstvo.knjizenje.model.SifraTransakcije;
-import raf.si.racunovodstvo.knjizenje.validation.validator.ValidTransakcija;
 
 import javax.validation.constraints.NotNull;
 import java.util.Date;
@@ -21,7 +19,7 @@ public class ObracunTransakcijeRequest {
     @NotNull
     private Date datum;
     @NotNull
-    private SifraTransakcije sifraTransakcije;
+    private Long sifraTransakcije;
     @NotNull
     private Long preduzeceId;
 
