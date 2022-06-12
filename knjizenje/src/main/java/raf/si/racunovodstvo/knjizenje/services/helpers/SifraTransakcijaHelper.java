@@ -15,12 +15,13 @@ import java.util.Map;
 
 public class SifraTransakcijaHelper {
 
-    private static final List<String> HEADER = List.of("Sifra transakcije","Uplata","Isplata","Saldo");
+    private static final List<String> HEADER = List.of("Sifra transakcije", "Uplata", "Isplata", "Saldo");
 
-    private static final Map<String, Comparator<SifraTransakcijeResponse>> sortMap = Map.of("+uplata", Comparator.comparing(SifraTransakcijeResponse::getUplata),
-                                                                  "-uplata", Comparator.comparing(SifraTransakcijeResponse::getUplata).reversed(),
-                                                                  "+saldo", Comparator.comparing(SifraTransakcijeResponse::getSaldo),
-                                                                  "-saldo", Comparator.comparing(SifraTransakcijeResponse::getSaldo).reversed());
+    private static final Map<String, Comparator<SifraTransakcijeResponse>> sortMap =
+        Map.of("uplata", Comparator.comparing(SifraTransakcijeResponse::getUplata),
+               "-uplata", Comparator.comparing(SifraTransakcijeResponse::getUplata).reversed(),
+               "saldo", Comparator.comparing(SifraTransakcijeResponse::getSaldo),
+               "-saldo", Comparator.comparing(SifraTransakcijeResponse::getSaldo).reversed());
 
     private String title;
     private List<SifraTransakcijeResponse> sifraTransakcijeResponses;
