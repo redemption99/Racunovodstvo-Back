@@ -9,6 +9,7 @@ import raf.si.racunovodstvo.knjizenje.feign.PreduzeceFeignClient;
 import raf.si.racunovodstvo.knjizenje.model.Preduzece;
 import raf.si.racunovodstvo.knjizenje.model.Transakcija;
 import raf.si.racunovodstvo.knjizenje.model.enums.TipTransakcije;
+import raf.si.racunovodstvo.knjizenje.repositories.SifraTransakcijeRepository;
 import raf.si.racunovodstvo.knjizenje.repositories.TransakcijaRepository;
 import raf.si.racunovodstvo.knjizenje.requests.ObracunTransakcijeRequest;
 import raf.si.racunovodstvo.knjizenje.requests.TransakcijaRequest;
@@ -18,7 +19,6 @@ import raf.si.racunovodstvo.knjizenje.converters.IConverter;
 import raf.si.racunovodstvo.knjizenje.converters.impl.TransakcijaConverter;
 import raf.si.racunovodstvo.knjizenje.converters.impl.TransakcijaReverseConverter;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -29,15 +29,18 @@ import javax.persistence.EntityNotFoundException;
 public class TransakcijaService implements ITransakcijaService {
 
     private final TransakcijaRepository transakcijaRepository;
+    private final SifraTransakcijeRepository sifraTransakcijeRepository;
     private final IConverter<Transakcija, TransakcijaResponse> transakcijaReverseConverter;
     private final IConverter<TransakcijaRequest, Transakcija> transakcijaConverter;
     private final PreduzeceFeignClient preduzeceFeignClient;
 
     public TransakcijaService(TransakcijaRepository transakcijaRepository,
+                              SifraTransakcijeRepository sifraTransakcijeRepository,
                               TransakcijaReverseConverter transakcijaReverseConverter,
                               TransakcijaConverter transakcijaConverter,
                               PreduzeceFeignClient preduzeceFeignClient) {
         this.transakcijaRepository = transakcijaRepository;
+        this.sifraTransakcijeRepository = sifraTransakcijeRepository;
         this.transakcijaReverseConverter = transakcijaReverseConverter;
         this.transakcijaConverter = transakcijaConverter;
         this.preduzeceFeignClient = preduzeceFeignClient;
@@ -87,7 +90,7 @@ public class TransakcijaService implements ITransakcijaService {
             t.setDatumTransakcije(o.getDatum());
             t.setIznos(o.getIznos());
             t.setPreduzeceId(o.getPreduzeceId());
-            t.setSifraTransakcije(o.getSifraTransakcije());
+            t.setSifraTransakcije(sifraTransakcijeRepository.getById(o.getSifraTransakcije()));
             transakcijeList.add(t);
         }
         return transakcijaRepository.saveAll(transakcijeList);
