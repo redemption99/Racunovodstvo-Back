@@ -95,9 +95,14 @@ public class IzvestajService implements IIzvestajService {
             throw new EntityNotFoundException();
         }
 
-        String filter = createTransakcijeFilter(preduzeceId, pocetniDatum, krajniDatum);
-        Page<TransakcijaResponse> transakcijaResponses = transakcijaService.search(searchUtil.getSpec(filter), Pageable.unpaged(), token);
-        return new StatickiIzvestajOTransakcijamaHelper(naslov, preduzece, transakcijaResponses.getContent()).makeTableReport();
+        List<TransakcijaResponse> transakcijaResponses;
+        if (pocetniDatum == null || krajniDatum == null) {
+            transakcijaResponses = transakcijaService.findByPreduzeceId(preduzeceId);
+        } else {
+            transakcijaResponses = transakcijaService.findByPreduzeceIdAndDate(preduzeceId, pocetniDatum, krajniDatum);
+        }
+
+        return new StatickiIzvestajOTransakcijamaHelper(naslov, preduzece, transakcijaResponses).makeTableReport();
     }
 
     @Override
