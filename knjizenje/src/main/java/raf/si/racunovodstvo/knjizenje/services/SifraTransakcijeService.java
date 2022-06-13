@@ -38,7 +38,7 @@ public class SifraTransakcijeService implements ISifraTransakcijeService {
     }
 
     @Override
-    public Page<SifraTransakcijeResponse> findAll(Pageable pageable, String token) {
+    public Page<SifraTransakcijeResponse> findAll(Pageable pageable) {
         return sifraTransakcijeRepository.findAll(pageable).map(sifraTransakcije -> {
             SifraTransakcijeResponse sifraTransakcijeResponse = sifraTransakcijeReverseConverter.convert(sifraTransakcije);
             return sifraTransakcijeResponse;
@@ -46,7 +46,7 @@ public class SifraTransakcijeService implements ISifraTransakcijeService {
     }
 
     @Override
-    public Page<SifraTransakcijeResponse> search(Specification<SifraTransakcije> specification, Pageable pageable, String token) {
+    public Page<SifraTransakcijeResponse> search(Specification<SifraTransakcije> specification, Pageable pageable) {
         return sifraTransakcijeRepository.findAll(specification, pageable).map(sifraTransakcije -> {
             SifraTransakcijeResponse sifraTransakcijeResponse = sifraTransakcijeReverseConverter.convert(sifraTransakcije);
             return sifraTransakcijeResponse;

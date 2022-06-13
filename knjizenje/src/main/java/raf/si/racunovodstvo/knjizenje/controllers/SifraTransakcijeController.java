@@ -39,11 +39,10 @@ public class SifraTransakcijeController {
             @RequestParam(defaultValue = "", required = false, name = "search") String search,
             @RequestParam(defaultValue = ApiUtil.DEFAULT_PAGE) @Min(ApiUtil.MIN_PAGE) Integer page,
             @RequestParam(defaultValue = ApiUtil.DEFAULT_SIZE) @Min(ApiUtil.MIN_SIZE) @Max(ApiUtil.MAX_SIZE) Integer size,
-            @RequestParam(defaultValue = "nazivTransakcije") String[] sort,
-            @RequestHeader("Authorization") String token) {
+            @RequestParam(defaultValue = "nazivTransakcije") String[] sort) {
         Pageable pageSort = ApiUtil.resolveSortingAndPagination(page, size, sort);
-        return ResponseEntity.ok(Strings.isNotBlank(search) ? sifraTransakcijeService.search(searchUtil.getSpec(search), pageSort, token)
-                : sifraTransakcijeService.findAll(pageSort, token));
+        return ResponseEntity.ok(Strings.isNotBlank(search) ? sifraTransakcijeService.search(searchUtil.getSpec(search), pageSort)
+                : sifraTransakcijeService.findAll(pageSort));
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)

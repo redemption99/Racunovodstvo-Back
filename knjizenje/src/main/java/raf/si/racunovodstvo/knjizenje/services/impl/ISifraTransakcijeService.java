@@ -9,9 +9,9 @@ import raf.si.racunovodstvo.knjizenje.responses.SifraTransakcijeResponse;
 
 public interface ISifraTransakcijeService extends IService<SifraTransakcije, Long>{
 
-    Page<SifraTransakcijeResponse> findAll(Pageable pageable, String token);
+    Page<SifraTransakcijeResponse> findAll(Pageable pageable);
 
-    Page<SifraTransakcijeResponse> search(Specification<SifraTransakcije> specification, Pageable pageable, String token);
+    Page<SifraTransakcijeResponse> search(Specification<SifraTransakcije> specification, Pageable pageable);
 
     SifraTransakcijeResponse save(SifraTransakcijeRequest sifraTransakcijeRequest);
 
