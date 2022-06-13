@@ -97,6 +97,7 @@ services:
     depends_on:
       - mysql_db
       - mysql_slave
+      - redis_db
       - eureka
       - gateway
 
@@ -120,6 +121,8 @@ services:
       - racunovodstvo
     depends_on:
       - mysql_db
+      - mysql_slave
+      - redis_db
       - eureka
       - gateway
 
@@ -144,6 +147,8 @@ services:
       - racunovodstvo
     depends_on:
       - mysql_db
+      - mysql_slave
+      - redis_db
       - eureka
       - gateway
 
@@ -181,7 +186,9 @@ services:
 volumes:
   db:
     driver: local
+  redis-dbdata:
+    driver: local
 
 networks:
   racunovodstvo:
-    name: racunovodstvo
+    driver: bridge

@@ -35,12 +35,14 @@ public class PreduzeceService implements IPreduzeceService {
     }
 
     @Override
+    @CachePut(value = RedisConstants.PREDUZECE_CACHE, key = "#result.preduzeceId")
     public Preduzece save(Preduzece preduzece) {
         preduzece.setIsActive(true);
         return preduzeceRepository.save(preduzece);
     }
 
     @Override
+    @Cacheable(value = RedisConstants.PREDUZECE_CACHE, key = "#id")
     public Optional<Preduzece> findById(Long id) {
         return preduzeceRepository.findByPreduzeceId(id);
     }
