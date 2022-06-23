@@ -11,7 +11,7 @@ services:
       - racunovodstvo
 
   gateway:
-    image: gateway-test
+    image: ghcr.io/raf-si-2021/racunovodstvo-gateway:latest
     hostname: gateway
     restart: always
     ports:
