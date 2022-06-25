@@ -3,7 +3,6 @@ package raf.si.racunovodstvo.knjizenje.controllers;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
-import org.springframework.data.mapping.PropertyReferenceException;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -23,8 +22,11 @@ import raf.si.racunovodstvo.knjizenje.feign.PreduzeceFeignClient;
 import raf.si.racunovodstvo.knjizenje.model.Faktura;
 import raf.si.racunovodstvo.knjizenje.model.FakturaWithPreduzece;
 import raf.si.racunovodstvo.knjizenje.model.Preduzece;
+import raf.si.racunovodstvo.knjizenje.model.enums.TipFakture;
 import raf.si.racunovodstvo.knjizenje.services.FakturaService;
 import raf.si.racunovodstvo.knjizenje.services.impl.IFakturaService;
+import raf.si.racunovodstvo.knjizenje.services.impl.ISifraTransakcijeService;
+import raf.si.racunovodstvo.knjizenje.services.impl.ITransakcijaService;
 import raf.si.racunovodstvo.knjizenje.utils.ApiUtil;
 import raf.si.racunovodstvo.knjizenje.utils.SearchUtil;
 
@@ -53,9 +55,16 @@ public class FakturaRestController {
 
     private final PreduzeceFeignClient preduzeceFeignClient;
 
-    public FakturaRestController(FakturaService fakturaService, PreduzeceFeignClient preduzeceFeignClient) {
+    private final ITransakcijaService transakcijaService;
+
+    public FakturaRestController(
+            FakturaService fakturaService,
+            PreduzeceFeignClient preduzeceFeignClient,
+            ITransakcijaService transakcijaService
+    ) {
         this.fakturaService = fakturaService;
         this.preduzeceFeignClient = preduzeceFeignClient;
+        this.transakcijaService = transakcijaService;
         this.searchUtil = new SearchUtil<>();
     }
 
@@ -110,7 +119,12 @@ public class FakturaRestController {
         if(getPreduzeceById(faktura.getPreduzeceId(), token)== null){
             throw new PersistenceException(String.format("Ne postoji preduzece sa id-jem %s",faktura.getPreduzeceId()));
         }
-        return ResponseEntity.ok(fakturaService.save(faktura));
+        fakturaService.save(faktura);
+
+        if (faktura.getTipFakture() == TipFakture.MALOPRODAJNA_FAKTURA) {
+            this.transakcijaService.createFromMPFaktura(faktura);
+        }
+        return ResponseEntity.ok(faktura);
     }
 
     @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)

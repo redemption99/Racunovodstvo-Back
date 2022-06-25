@@ -491,6 +491,11 @@ public class BootstrapData implements CommandLineRunner {
         sifraTransakcijeRepository.save(st2);
         sifraTransakcijeRepository.save(st3);
 
+        SifraTransakcije mpfTransakcija = new SifraTransakcije();
+        mpfTransakcija.setSifra(101L);
+        mpfTransakcija.setNazivTransakcije("Maloprodajna faktura");
+        sifraTransakcijeRepository.save(mpfTransakcija);
+
         log.info("Data loaded!");
     }
 }

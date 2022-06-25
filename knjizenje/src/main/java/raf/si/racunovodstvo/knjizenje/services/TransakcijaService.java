@@ -6,6 +6,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import raf.si.racunovodstvo.knjizenje.feign.PreduzeceFeignClient;
+import raf.si.racunovodstvo.knjizenje.model.Faktura;
 import raf.si.racunovodstvo.knjizenje.model.Preduzece;
 import raf.si.racunovodstvo.knjizenje.model.Transakcija;
 import raf.si.racunovodstvo.knjizenje.model.enums.TipDokumenta;
@@ -33,17 +34,19 @@ public class TransakcijaService implements ITransakcijaService {
 
     private final TransakcijaRepository transakcijaRepository;
     private final SifraTransakcijeRepository sifraTransakcijeRepository;
+    private final FakturaService fakturaService;
     private final IConverter<Transakcija, TransakcijaResponse> transakcijaReverseConverter;
     private final IConverter<TransakcijaRequest, Transakcija> transakcijaConverter;
     private final PreduzeceFeignClient preduzeceFeignClient;
 
     public TransakcijaService(TransakcijaRepository transakcijaRepository,
                               SifraTransakcijeRepository sifraTransakcijeRepository,
-                              TransakcijaReverseConverter transakcijaReverseConverter,
+                              FakturaService fakturaService, TransakcijaReverseConverter transakcijaReverseConverter,
                               TransakcijaConverter transakcijaConverter,
                               PreduzeceFeignClient preduzeceFeignClient) {
         this.transakcijaRepository = transakcijaRepository;
         this.sifraTransakcijeRepository = sifraTransakcijeRepository;
+        this.fakturaService = fakturaService;
         this.transakcijaReverseConverter = transakcijaReverseConverter;
         this.transakcijaConverter = transakcijaConverter;
         this.preduzeceFeignClient = preduzeceFeignClient;
@@ -120,6 +123,22 @@ public class TransakcijaService implements ITransakcijaService {
     }
 
     @Override
+    public TransakcijaResponse createFromMPFaktura(Faktura faktura) {
+        TransakcijaRequest transakcija = new TransakcijaRequest();
+
+        transakcija.setBrojDokumenta("MPF" + faktura.getBrojDokumenta());
+        transakcija.setTipDokumenta(TipDokumenta.TRANSAKCIJA);
+        transakcija.setBrojTransakcije(this.generateBrojTransakcije(this.fakturaService.countMPFakture()));
+        transakcija.setPreduzeceId(faktura.getPreduzeceId());
+        transakcija.setDatumTransakcije(faktura.getDatumPlacanja());
+        transakcija.setTipTransakcije(TipTransakcije.UPLATA);
+        transakcija.setIznos(faktura.getIznos());
+        this.sifraTransakcijeRepository.findBySifra(101L).ifPresent(transakcija::setSifraTransakcije);
+
+        return this.save(transakcija);
+    }
+
+    @Override
     public <S extends Transakcija> S save(S var1) {
         return transakcijaRepository.save(var1);
     }
@@ -149,5 +168,9 @@ public class TransakcijaService implements ITransakcijaService {
             return preduzece == null ? null : preduzece.getNaziv();
         }
         return Strings.EMPTY;
+    }
+
+    private String generateBrojTransakcije(Long countMPFakture) {
+        return "MPF" + String.format("%04d", countMPFakture + 1);
     }
 }
