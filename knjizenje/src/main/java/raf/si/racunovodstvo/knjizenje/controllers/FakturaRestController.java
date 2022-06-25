@@ -3,6 +3,7 @@ package raf.si.racunovodstvo.knjizenje.controllers;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.data.mapping.PropertyReferenceException;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import raf.si.racunovodstvo.knjizenje.exceptions.MissingFieldException;
 import raf.si.racunovodstvo.knjizenje.feign.PreduzeceFeignClient;
 import raf.si.racunovodstvo.knjizenje.model.Faktura;
 import raf.si.racunovodstvo.knjizenje.model.FakturaWithPreduzece;
@@ -28,6 +30,7 @@ import raf.si.racunovodstvo.knjizenje.utils.SearchUtil;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -101,6 +104,9 @@ public class FakturaRestController {
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> createFaktura(@Valid @RequestBody Faktura faktura, @RequestHeader(name="Authorization") String token) throws IOException {
+        if (!this.isValidFaktura(faktura)) {
+            throw new MissingFieldException();
+        }
         if(getPreduzeceById(faktura.getPreduzeceId(), token)== null){
             throw new PersistenceException(String.format("Ne postoji preduzece sa id-jem %s",faktura.getPreduzeceId()));
         }
@@ -112,6 +118,9 @@ public class FakturaRestController {
         Long preduzeceId = faktura.getPreduzeceId();
         if(preduzeceId != null && getPreduzeceById(faktura.getPreduzeceId(), token) == null){
             throw new PersistenceException(String.format("Ne postoji preduzece sa id-jem %s",faktura.getPreduzeceId()));
+        }
+        if (!this.isValidFaktura(faktura)) {
+            throw new MissingFieldException();
         }
         Optional<Faktura> optionalFaktura = fakturaService.findById(faktura.getDokumentId());
         if(optionalFaktura.isPresent()) {
@@ -128,5 +137,17 @@ public class FakturaRestController {
             return ResponseEntity.noContent().build();
         }
         throw new EntityNotFoundException();
+    }
+
+    private boolean isValidFaktura(Faktura faktura) {
+        switch (faktura.getTipFakture()) {
+            case MALOPRODAJNA_FAKTURA:
+                faktura.setRokZaPlacanje(new Date(0));
+                if (faktura.getDatumPlacanja() == null) {
+                    return false;
+                }
+            default:
+                return true;
+        }
     }
 }
