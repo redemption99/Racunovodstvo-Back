@@ -201,8 +201,8 @@ public class BootstrapData implements CommandLineRunner {
         fu1.setPorezProcenat(20.00);
         fu1.setValuta("DIN");
         fu1.setTipFakture(TipFakture.ULAZNA_FAKTURA);
-        fu1.setPreduzeceId(p1.getPreduzeceId());
         fu1.setTipDokumenta(TipDokumenta.FAKTURA);
+        fu1.setPreduzeceId(p1.getPreduzeceId());
 
         Faktura fu2 = new Faktura();
         fu2.setBrojFakture("F23/12");
@@ -216,6 +216,7 @@ public class BootstrapData implements CommandLineRunner {
         fu2.setValuta("DIN");
         fu2.setTipFakture(TipFakture.ULAZNA_FAKTURA);
         fu2.setTipDokumenta(TipDokumenta.FAKTURA);
+        fu2.setPreduzeceId(p1.getPreduzeceId());
 
         Faktura fu3 = new Faktura();
         fu3.setBrojFakture("F23/13");
@@ -229,6 +230,7 @@ public class BootstrapData implements CommandLineRunner {
         fu3.setValuta("DIN");
         fu3.setTipFakture(TipFakture.ULAZNA_FAKTURA);
         fu3.setTipDokumenta(TipDokumenta.FAKTURA);
+        fu3.setPreduzeceId(p1.getPreduzeceId());
 
         Faktura fu4 = new Faktura();
         fu4.setBrojFakture("F23/14");
@@ -242,6 +244,7 @@ public class BootstrapData implements CommandLineRunner {
         fu4.setValuta("DIN");
         fu4.setTipFakture(TipFakture.ULAZNA_FAKTURA);
         fu4.setTipDokumenta(TipDokumenta.FAKTURA);
+        fu4.setPreduzeceId(p1.getPreduzeceId());
 
         Faktura fu5 = new Faktura();
         fu5.setBrojFakture("F23/15");
@@ -256,6 +259,7 @@ public class BootstrapData implements CommandLineRunner {
         fu5.setKomentar("inostranstvo");
         fu5.setTipFakture(TipFakture.ULAZNA_FAKTURA);
         fu5.setTipDokumenta(TipDokumenta.FAKTURA);
+        fu5.setPreduzeceId(p2.getPreduzeceId());
 
         Faktura fu6 = new Faktura();
         fu6.setBrojFakture("F23/16");
@@ -270,6 +274,7 @@ public class BootstrapData implements CommandLineRunner {
         fu6.setKomentar("inostranstvo");
         fu6.setTipFakture(TipFakture.ULAZNA_FAKTURA);
         fu6.setTipDokumenta(TipDokumenta.FAKTURA);
+        fu6.setPreduzeceId(p2.getPreduzeceId());
 
         Faktura fu7 = new Faktura();
         fu7.setBrojFakture("F23/17");
@@ -284,6 +289,7 @@ public class BootstrapData implements CommandLineRunner {
         fu7.setKomentar("inostranstvo");
         fu7.setTipFakture(TipFakture.ULAZNA_FAKTURA);
         fu7.setTipDokumenta(TipDokumenta.FAKTURA);
+        fu7.setPreduzeceId(p2.getPreduzeceId());
 
         Faktura fu8 = new Faktura();
         fu8.setBrojFakture("F24/11");
@@ -298,6 +304,7 @@ public class BootstrapData implements CommandLineRunner {
         fu8.setKomentar("inostranstvo");
         fu8.setTipFakture(TipFakture.ULAZNA_FAKTURA);
         fu8.setTipDokumenta(TipDokumenta.FAKTURA);
+        fu8.setPreduzeceId(p2.getPreduzeceId());
 
         Faktura fu9 = new Faktura();
         fu9.setBrojFakture("F24/12");
@@ -312,6 +319,7 @@ public class BootstrapData implements CommandLineRunner {
         fu9.setKomentar("inostranstvo");
         fu9.setTipFakture(TipFakture.ULAZNA_FAKTURA);
         fu9.setTipDokumenta(TipDokumenta.FAKTURA);
+        fu9.setPreduzeceId(p2.getPreduzeceId());
 
         Faktura fi1 = new Faktura();
         fi1.setBrojFakture("F24/13");
@@ -325,6 +333,7 @@ public class BootstrapData implements CommandLineRunner {
         fi1.setValuta("DIN");
         fi1.setTipFakture(TipFakture.IZLAZNA_FAKTURA);
         fi1.setTipDokumenta(TipDokumenta.FAKTURA);
+        fi1.setPreduzeceId(p3.getPreduzeceId());
 
         Faktura fi2 = new Faktura();
         fi2.setBrojFakture("F24/14");
@@ -338,6 +347,7 @@ public class BootstrapData implements CommandLineRunner {
         fi2.setValuta("DIN");
         fi2.setTipFakture(TipFakture.IZLAZNA_FAKTURA);
         fi2.setTipDokumenta(TipDokumenta.FAKTURA);
+        fi2.setPreduzeceId(p3.getPreduzeceId());
 
         Faktura fi3 = new Faktura();
         fi3.setBrojFakture("F24/15");
@@ -352,6 +362,7 @@ public class BootstrapData implements CommandLineRunner {
         fi3.setKomentar("inostranstvo");
         fi3.setTipFakture(TipFakture.IZLAZNA_FAKTURA);
         fi3.setTipDokumenta(TipDokumenta.FAKTURA);
+        fi3.setPreduzeceId(p2.getPreduzeceId());
 
         Faktura fi4 = new Faktura();
         fi4.setBrojFakture("F24/16");
@@ -365,6 +376,7 @@ public class BootstrapData implements CommandLineRunner {
         fi4.setValuta("DIN");
         fi4.setTipFakture(TipFakture.IZLAZNA_FAKTURA);
         fi4.setTipDokumenta(TipDokumenta.FAKTURA);
+        fi4.setPreduzeceId(p1.getPreduzeceId());
 
         Faktura fi5 = new Faktura();
         fi5.setBrojFakture("F24/17");
@@ -378,6 +390,7 @@ public class BootstrapData implements CommandLineRunner {
         fi5.setValuta("DIN");
         fi5.setTipFakture(TipFakture.IZLAZNA_FAKTURA);
         fi5.setTipDokumenta(TipDokumenta.FAKTURA);
+        fi5.setPreduzeceId(p3.getPreduzeceId());
 
         Faktura fi6 = new Faktura();
         fi6.setBrojFakture("F24/18");
@@ -392,6 +405,7 @@ public class BootstrapData implements CommandLineRunner {
         fi6.setKomentar("inostranstvo");
         fi6.setTipFakture(TipFakture.IZLAZNA_FAKTURA);
         fi6.setTipDokumenta(TipDokumenta.FAKTURA);
+        fi6.setPreduzeceId(p4.getPreduzeceId());
 
         this.fakturaRepository.save(fu1);
         this.fakturaRepository.save(fu2);
