@@ -14,6 +14,7 @@ import raf.si.racunovodstvo.preduzece.services.impl.ObracunZaposleniService;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -51,116 +52,115 @@ public class BootstrapData implements CommandLineRunner {
 
         log.info("Loading Data...");
 
-        Preduzece p1 = new Preduzece();
-        p1.setNaziv("Preduzece A");
-        p1.setPib("111222333");
-        p1.setAdresa("test adresa");
-        p1.setGrad("Beograd");
-        p1.setIsActive(true);
+        Zaposleni z1 = new Zaposleni();
+        z1.setIme("Darko");
+        z1.setPrezime("Stanković");
+        z1.setImeRoditelja("Miodrag");
+        z1.setPocetakRadnogOdnosa(new Date(2018, Calendar.JANUARY, 22));
+        z1.setJmbg("0311988710341");
+        z1.setPol(PolZaposlenog.MUSKO);
+        z1.setDatumRodjenja(new Date(1988, Calendar.NOVEMBER, 13));
+        z1.setAdresa("Držićeva 5");
+        z1.setGrad("Beograd");
+        z1.setBrojRacuna("908‑10501‑97");
+        z1.setStepenObrazovanja("5");
+        z1.setBrojRadneKnjizice(62834L);
+        z1.setStatusZaposlenog(StatusZaposlenog.ZAPOSLEN);
 
-        Preduzece p2 = new Preduzece();
-        p2.setNaziv("Preduzece B");
-        p2.setPib("333222111");
-        p2.setAdresa("test adresa");
-        p2.setGrad("Novi Sad");
-        p2.setIsActive(true);
+        Plata p1 = new Plata();
+        p1.setDatumOd(z1.getPocetakRadnogOdnosa());
+        p1.setNetoPlata(70000.00);
+        p1.setZaposleni(z1);
 
-        this.preduzeceRepository.save(p1);
-        this.preduzeceRepository.save(p2);
+        Zaposleni z2 = new Zaposleni();
+        z2.setIme("Marko");
+        z2.setPrezime("Jovanović");
+        z2.setImeRoditelja("Pavle");
+        z2.setPocetakRadnogOdnosa(new Date(2018, Calendar.JANUARY, 22));
+        z2.setJmbg("0502999710381");
+        z2.setPol(PolZaposlenog.MUSKO);
+        z2.setDatumRodjenja(new Date(1999, Calendar.FEBRUARY, 5));
+        z2.setAdresa("Bulevar Nikole Tesle 33");
+        z2.setGrad("Beograd");
+        z2.setBrojRacuna("908‑10308‑97");
+        z2.setStepenObrazovanja("5");
+        z2.setStatusZaposlenog(StatusZaposlenog.ZAPOSLEN);
+        z2.setKomentar("omladinska");
 
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy");
-        Staz staz = new Staz();
-        staz.setPocetakRada(simpleDateFormat.parse("08-08-2010"));
-        staz.setKrajRada(null);
-        stazRepository.save(staz);
+        Plata p2 = new Plata();
+        p2.setDatumOd(z2.getPocetakRadnogOdnosa());
+        p2.setNetoPlata(70000.00);
+        p2.setZaposleni(z2);
 
-        Staz staz2 = new Staz();
-        staz2.setPocetakRada(new Date());
-        staz2.setKrajRada(null);
-        stazRepository.save(staz2);
+        Zaposleni z3 = new Zaposleni();
+        z3.setIme("Bojana");
+        z3.setPrezime("Šolak");
+        z3.setImeRoditelja("Marko");
+        z3.setPocetakRadnogOdnosa(new Date(2017, Calendar.MAY, 15));
+        z3.setJmbg("0904978710699");
+        z3.setPol(PolZaposlenog.ZENSKO);
+        z3.setDatumRodjenja(new Date(1978, Calendar.APRIL, 9));
+        z3.setAdresa("Trg Republike 4");
+        z3.setGrad("Beograd");
+        z3.setBrojRacuna("903‑14308‑97");
+        z3.setStepenObrazovanja("6");
+        z3.setBrojRadneKnjizice(33456L);
+        z3.setStatusZaposlenog(StatusZaposlenog.ZAPOSLEN);
 
-        List<Staz> stazevi = new ArrayList<>();
-        stazevi.add(staz);
+        Plata p3 = new Plata();
+        p3.setDatumOd(z3.getPocetakRadnogOdnosa());
+        p3.setNetoPlata(115300.00);
+        p3.setZaposleni(z3);
 
-        Zaposleni zaposleni = new Zaposleni();
-        zaposleni.setIme("Marko");
-        zaposleni.setPrezime("Markovic");
-        zaposleni.setPocetakRadnogOdnosa(new Date());
-        zaposleni.setJmbg("1234567890123");
-        zaposleni.setGrad("Beograd");
-        zaposleni.setAdresa("Dorcol");
-        zaposleni.setPol(PolZaposlenog.MUSKO);
-        zaposleni.setStatusZaposlenog(StatusZaposlenog.ZAPOSLEN);
-        zaposleni.setDatumRodjenja(new Date());
-        zaposleni.setRadnaPozicija(RadnaPozicija.DIREKTOR);
-        zaposleni.setStaz(stazevi);
-        zaposleni.setPreduzece(p1);
-        zaposleniRepository.save(zaposleni);
+        Zaposleni z4 = new Zaposleni();
+        z4.setIme("Darko");
+        z4.setPrezime("Ognjenović");
+        z4.setImeRoditelja("Aleksa");
+        z4.setPocetakRadnogOdnosa(new Date(2019, Calendar.APRIL, 15));
+        z4.setJmbg("0101995710121");
+        z4.setPol(PolZaposlenog.MUSKO);
+        z4.setDatumRodjenja(new Date(1995, Calendar.JANUARY, 1));
+        z4.setAdresa("Masarikova 11");
+        z4.setGrad("Beograd");
+        z4.setBrojRacuna("903‑33308‑97");
+        z4.setStepenObrazovanja("6");
+        z4.setStatusZaposlenog(StatusZaposlenog.ZAPOSLEN);
 
-        Zaposleni zaposleni2 = new Zaposleni();
-        zaposleni2.setIme("Petar");
-        zaposleni2.setPrezime("Peric");
-        zaposleni2.setPocetakRadnogOdnosa(new Date());
-        zaposleni2.setJmbg("3210987654321");
-        zaposleni2.setGrad("Novi Sad");
-        zaposleni2.setAdresa("Centar");
-        zaposleni2.setPol(PolZaposlenog.MUSKO);
-        zaposleni2.setStatusZaposlenog(StatusZaposlenog.ZAPOSLEN);
-        zaposleni2.setDatumRodjenja(new Date());
-        zaposleni2.setRadnaPozicija(RadnaPozicija.MENADZER);
-        zaposleni2.setStaz(List.of(staz2));
-        zaposleni2.setPreduzece(p1);
-        zaposleniRepository.save(zaposleni2);
+        Plata p4 = new Plata();
+        p4.setDatumOd(z4.getPocetakRadnogOdnosa());
+        p4.setNetoPlata(230000.00);
+        p4.setZaposleni(z4);
 
-        Plata plata = new Plata();
-        plata.setNetoPlata(100000.0);
-        plata.setZaposleni(zaposleni);
-        plata.setDatumOd(new Date());
-        plata.setDatumDo(null);
-        plata.setBrutoPlata(150000.0);
-        plata.setDoprinos1(1.2);
-        plata.setDoprinos2(1.2);
-        plata.setPorez(0.2);
+        Zaposleni z5 = new Zaposleni();
+        z5.setIme("Dimitrije");
+        z5.setPrezime("Zdravković");
+        z5.setImeRoditelja("Kosta");
+        z5.setPocetakRadnogOdnosa(new Date(2021, Calendar.JANUARY, 1));
+        z5.setJmbg("0711987710241");
+        z5.setPol(PolZaposlenog.MUSKO);
+        z5.setDatumRodjenja(new Date(1987, Calendar.NOVEMBER, 27));
+        z5.setAdresa("Bulevar Zorana Đinđića 1");
+        z5.setGrad("Beograd");
+        z5.setBrojRacuna("933‑47345‑92");
+        z5.setStepenObrazovanja("6");
+        z5.setStatusZaposlenog(StatusZaposlenog.ZAPOSLEN);
 
+        Plata p5 = new Plata();
+        p5.setDatumOd(z5.getPocetakRadnogOdnosa());
+        p5.setNetoPlata(110000.00);
+        p5.setZaposleni(z5);
 
-        plataRepository.save(plata);
+        this.zaposleniRepository.save(z1);
+        this.zaposleniRepository.save(z2);
+        this.zaposleniRepository.save(z3);
+        this.zaposleniRepository.save(z4);
+        this.zaposleniRepository.save(z5);
 
-        Plata plata2 = new Plata();
-        plata2.setNetoPlata(70000.0);
-        plata2.setZaposleni(zaposleni2);
-        plata2.setDatumOd(new Date());
-        plata2.setDatumDo(null);
-        plata.setBrutoPlata(150000.0);
-        plata.setDoprinos1(1.2);
-        plata.setDoprinos2(1.2);
-        plata.setPorez(0.2);
-
-        plataRepository.save(plata2);
-
-        Koeficijent koeficijent = new Koeficijent();
-        koeficijent.setKoeficijentPoreza(1d);
-        koeficijent.setNezaposlenost1(2d);
-        koeficijent.setNezaposlenost2(10d);
-        koeficijent.setPenzionoOsiguranje1(5d);
-        koeficijent.setPenzionoOsiguranje2(50d);
-        koeficijent.setNajnizaOsnovica(1d);
-        koeficijent.setNajvisaOsnovica(1d);
-        koeficijent.setZdravstvenoOsiguranje1(5d);
-        koeficijent.setZdravstvenoOsiguranje2(5d);
-        koeficijent.setPoreskoOslobadjanje(23.4);
-        koeficijentRepository.save(koeficijent);
-
-        Obracun obracun = new Obracun();
-        obracun.setNaziv("Obracun 1");
-        obracun.setDatumObracuna(new Date());
-        obracunRepository.save(obracun);
-
-        ObracunZaposleni obracunZaposleni = new ObracunZaposleni();
-        obracunZaposleni.setObracun(obracun);
-        obracunZaposleni.setZaposleni(zaposleni);
-        obracunZaposleni.setNetoPlata(plata2.getNetoPlata());
-        obracunZaposleni.setUcinak(0.5);
-        obracunZaposleniRepository.save(obracunZaposleni);
+        this.plataRepository.save(p1);
+        this.plataRepository.save(p2);
+        this.plataRepository.save(p3);
+        this.plataRepository.save(p4);
+        this.plataRepository.save(p5);
 
         log.info("Data loaded!");
     }
