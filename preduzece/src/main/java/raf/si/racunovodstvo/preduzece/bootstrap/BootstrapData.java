@@ -65,7 +65,7 @@ public class BootstrapData implements CommandLineRunner {
 
         Preduzece p2 = new Preduzece();
         p2.setNaziv("Universal UK");
-        p2.setPib("1238483921");
+        p2.setPib("123848392");
         p2.setRacun("55743513");
         p2.setAdresa("22 Old Gloucester Street");
         p2.setGrad("London");
@@ -88,8 +88,8 @@ public class BootstrapData implements CommandLineRunner {
 
         Preduzece p4 = new Preduzece();
         p4.setNaziv("BP Production");
-        p4.setPib("123-442-1134");
-        p4.setRacun("132355513");
+        p4.setPib("132355513");
+        p4.setRacun("123-442-1134");
         p4.setAdresa("7115 3rd Ave");
         p4.setGrad("New York City");
         p4.setTelefon("555-1234");
@@ -134,6 +134,7 @@ public class BootstrapData implements CommandLineRunner {
         z1.setStepenObrazovanja("5");
         z1.setBrojRadneKnjizice(62834L);
         z1.setStatusZaposlenog(StatusZaposlenog.ZAPOSLEN);
+        z1.setPreduzece(p1);
 
         Plata pl1 = new Plata();
         pl1.setDatumOd(z1.getPocetakRadnogOdnosa());
@@ -154,6 +155,7 @@ public class BootstrapData implements CommandLineRunner {
         z2.setStepenObrazovanja("5");
         z2.setStatusZaposlenog(StatusZaposlenog.ZAPOSLEN);
         z2.setKomentar("omladinska");
+        z2.setPreduzece(p2);
 
         Plata pl2 = new Plata();
         pl2.setDatumOd(z2.getPocetakRadnogOdnosa());
@@ -174,6 +176,7 @@ public class BootstrapData implements CommandLineRunner {
         z3.setStepenObrazovanja("6");
         z3.setBrojRadneKnjizice(33456L);
         z3.setStatusZaposlenog(StatusZaposlenog.ZAPOSLEN);
+        z3.setPreduzece(p3);
 
         Plata pl3 = new Plata();
         pl3.setDatumOd(z3.getPocetakRadnogOdnosa());
@@ -193,6 +196,7 @@ public class BootstrapData implements CommandLineRunner {
         z4.setBrojRacuna("903‑33308‑97");
         z4.setStepenObrazovanja("6");
         z4.setStatusZaposlenog(StatusZaposlenog.ZAPOSLEN);
+        z4.setPreduzece(p4);
 
         Plata pl4 = new Plata();
         pl4.setDatumOd(z4.getPocetakRadnogOdnosa());
@@ -212,11 +216,19 @@ public class BootstrapData implements CommandLineRunner {
         z5.setBrojRacuna("933‑47345‑92");
         z5.setStepenObrazovanja("6");
         z5.setStatusZaposlenog(StatusZaposlenog.ZAPOSLEN);
+        z5.setPreduzece(p5);
 
         Plata pl5 = new Plata();
         pl5.setDatumOd(z5.getPocetakRadnogOdnosa());
         pl5.setNetoPlata(110000.00);
         pl5.setZaposleni(z5);
+
+        this.preduzeceRepository.save(p1);
+        this.preduzeceRepository.save(p2);
+        this.preduzeceRepository.save(p3);
+        this.preduzeceRepository.save(p4);
+        this.preduzeceRepository.save(p5);
+        this.preduzeceRepository.save(p6);
 
         this.zaposleniRepository.save(z1);
         this.zaposleniRepository.save(z2);
