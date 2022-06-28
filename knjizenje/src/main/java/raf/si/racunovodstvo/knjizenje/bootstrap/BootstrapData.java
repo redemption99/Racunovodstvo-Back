@@ -203,6 +203,8 @@ public class BootstrapData implements CommandLineRunner {
         fu1.setTipFakture(TipFakture.ULAZNA_FAKTURA);
         fu1.setTipDokumenta(TipDokumenta.FAKTURA);
         fu1.setPreduzeceId(p1.getPreduzeceId());
+        fu1.setKurs(117.00);
+        fu1.setNaplata(0.00);
 
         Faktura fu2 = new Faktura();
         fu2.setBrojFakture("F23/12");
@@ -217,6 +219,8 @@ public class BootstrapData implements CommandLineRunner {
         fu2.setTipFakture(TipFakture.ULAZNA_FAKTURA);
         fu2.setTipDokumenta(TipDokumenta.FAKTURA);
         fu2.setPreduzeceId(p1.getPreduzeceId());
+        fu2.setKurs(117.00);
+        fu2.setNaplata(0.00);
 
         Faktura fu3 = new Faktura();
         fu3.setBrojFakture("F23/13");
@@ -231,6 +235,8 @@ public class BootstrapData implements CommandLineRunner {
         fu3.setTipFakture(TipFakture.ULAZNA_FAKTURA);
         fu3.setTipDokumenta(TipDokumenta.FAKTURA);
         fu3.setPreduzeceId(p1.getPreduzeceId());
+        fu3.setKurs(117.00);
+        fu3.setNaplata(0.00);
 
         Faktura fu4 = new Faktura();
         fu4.setBrojFakture("F23/14");
@@ -245,6 +251,8 @@ public class BootstrapData implements CommandLineRunner {
         fu4.setTipFakture(TipFakture.ULAZNA_FAKTURA);
         fu4.setTipDokumenta(TipDokumenta.FAKTURA);
         fu4.setPreduzeceId(p1.getPreduzeceId());
+        fu4.setKurs(117.00);
+        fu4.setNaplata(0.00);
 
         Faktura fu5 = new Faktura();
         fu5.setBrojFakture("F23/15");
@@ -260,6 +268,8 @@ public class BootstrapData implements CommandLineRunner {
         fu5.setTipFakture(TipFakture.ULAZNA_FAKTURA);
         fu5.setTipDokumenta(TipDokumenta.FAKTURA);
         fu5.setPreduzeceId(p2.getPreduzeceId());
+        fu5.setKurs(117.00);
+        fu5.setNaplata(0.00);
 
         Faktura fu6 = new Faktura();
         fu6.setBrojFakture("F23/16");
@@ -275,6 +285,8 @@ public class BootstrapData implements CommandLineRunner {
         fu6.setTipFakture(TipFakture.ULAZNA_FAKTURA);
         fu6.setTipDokumenta(TipDokumenta.FAKTURA);
         fu6.setPreduzeceId(p2.getPreduzeceId());
+        fu6.setKurs(117.00);
+        fu6.setNaplata(0.00);
 
         Faktura fu7 = new Faktura();
         fu7.setBrojFakture("F23/17");
@@ -290,6 +302,8 @@ public class BootstrapData implements CommandLineRunner {
         fu7.setTipFakture(TipFakture.ULAZNA_FAKTURA);
         fu7.setTipDokumenta(TipDokumenta.FAKTURA);
         fu7.setPreduzeceId(p2.getPreduzeceId());
+        fu7.setKurs(117.00);
+        fu7.setNaplata(0.00);
 
         Faktura fu8 = new Faktura();
         fu8.setBrojFakture("F24/11");
@@ -305,6 +319,8 @@ public class BootstrapData implements CommandLineRunner {
         fu8.setTipFakture(TipFakture.ULAZNA_FAKTURA);
         fu8.setTipDokumenta(TipDokumenta.FAKTURA);
         fu8.setPreduzeceId(p2.getPreduzeceId());
+        fu8.setKurs(117.00);
+        fu8.setNaplata(0.00);
 
         Faktura fu9 = new Faktura();
         fu9.setBrojFakture("F24/12");
@@ -320,6 +336,8 @@ public class BootstrapData implements CommandLineRunner {
         fu9.setTipFakture(TipFakture.ULAZNA_FAKTURA);
         fu9.setTipDokumenta(TipDokumenta.FAKTURA);
         fu9.setPreduzeceId(p2.getPreduzeceId());
+        fu9.setKurs(117.00);
+        fu9.setNaplata(0.00);
 
         Faktura fi1 = new Faktura();
         fi1.setBrojFakture("F24/13");
@@ -334,6 +352,8 @@ public class BootstrapData implements CommandLineRunner {
         fi1.setTipFakture(TipFakture.IZLAZNA_FAKTURA);
         fi1.setTipDokumenta(TipDokumenta.FAKTURA);
         fi1.setPreduzeceId(p3.getPreduzeceId());
+        fi1.setKurs(117.00);
+        fi1.setNaplata(0.00);
 
         Faktura fi2 = new Faktura();
         fi2.setBrojFakture("F24/14");
@@ -348,6 +368,8 @@ public class BootstrapData implements CommandLineRunner {
         fi2.setTipFakture(TipFakture.IZLAZNA_FAKTURA);
         fi2.setTipDokumenta(TipDokumenta.FAKTURA);
         fi2.setPreduzeceId(p3.getPreduzeceId());
+        fi2.setKurs(117.00);
+        fi2.setNaplata(0.00);
 
         Faktura fi3 = new Faktura();
         fi3.setBrojFakture("F24/15");
@@ -363,6 +385,8 @@ public class BootstrapData implements CommandLineRunner {
         fi3.setTipFakture(TipFakture.IZLAZNA_FAKTURA);
         fi3.setTipDokumenta(TipDokumenta.FAKTURA);
         fi3.setPreduzeceId(p2.getPreduzeceId());
+        fi3.setKurs(117.00);
+        fi3.setNaplata(0.00);
 
         Faktura fi4 = new Faktura();
         fi4.setBrojFakture("F24/16");
@@ -377,6 +401,8 @@ public class BootstrapData implements CommandLineRunner {
         fi4.setTipFakture(TipFakture.IZLAZNA_FAKTURA);
         fi4.setTipDokumenta(TipDokumenta.FAKTURA);
         fi4.setPreduzeceId(p1.getPreduzeceId());
+        fi4.setKurs(117.00);
+        fi4.setNaplata(0.00);
 
         Faktura fi5 = new Faktura();
         fi5.setBrojFakture("F24/17");
@@ -391,6 +417,8 @@ public class BootstrapData implements CommandLineRunner {
         fi5.setTipFakture(TipFakture.IZLAZNA_FAKTURA);
         fi5.setTipDokumenta(TipDokumenta.FAKTURA);
         fi5.setPreduzeceId(p3.getPreduzeceId());
+        fi5.setKurs(117.00);
+        fi5.setNaplata(0.00);
 
         Faktura fi6 = new Faktura();
         fi6.setBrojFakture("F24/18");
@@ -406,6 +434,8 @@ public class BootstrapData implements CommandLineRunner {
         fi6.setTipFakture(TipFakture.IZLAZNA_FAKTURA);
         fi6.setTipDokumenta(TipDokumenta.FAKTURA);
         fi6.setPreduzeceId(p4.getPreduzeceId());
+        fi6.setKurs(117.00);
+        fi6.setNaplata(0.00);
 
         this.fakturaRepository.save(fu1);
         this.fakturaRepository.save(fu2);
@@ -502,51 +532,76 @@ public class BootstrapData implements CommandLineRunner {
         mpf1.setBrojFakture("MP12/21");
         mpf1.setBrojDokumenta(mpf1.getBrojFakture());
         mpf1.setDatumIzdavanja(new Date(2021, Calendar.APRIL, 5));
+        mpf1.setRokZaPlacanje(new Date(2021, Calendar.APRIL, 5));
         mpf1.setDatumPlacanja(new Date(2021, Calendar.APRIL, 5));
         mpf1.setProdajnaVrednost(5300.00);
         mpf1.setRabatProcenat(0.00);
         mpf1.setPorezProcenat(20.00);
         mpf1.setValuta("DIN");
+        mpf1.setTipFakture(TipFakture.MALOPRODAJNA_FAKTURA);
+        mpf1.setTipDokumenta(TipDokumenta.FAKTURA);
+        mpf1.setKurs(117.00);
+        mpf1.setNaplata(0.00);
 
         Faktura mpf2 = new Faktura();
         mpf2.setBrojFakture("MP12/22");
         mpf2.setBrojDokumenta(mpf2.getBrojFakture());
         mpf2.setDatumIzdavanja(new Date(2021, Calendar.APRIL, 5));
+        mpf2.setRokZaPlacanje(new Date(2021, Calendar.APRIL, 5));
         mpf2.setDatumPlacanja(new Date(2021, Calendar.APRIL, 5));
         mpf2.setProdajnaVrednost(11700.00);
         mpf2.setRabatProcenat(0.00);
         mpf2.setPorezProcenat(20.00);
         mpf2.setValuta("DIN");
+        mpf2.setTipFakture(TipFakture.MALOPRODAJNA_FAKTURA);
+        mpf2.setTipDokumenta(TipDokumenta.FAKTURA);
+        mpf2.setKurs(117.00);
+        mpf2.setNaplata(0.00);
 
         Faktura mpf3 = new Faktura();
         mpf3.setBrojFakture("MP12/23");
         mpf3.setBrojDokumenta(mpf3.getBrojFakture());
         mpf3.setDatumIzdavanja(new Date(2021, Calendar.MAY, 7));
+        mpf3.setRokZaPlacanje(new Date(2021, Calendar.MAY, 7));
         mpf3.setDatumPlacanja(new Date(2021, Calendar.MAY, 7));
         mpf3.setProdajnaVrednost(24500.00);
         mpf3.setRabatProcenat(0.00);
         mpf3.setPorezProcenat(20.00);
         mpf3.setValuta("DIN");
+        mpf3.setTipFakture(TipFakture.MALOPRODAJNA_FAKTURA);
+        mpf3.setTipDokumenta(TipDokumenta.FAKTURA);
+        mpf3.setKurs(117.00);
+        mpf3.setNaplata(0.00);
 
         Faktura mpf4 = new Faktura();
         mpf4.setBrojFakture("MP17/21");
         mpf4.setBrojDokumenta(mpf4.getBrojFakture());
         mpf4.setDatumIzdavanja(new Date(2021, Calendar.MAY, 7));
+        mpf4.setRokZaPlacanje(new Date(2021, Calendar.MAY, 7));
         mpf4.setDatumPlacanja(new Date(2021, Calendar.MAY, 7));
         mpf4.setProdajnaVrednost(9200.00);
         mpf4.setRabatProcenat(0.00);
         mpf4.setPorezProcenat(20.00);
         mpf4.setValuta("DIN");
+        mpf4.setTipFakture(TipFakture.MALOPRODAJNA_FAKTURA);
+        mpf4.setTipDokumenta(TipDokumenta.FAKTURA);
+        mpf4.setKurs(117.00);
+        mpf4.setNaplata(0.00);
 
         Faktura mpf5 = new Faktura();
         mpf5.setBrojFakture("MP18/22");
         mpf5.setBrojDokumenta(mpf5.getBrojFakture());
         mpf5.setDatumIzdavanja(new Date(2021, Calendar.JUNE, 12));
+        mpf5.setRokZaPlacanje(new Date(2021, Calendar.JUNE, 12));
         mpf5.setDatumPlacanja(new Date(2021, Calendar.JUNE, 12));
         mpf5.setProdajnaVrednost(8350.00);
         mpf5.setRabatProcenat(0.00);
         mpf5.setPorezProcenat(20.00);
         mpf5.setValuta("DIN");
+        mpf5.setTipFakture(TipFakture.MALOPRODAJNA_FAKTURA);
+        mpf5.setTipDokumenta(TipDokumenta.FAKTURA);
+        mpf5.setKurs(117.00);
+        mpf5.setNaplata(0.00);
 
         this.fakturaRepository.save(mpf1);
         this.fakturaRepository.save(mpf2);
@@ -582,26 +637,41 @@ public class BootstrapData implements CommandLineRunner {
         TroskovniCentar tc1 = new TroskovniCentar();
         tc1.setSifra("MAG-BG");
         tc1.setNaziv("MAGACINI");
+        tc1.setLokacijaId(11L);
+        tc1.setOdgovornoLiceId(1L);
+        tc1.setUkupniTrosak(0.00);
 
         TroskovniCentar tc2 = new TroskovniCentar();
         tc2.setSifra("MAG-NBG");
         tc2.setNaziv("MAGACIN - NOVI BEOGRAD");
         tc2.setParentTroskovniCentar(tc1);
+        tc2.setLokacijaId(11L);
+        tc2.setOdgovornoLiceId(1L);
+        tc2.setUkupniTrosak(0.00);
 
         TroskovniCentar tc3 = new TroskovniCentar();
         tc3.setSifra("MAG-NBG-DC");
         tc3.setNaziv("MAGACIN - NOVI BEOGRAD, DELTA CITY");
         tc3.setParentTroskovniCentar(tc2);
+        tc3.setLokacijaId(11L);
+        tc3.setOdgovornoLiceId(1L);
+        tc3.setUkupniTrosak(0.00);
 
         TroskovniCentar tc4 = new TroskovniCentar();
         tc4.setSifra("MAG-SV");
         tc4.setNaziv("MAGACIN - SAVSKI VENAC");
         tc4.setParentTroskovniCentar(tc1);
+        tc4.setLokacijaId(11L);
+        tc4.setOdgovornoLiceId(1L);
+        tc4.setUkupniTrosak(0.00);
 
         TroskovniCentar tc5 = new TroskovniCentar();
         tc5.setSifra("MAG-Z");
         tc5.setNaziv("MAGACIN - ZEMUN");
         tc5.setParentTroskovniCentar(tc1);
+        tc5.setLokacijaId(11L);
+        tc5.setOdgovornoLiceId(1L);
+        tc5.setUkupniTrosak(0.00);
 
         this.troskovniCentarRepository.save(tc1);
         this.troskovniCentarRepository.save(tc2);
@@ -612,16 +682,25 @@ public class BootstrapData implements CommandLineRunner {
         ProfitniCentar pc1 = new ProfitniCentar();
         pc1.setSifra("MP-BG");
         pc1.setNaziv("MALOPRODAJE");
+        pc1.setLokacijaId(11L);
+        pc1.setOdgovornoLiceId(1L);
+        pc1.setUkupniTrosak(0.00);
 
         ProfitniCentar pc2 = new ProfitniCentar();
         pc2.setSifra("MP-NBG");
         pc2.setNaziv("MALOPRODAJA - NOVI BEOGRAD");
         pc2.setParentProfitniCentar(pc1);
+        pc2.setLokacijaId(11L);
+        pc2.setOdgovornoLiceId(1L);
+        pc2.setUkupniTrosak(0.00);
 
         ProfitniCentar pc3 = new ProfitniCentar();
         pc3.setSifra("MP-NBG");
         pc3.setNaziv("MALOPRODAJA - NBG - DELTA CITY");
         pc3.setParentProfitniCentar(pc2);
+        pc3.setLokacijaId(11L);
+        pc3.setOdgovornoLiceId(1L);
+        pc3.setUkupniTrosak(0.00);
 
         this.profitniCentarRepository.save(pc1);
         this.profitniCentarRepository.save(pc2);

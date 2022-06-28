@@ -52,6 +52,74 @@ public class BootstrapData implements CommandLineRunner {
 
         log.info("Loading Data...");
 
+        Preduzece p1 = new Preduzece();
+        p1.setNaziv("ThinkStudio");
+        p1.setPib("102979306");
+        p1.setRacun("908‑10501‑97");
+        p1.setAdresa("Držićeva 11");
+        p1.setGrad("Beograd");
+        p1.setTelefon("0112324444");
+        p1.setEmail("office@thinkstudio.com");
+        p1.setWebAdresa("thinkstudio.com");
+        p1.setIsActive(true);
+
+        Preduzece p2 = new Preduzece();
+        p2.setNaziv("Universal UK");
+        p2.setPib("1238483921");
+        p2.setRacun("55743513");
+        p2.setAdresa("22 Old Gloucester Street");
+        p2.setGrad("London");
+        p2.setTelefon("0113928422");
+        p2.setEmail("london@universal.co.uk");
+        p2.setWebAdresa("universal.co.uk");
+        p2.setIsActive(true);
+        p2.setKomentar("UK");
+
+        Preduzece p3 = new Preduzece();
+        p3.setNaziv("Blue Marble Inc");
+        p3.setPib("194382931");
+        p3.setRacun("908‑11501‑07");
+        p3.setAdresa("Bulevar Mihajla Pupina 13");
+        p3.setGrad("Beograd");
+        p3.setTelefon("7975777666");
+        p3.setEmail("office@bluemarble.com");
+        p3.setWebAdresa("bluemarble.com");
+        p3.setIsActive(true);
+
+        Preduzece p4 = new Preduzece();
+        p4.setNaziv("BP Production");
+        p4.setPib("123-442-1134");
+        p4.setRacun("132355513");
+        p4.setAdresa("7115 3rd Ave");
+        p4.setGrad("New York City");
+        p4.setTelefon("555-1234");
+        p4.setEmail("contact@bp.com");
+        p4.setWebAdresa("bp.com");
+        p4.setIsActive(true);
+        p4.setKomentar("SAD");
+
+        Preduzece p5 = new Preduzece();
+        p5.setNaziv("Mark Cinema");
+        p5.setPib("129438322");
+        p5.setRacun("908‑14501‑28");
+        p5.setAdresa("Bulevar Zorana Đinđića 11");
+        p5.setGrad("Beograd");
+        p5.setTelefon("0119303492");
+        p5.setEmail("markcinema@gmail.com");
+        p5.setWebAdresa("markcinema.rs");
+        p5.setIsActive(false);
+
+        Preduzece p6 = new Preduzece();
+        p6.setNaziv("Fashion World");
+        p6.setPib("193849293");
+        p6.setRacun("908‑28311‑28");
+        p6.setAdresa("Semjuela Beketa 55");
+        p6.setGrad("Beograd");
+        p6.setTelefon("011948293");
+        p6.setEmail("office@fashionworld.com");
+        p6.setWebAdresa("fashionworld.com");
+        p6.setIsActive(false);
+
         Zaposleni z1 = new Zaposleni();
         z1.setIme("Darko");
         z1.setPrezime("Stanković");
@@ -67,10 +135,10 @@ public class BootstrapData implements CommandLineRunner {
         z1.setBrojRadneKnjizice(62834L);
         z1.setStatusZaposlenog(StatusZaposlenog.ZAPOSLEN);
 
-        Plata p1 = new Plata();
-        p1.setDatumOd(z1.getPocetakRadnogOdnosa());
-        p1.setNetoPlata(70000.00);
-        p1.setZaposleni(z1);
+        Plata pl1 = new Plata();
+        pl1.setDatumOd(z1.getPocetakRadnogOdnosa());
+        pl1.setNetoPlata(70000.00);
+        pl1.setZaposleni(z1);
 
         Zaposleni z2 = new Zaposleni();
         z2.setIme("Marko");
@@ -87,10 +155,10 @@ public class BootstrapData implements CommandLineRunner {
         z2.setStatusZaposlenog(StatusZaposlenog.ZAPOSLEN);
         z2.setKomentar("omladinska");
 
-        Plata p2 = new Plata();
-        p2.setDatumOd(z2.getPocetakRadnogOdnosa());
-        p2.setNetoPlata(70000.00);
-        p2.setZaposleni(z2);
+        Plata pl2 = new Plata();
+        pl2.setDatumOd(z2.getPocetakRadnogOdnosa());
+        pl2.setNetoPlata(70000.00);
+        pl2.setZaposleni(z2);
 
         Zaposleni z3 = new Zaposleni();
         z3.setIme("Bojana");
@@ -107,10 +175,10 @@ public class BootstrapData implements CommandLineRunner {
         z3.setBrojRadneKnjizice(33456L);
         z3.setStatusZaposlenog(StatusZaposlenog.ZAPOSLEN);
 
-        Plata p3 = new Plata();
-        p3.setDatumOd(z3.getPocetakRadnogOdnosa());
-        p3.setNetoPlata(115300.00);
-        p3.setZaposleni(z3);
+        Plata pl3 = new Plata();
+        pl3.setDatumOd(z3.getPocetakRadnogOdnosa());
+        pl3.setNetoPlata(115300.00);
+        pl3.setZaposleni(z3);
 
         Zaposleni z4 = new Zaposleni();
         z4.setIme("Darko");
@@ -126,10 +194,10 @@ public class BootstrapData implements CommandLineRunner {
         z4.setStepenObrazovanja("6");
         z4.setStatusZaposlenog(StatusZaposlenog.ZAPOSLEN);
 
-        Plata p4 = new Plata();
-        p4.setDatumOd(z4.getPocetakRadnogOdnosa());
-        p4.setNetoPlata(230000.00);
-        p4.setZaposleni(z4);
+        Plata pl4 = new Plata();
+        pl4.setDatumOd(z4.getPocetakRadnogOdnosa());
+        pl4.setNetoPlata(230000.00);
+        pl4.setZaposleni(z4);
 
         Zaposleni z5 = new Zaposleni();
         z5.setIme("Dimitrije");
@@ -145,10 +213,10 @@ public class BootstrapData implements CommandLineRunner {
         z5.setStepenObrazovanja("6");
         z5.setStatusZaposlenog(StatusZaposlenog.ZAPOSLEN);
 
-        Plata p5 = new Plata();
-        p5.setDatumOd(z5.getPocetakRadnogOdnosa());
-        p5.setNetoPlata(110000.00);
-        p5.setZaposleni(z5);
+        Plata pl5 = new Plata();
+        pl5.setDatumOd(z5.getPocetakRadnogOdnosa());
+        pl5.setNetoPlata(110000.00);
+        pl5.setZaposleni(z5);
 
         this.zaposleniRepository.save(z1);
         this.zaposleniRepository.save(z2);
@@ -156,11 +224,11 @@ public class BootstrapData implements CommandLineRunner {
         this.zaposleniRepository.save(z4);
         this.zaposleniRepository.save(z5);
 
-        this.plataRepository.save(p1);
-        this.plataRepository.save(p2);
-        this.plataRepository.save(p3);
-        this.plataRepository.save(p4);
-        this.plataRepository.save(p5);
+        this.plataRepository.save(pl1);
+        this.plataRepository.save(pl2);
+        this.plataRepository.save(pl3);
+        this.plataRepository.save(pl4);
+        this.plataRepository.save(pl5);
 
         log.info("Data loaded!");
     }
